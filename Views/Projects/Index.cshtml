@@ -1,0 +1,59 @@
+@{
+    ViewData["Title"] = "Projects";
+}
+@model List<Project>
+<!-- start banner Area -->
+<section class="banner-area relative about-banner" id="home">
+    <div class="overlay overlay-bg"></div>
+    <div class="container">
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="about-content col-lg-12">
+                <h1 class="text-white">
+                    Projects
+                </h1>
+                <p class="text-white link-nav"><a asp-action="index" asp-controller="home">Home </a> <span
+                        class="lnr lnr-arrow-right"></span>
+                    <a asp-action="committees" asp-controller="home">@ViewData["Title"]</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End banner Area -->
+
+<!-- Start popular-courses Area -->
+<section class="popular-courses-area section-gap courses-page">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-70 col-lg-8">
+                <div class="title text-center">
+                    <h1 class="mb-10">Our @ViewData["Title"]</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @if (Model.Count != 0)
+            {
+                @foreach (Project project in Model)
+                {
+                    <div class="single-popular-carusel col-lg-3 col-md-6">
+                        <div class="thumb-wrap relative">
+                            <div class="thumb relative">
+                                <div class="overlay overlay-bg"></div>
+                                <img class="img-fluid" src="~/img/committee/mm.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="details">
+                            <a href="#">
+                                <h4>
+                                    @project.Title
+                                </h4>
+                            </a>
+                            <p>@project.Description</p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+</section>
+<!-- End popular-courses Area -->
