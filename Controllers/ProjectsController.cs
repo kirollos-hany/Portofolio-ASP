@@ -18,6 +18,11 @@ namespace Portofolio.Controllers
             return View(await repository.GetAll());
         }
 
+        public async Task<IActionResult> Details(int id)
+        {
+            return View(await repository.GetById(id));
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

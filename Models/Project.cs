@@ -18,11 +18,13 @@ namespace Portofolio.Models
             ProjectImages = new HashSet<ProjectImage>();
             ProjectLinks = new HashSet<ProjectLink>();
             UsersInProjects = new HashSet<UsersInProject>();
+            Tools = new HashSet<ProjectTool>();
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [Required]
         public int TypeId { get; set; }
         [Required]
         [StringLength(100)]
@@ -46,5 +48,8 @@ namespace Portofolio.Models
         public virtual ICollection<ProjectLink> ProjectLinks { get; set; }
         [InverseProperty(nameof(UsersInProject.Project))]
         public virtual ICollection<UsersInProject> UsersInProjects { get; set; }
+
+        [InverseProperty(nameof(ProjectTool.AssociatedProject))]
+        public virtual ICollection<ProjectTool> Tools{get; set;}
     }
 }

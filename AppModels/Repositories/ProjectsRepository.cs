@@ -50,6 +50,7 @@ namespace Portofolio.AppModels.Repositories
         {
             return await dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks).Include(project => project.ProjectImages)
+            .Include(project => project.Tools)
             .Include(project => project.ProjectLinks)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
@@ -61,6 +62,7 @@ namespace Portofolio.AppModels.Repositories
             return await dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks).Include(project => project.ProjectImages)
             .Include(project => project.ProjectLinks)
+            .Include(project => project.Tools)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
             .Where(expression).ToListAsync();
@@ -71,6 +73,7 @@ namespace Portofolio.AppModels.Repositories
             return await dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks).Include(project => project.ProjectImages)
             .Include(project => project.ProjectLinks)
+            .Include(project => project.Tools)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
             .ToListAsync();
@@ -81,6 +84,7 @@ namespace Portofolio.AppModels.Repositories
             return await dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks).Include(project => project.ProjectImages)
             .Include(project => project.ProjectLinks)
+            .Include(project => project.Tools)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
             .FirstOrDefaultAsync(project => project.Id == id);

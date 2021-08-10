@@ -7,6 +7,7 @@ using Portofolio.Database;
 using Portofolio.Models;
 using Microsoft.EntityFrameworkCore;
 using Portofolio.AppModels.Repositories;
+using Portofolio.AppModels.Services;
 namespace Portofolio
 {
     public class Startup
@@ -25,13 +26,18 @@ namespace Portofolio
             string connString = Configuration.GetConnectionString("PortofolioMySQLConn");
             services.AddDbContextPool<PortofolioDbContext>(options =>
             {
-                options.UseMySql(connString, ServerVersion.AutoDetect(connString));
+                options.UseMySql(connString, ServerVersion.AutoDetect(connString), dbOptions =>
+                {
+                    dbOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                });
                 options.EnableSensitiveDataLogging();
+
             });
             services.AddScoped(typeof(BaseRepository<Contact>), typeof(ContactRepository));
             services.AddScoped(typeof(BaseRepository<ContactStatus>), typeof(ContactStatusRepository));
             services.AddScoped(typeof(BaseRepository<Service>), typeof(ServicesRepository));
             services.AddScoped(typeof(BaseRepository<Project>), typeof(ProjectsRepository));
+            services.AddScoped(typeof(IImageService), typeof(ImageServices));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

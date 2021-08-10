@@ -1,0 +1,162 @@
+@{
+	ViewData["Title"] = "Details";
+	Layout = "_Layout";
+}
+@model Project
+
+<!-- start banner Area -->
+<section class="banner-area relative about-banner" id="home">
+ <div class="overlay overlay-bg"></div>
+ <div class="container">
+  <div class="row d-flex align-items-center justify-content-center">
+   <div class="about-content col-lg-12">
+	<h1 class="text-white">
+	 Project @ViewData["Title"]
+	</h1>
+	<p class="text-white link-nav"><a asp-controller="home" asp-action="index">Home </a> <span
+						class="lnr lnr-arrow-right"></span>
+	 <a asp-action="details" asp-controller="projects" asp-route-id=@Model.Id> Project @ViewData["Title"]
+	 </a>
+	</p>
+   </div>
+  </div>
+ </div>
+</section>
+<!-- End banner Area -->
+
+<!-- Start course-details Area -->
+<section class="course-details-area pt-120">
+ <div class="container">
+  <div class="row">
+   <div class="col-lg-8 left-contents">
+	<div class="main-image">
+	 <img class="img-fluid" src="~/img/committee/it.jpg" alt="">
+	</div>
+	<div class="jq-tab-wrapper" id="horizontalTab">
+	 <div class="jq-tab-menu">
+	  <div class="jq-tab-title active" data-tab="1">Description</div>
+	  <div class="jq-tab-title" data-tab="5">Feedback</div>
+	 </div>
+	 <div class="jq-tab-content-wrapper">
+	  <div class="jq-tab-content active" data-tab="1">@Model.Description</div>
+	  <div class="jq-tab-content" data-tab="5">
+	   <div class="feedeback">
+		<h4 class="pb-20">Your Feedback</h4>
+		<textarea name="feedback" class="form-control" cols="10" rows="10"></textarea>
+		<a href="#" class="mt-20 primary-btn text-right text-uppercase">Submit</a>
+	   </div>
+	  </div>
+	 </div>
+	</div>
+   </div>
+   <div class="col-lg-4 right-contents">
+	<a href="#" class="primary-btn text-uppercase">@Model.Title</a>
+	<ul>
+					@if (@Model.UsersInProjects.Count != 0)
+					{
+						@foreach (UsersInProject userInProject in Model.UsersInProjects)
+						{
+							<li>
+								<a class="justify-content-between d-flex">
+									<h5>@userInProject.Role.Role</h5>
+									<span class="or">@userInProject.User.UserName</span>
+								</a>
+							</li>
+						}
+					}
+	 <li>
+	  <a class="justify-content-between d-flex" href="#go">
+	   <h5>Team Members</h5>
+	   <span>@Model.UsersInProjects.Count</span>
+	  </a>
+	 </li>
+	 <li>
+	  <a class="justify-content-between d-flex">
+	   <h5>Technologies & Tools</h5>
+	   @{
+		   string tools = string.Empty;
+		   if(Model.Tools.Count != 0){
+			   foreach(ProjectTool tool in Model.Tools){
+				   tools = string.Concat(tools, tool.ToolUsed, "-");
+			   }
+		   }
+	   }
+	   <span style="margin-left: 20px">@tools</span>
+	  </a>
+	 </li>
+	</ul>
+   </div>
+  </div>
+ </div>
+</section>
+<!-- End course-details Area -->
+<!-- Start Featured Work -->
+<div id="go" class="featured-work text-center">
+ <div class="container">
+  <h2>TEAM</h2>
+		@* <ul class="list-unstyled row">
+			<li data-class="ALL" class="active col-md">ALL </li>
+			<li data-class=".HEAD" class="col-md">LEADER</li>
+			<li data-class=".VICE" class="col-md">VICE HEAD</li>
+			<li data-class=".MEMBERS" class="col-md">MEMBERS</li>
+			</ul> *@
+ </div>
+ <div class="lol">
+  <div class="row shuffle-images">
+   <div class="col-md">
+	<img class="HEAD" src="~/img/committee/h_it.jpg" alt="" />
+   </div>
+   <div class="col-md">
+	<img class="VICE" src="~/img/committee/v_it.jpg" alt="" />
+   </div>
+   <div class="col-md">
+	<img class="MEMBERS" src="~/img/committee/m1_it.jpg" alt="" />
+   </div>
+   <div class="col-md">
+	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
+   </div>
+  </div>
+  <div class="row shuffle-images">
+   <div class="col-md">
+	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
+   </div>
+   <div class="col-md">
+	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
+   </div>
+   <div class="col-md">
+	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
+   </div>
+   <div class="col-md">
+	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
+   </div>
+  </div>
+  <div class="row shuffle-images">
+   <div class="col-md">
+	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
+   </div>
+   <div class="col-md">
+	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
+   </div>
+   <div class="col-md">
+	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
+   </div>
+   <div class="col-md">
+	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- End Featured Work -->
+
+
+<!-- Start  -->
+<section class="popular-courses-area section-gap courses-page">
+ <div class="container">
+  <div class="row">
+   <a asp-controller="projects" asp-action="index" class="primary-btn text-uppercase mx-auto">View other
+	projects</a>
+  </div>
+ </div>
+</section>
+<!-- End  -->

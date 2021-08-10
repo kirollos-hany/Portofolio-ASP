@@ -30,6 +30,8 @@ namespace Portofolio.Database
 
         public virtual DbSet<Service> Services { get; set; }
 
+        public virtual DbSet<ProjectTool> ProjectTools {get; set;}
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasCharSet("utf8mb4")
@@ -124,9 +126,9 @@ namespace Portofolio.Database
             });
 
             OnModelCreatingPartial(modelBuilder);
-
             modelBuilder.Seed();
             modelBuilder.SeedServices();
+            modelBuilder.SeedProjectTools();
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
