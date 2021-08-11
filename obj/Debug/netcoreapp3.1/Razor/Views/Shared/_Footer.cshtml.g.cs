@@ -26,8 +26,15 @@ using Portofolio.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "E:\Personal\Portofolio\Views\_ViewImports.cshtml"
+using Portofolio.ViewModels;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"28f5c4d11d34319e61aa2bf9875668065c363cc6", @"/Views/Shared/_Footer.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"17311d3f9474b066bdc5834d19b73b0312990047", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"c0428c88c9816ab1d965d55f046341a348e65da0", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared__Footer : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-controller", "home", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -77,7 +84,7 @@ using Portofolio.Models;
                         <li>
                             <span class=""arrow-right"" style=""color: #0072ae""><i class=""fa fa-angle-right""
                                     aria-hidden=""true""></i></span>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "28f5c4d11d34319e61aa2bf9875668065c363cc65780", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "28f5c4d11d34319e61aa2bf9875668065c363cc65939", async() => {
                 WriteLiteral("Learn more\r\n                                about\r\n                                IEEE");
             }
             );
@@ -145,7 +152,7 @@ using Portofolio.Models;
             BeginWriteAttribute("class", " class=\"", 3037, "\"", 3045, 0);
             EndWriteAttribute();
             WriteLiteral(" id=\"mc_embed_signup\">\r\n                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "28f5c4d11d34319e61aa2bf9875668065c363cc69625", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "28f5c4d11d34319e61aa2bf9875668065c363cc69784", async() => {
                 WriteLiteral(@"
                             <div class=""input-group"">
                                 <input type=""text"" class=""form-control"" name=""EMAIL"" placeholder=""Enter Email Address""

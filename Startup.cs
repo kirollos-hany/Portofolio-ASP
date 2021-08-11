@@ -38,6 +38,7 @@ namespace Portofolio
             services.AddScoped(typeof(BaseRepository<Service>), typeof(ServicesRepository));
             services.AddScoped(typeof(BaseRepository<Project>), typeof(ProjectsRepository));
             services.AddScoped(typeof(IImageService), typeof(ImageServices));
+            services.AddScoped(typeof(BaseRepository<RequestedService>), typeof(RequestedServicesRepository));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

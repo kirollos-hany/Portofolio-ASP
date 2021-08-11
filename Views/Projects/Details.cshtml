@@ -1,6 +1,10 @@
 @{
 	ViewData["Title"] = "Details";
-	Layout = "_Layout";
+	ViewData["BannerTitle"] = "Project Details";
+	ViewData["BannerNavTitle"] = ViewData["BannerTitle"];
+	ViewData["BannerNavRouteValue"] = Model.Id;
+	ViewData["BannerNavAction"] = "details";
+	ViewData["BannerNavController"] = "projects";
 }
 @model Project
 

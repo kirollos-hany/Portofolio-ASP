@@ -3,28 +3,39 @@ using Microsoft.AspNetCore.Mvc;
 using Portofolio.Models;
 using Portofolio.AppModels.Repositories;
 using System.Diagnostics;
+using Portofolio.ViewModels;
 namespace Portofolio.Controllers
 {
     public class ContactController : Controller
     {
-        private readonly BaseRepository<Contact> repository;
-        public ContactController(BaseRepository<Contact> repository)
+        private readonly BaseRepository<Contact> contactRepository;
+        private readonly BaseRepository<Service> serviceRepository;
+
+        private readonly BaseRepository<RequestedService> requestedServicesRepository;
+        public ContactController(BaseRepository<Contact> contactRepository, BaseRepository<Service> serviceRepository, BaseRepository<RequestedService> requestedServicesRepository)
         {
-            this.repository = repository;
+            this.contactRepository = contactRepository;
+            this.serviceRepository = serviceRepository;
+            this.requestedServicesRepository = requestedServicesRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var viewModel = new ContactWithServicesViewModel
+            {
+                Services = await serviceRepository.GetAll(),
+            };
+            return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> SubmitContact(Contact contactData)
+        public async Task<IActionResult> SubmitContact(ContactWithServicesViewModel contactData)
         {
             if (!ModelState.IsValid)
             {
-                return View("contact/index", contactData);
+                return RedirectToAction(controllerName: "Contact", actionName: "Index");
             }
-            await repository.Create(contactData);
+            Contact savedContact = await contactRepository.Create(contactData.Contact);
+            await requestedServicesRepository.CreateFromIds(contactData.RequestedServicesIds, savedContact.Id);
             return RedirectToAction(controllerName: "Contact", actionName: "Index");
         }
 

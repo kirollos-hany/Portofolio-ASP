@@ -34,6 +34,9 @@
     @{
         await Html.RenderPartialAsync("_Header");
     }
+    @{
+        await Html.RenderPartialAsync("_Banner");
+    }
     @RenderBody()
     @{
         await Html.RenderPartialAsync("_Footer");

@@ -14432,6 +14432,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Shared\\_Banner.cshtml",
+      "TargetPath": "Views\\Shared\\_Banner.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\_ViewStart.cshtml",
       "TargetPath": "Views\\_ViewStart.cshtml",
       "FileKind": "mvc"

@@ -26,8 +26,15 @@ using Portofolio.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "E:\Personal\Portofolio\Views\_ViewImports.cshtml"
+using Portofolio.ViewModels;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7633b97a1fbf40cd14196a7dc3e75c450a3a6de3", @"/Views/Shared/_Header.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"17311d3f9474b066bdc5834d19b73b0312990047", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"c0428c88c9816ab1d965d55f046341a348e65da0", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared__Header : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("src", new global::Microsoft.AspNetCore.Html.HtmlString("~/img/logo2.png"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -104,8 +111,8 @@ using Portofolio.Models;
         <div class=""row align-items-center justify-content-between d-flex"">
             <div id=""logo"">
                 ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de38845", async() => {
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de39061", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de39004", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de39220", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -137,7 +144,7 @@ using Portofolio.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n            </div>\r\n            <nav id=\"nav-menu-container\">\r\n                <ul class=\"nav-menu\">\r\n                    <li>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de311609", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de311768", async() => {
                 WriteLiteral("Home");
             }
             );
@@ -155,7 +162,7 @@ using Portofolio.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("</li>\r\n                    <li>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de312998", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de313157", async() => {
                 WriteLiteral("Projects");
             }
             );
@@ -173,7 +180,7 @@ using Portofolio.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("</li>\r\n                    <li>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de314391", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de314550", async() => {
                 WriteLiteral("Services");
             }
             );
@@ -191,7 +198,7 @@ using Portofolio.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("</li>\r\n                    <li>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de315784", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de315943", async() => {
                 WriteLiteral("Gallery");
             }
             );
@@ -212,7 +219,7 @@ using Portofolio.Models;
             BeginWriteAttribute("href", " href=\"", 2446, "\"", 2453, 0);
             EndWriteAttribute();
             WriteLiteral(">Blog</a>\r\n                        <ul>\r\n                            <li>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de317423", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de317582", async() => {
                 WriteLiteral("Blog Home");
             }
             );
@@ -230,7 +237,7 @@ using Portofolio.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("</li>\r\n                            <li>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de318825", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de318984", async() => {
                 WriteLiteral("Blog Single");
             }
             );
@@ -248,7 +255,7 @@ using Portofolio.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("</li>\r\n                        </ul>\r\n                    </li>\r\n                    <li>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de320285", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7633b97a1fbf40cd14196a7dc3e75c450a3a6de320444", async() => {
                 WriteLiteral("Contact");
             }
             );

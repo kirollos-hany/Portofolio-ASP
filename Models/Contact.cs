@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
-
+using System.Collections.Generic;
 #nullable disable
 
 namespace Portofolio.Models
@@ -36,5 +36,8 @@ namespace Portofolio.Models
         [ForeignKey(nameof(StatusId))]
         [InverseProperty(nameof(ContactStatus.Contacts))]
         public virtual ContactStatus Status { get; set; }
+
+        [InverseProperty(nameof(RequestedService.AssociatedContact))]
+        public virtual ICollection<RequestedService> RequestedServices { get; set; }
     }
 }

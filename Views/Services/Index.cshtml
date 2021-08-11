@@ -1,25 +1,11 @@
 @{
     ViewData["Title"] = "Services";
+    ViewData["BannerNavTitle"] = ViewData["Title"];
+    ViewData["BannerNavAction"] = "index";
+    ViewData["BannerNavController"] = "services";
+    ViewData["BannerTitle"] = ViewData["Title"];
 }
 @model List<Service>
-<!-- start banner Area -->
-<section class="banner-area relative about-banner" id="home">
-    <div class="overlay overlay-bg"></div>
-    <div class="container">
-        <div class="row d-flex align-items-center justify-content-center">
-            <div class="about-content col-lg-12">
-                <h1 class="text-white">
-
-                </h1>
-                <p class="text-white link-nav"><a asp-controller="home" asp-action="index">Home </a> <span
-                        class="lnr lnr-arrow-right"></span>
-                    <a asp-controller="home" asp-action="services">@ViewData["Title"]</a>
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- End banner Area -->
 <!-- Start events-list Area -->
 <section class="events-list-area section-gap event-page-lists" style="padding: 60px 0;">
     @if (Model.Count != 0)

@@ -22,5 +22,9 @@ namespace Portofolio.Models
 
         [Required]
         public string ServiceImage { get; set; }
+
+        [InverseProperty(nameof(RequestedService.AssociatedService))]
+        public virtual ICollection<RequestedService> Requests { get; set; }
+
     }
 }

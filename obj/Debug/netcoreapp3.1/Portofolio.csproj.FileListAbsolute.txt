@@ -49,6 +49,7 @@ E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Projects\Details.csht
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Projects\Index.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Services\Index.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Banner.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Footer.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Header.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs

@@ -32,6 +32,8 @@ namespace Portofolio.Database
 
         public virtual DbSet<ProjectTool> ProjectTools {get; set;}
 
+        public virtual DbSet<RequestedService> RequestedServices {get; set;}
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasCharSet("utf8mb4")

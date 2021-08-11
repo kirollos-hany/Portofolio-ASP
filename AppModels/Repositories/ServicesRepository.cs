@@ -41,22 +41,22 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<Service> FindByCondition(Expression<Func<Service, bool>> expression)
         {
-            return await dbContext.Services.Where(expression).FirstOrDefaultAsync();
+            return await dbContext.Services.Include(service => service.Requests).Where(expression).FirstOrDefaultAsync();
         }
 
         public async override Task<List<Service>> FindCollectionByCondition(Expression<Func<Service, bool>> expression)
         {
-            return await dbContext.Services.Where(expression).ToListAsync();
+            return await dbContext.Services.Include(service => service.Requests).Where(expression).ToListAsync();
         }
 
         public async override Task<List<Service>> GetAll()
         {
-            return await dbContext.Services.ToListAsync();
+            return await dbContext.Services.Include(service => service.Requests).ToListAsync();
         }
 
         public async override Task<Service> GetById(int id)
         {
-            return await dbContext.Services.FindAsync(id);
+            return await dbContext.Services.Include(service => service.Requests).FirstOrDefaultAsync(service => service.Id == id);
         }
 
     }
