@@ -4,6 +4,7 @@ using Portofolio.Models;
 using Portofolio.AppModels.Repositories;
 using System.Diagnostics;
 using Portofolio.ViewModels;
+using Portofolio.AppModels.Services;
 namespace Portofolio.Controllers
 {
     public class ContactController : Controller
@@ -11,12 +12,18 @@ namespace Portofolio.Controllers
         private readonly BaseRepository<Contact> contactRepository;
         private readonly BaseRepository<Service> serviceRepository;
 
+        private readonly IMailService mailService;
+
         private readonly BaseRepository<RequestedService> requestedServicesRepository;
-        public ContactController(BaseRepository<Contact> contactRepository, BaseRepository<Service> serviceRepository, BaseRepository<RequestedService> requestedServicesRepository)
+
+        private readonly IEmailParserFromModel<Contact> contactEmailParser;
+        public ContactController(BaseRepository<Contact> contactRepository, IEmailParserFromModel<Contact> contactEmailParser, BaseRepository<Service> serviceRepository, BaseRepository<RequestedService> requestedServicesRepository, IMailService mailService)
         {
+            this.mailService = mailService;
             this.contactRepository = contactRepository;
             this.serviceRepository = serviceRepository;
             this.requestedServicesRepository = requestedServicesRepository;
+            this.contactEmailParser = contactEmailParser;
         }
         public async Task<IActionResult> Index()
         {
@@ -36,6 +43,8 @@ namespace Portofolio.Controllers
             }
             Contact savedContact = await contactRepository.Create(contactData.Contact);
             await requestedServicesRepository.CreateFromIds(contactData.RequestedServicesIds, savedContact.Id);
+            var mailRequest = contactEmailParser.Parse(await contactRepository.GetById(savedContact.Id));
+            await mailService.SendEmailAsync(mailRequest);
             return RedirectToAction(controllerName: "Contact", actionName: "Index");
         }
 

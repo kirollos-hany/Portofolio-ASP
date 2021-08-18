@@ -46,22 +46,22 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<Contact> FindByCondition(Expression<Func<Contact, bool>> expression)
         {
-            return await dbContext.Contacts.Include(Contact => Contact.Status).FirstOrDefaultAsync(expression);
+            return await dbContext.Contacts.Include(Contact => Contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).FirstOrDefaultAsync(expression);
         }
 
         public async override Task<List<Contact>> FindCollectionByCondition(Expression<Func<Contact, bool>> expression)
         {
-            return await Task.Run(() => dbContext.Contacts.Include(contact => contact.Status).Where(expression).ToList());
+            return await Task.Run(() => dbContext.Contacts.Include(contact => contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).Where(expression).ToList());
         }
 
         public async override Task<List<Contact>> GetAll()
         {
-            return await Task.Run(() => dbContext.Contacts.Include(contact => contact.Status).ToList<Contact>());
+            return await Task.Run(() => dbContext.Contacts.Include(contact => contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).ToList<Contact>());
         }
 
         public async override Task<Contact> GetById(int id)
         {
-            return await dbContext.Contacts.Include(contact => contact.Status).FirstOrDefaultAsync(contact => contact.Id == id);
+            return await dbContext.Contacts.Include(contact => contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).FirstOrDefaultAsync(contact => contact.Id == id);
         }
 
     }

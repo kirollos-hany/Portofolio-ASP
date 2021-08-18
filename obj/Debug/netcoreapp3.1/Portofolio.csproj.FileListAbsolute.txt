@@ -11,6 +11,7 @@ E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Portofolio.Views.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Portofolio.Views.pdb
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Faker.Net.Core.3.1.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Humanizer.dll
+E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\MailKit.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
@@ -24,8 +25,10 @@ E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\MimeKit.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\MySqlConnector.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Pomelo.EntityFrameworkCore.MySql.dll
+E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\System.ComponentModel.Annotations.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll

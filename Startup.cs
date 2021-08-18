@@ -39,6 +39,9 @@ namespace Portofolio
             services.AddScoped(typeof(BaseRepository<Project>), typeof(ProjectsRepository));
             services.AddScoped(typeof(IImageService), typeof(ImageServices));
             services.AddScoped(typeof(BaseRepository<RequestedService>), typeof(RequestedServicesRepository));
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.AddTransient(typeof(IMailService), typeof(MailService));
+            services.AddTransient(typeof(IEmailParserFromModel<Contact>), typeof(ContactEmailParser));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
