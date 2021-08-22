@@ -24,6 +24,7 @@ namespace Portofolio.Models
         public string Phone { get; set; }
         [Required]
         [StringLength(320)]
+        [EmailAddress]
         public string Email { get; set; }
         [Required]
         [Column(TypeName = "text")]

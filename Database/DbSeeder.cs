@@ -250,8 +250,8 @@ namespace Portofolio.Database
                     UserName = Faker.Name.FullName(),
                     Email = Faker.Internet.Email(),
                     ImagePath = Faker.Lorem.Paragraph(1),
-                    Phone = "+201206784139",
-                    Password = Faker.Identification.SocialSecurityNumber(),
+                    PhoneNumber = "+201206784139",
+                    PasswordHash = Faker.Identification.SocialSecurityNumber(),
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now
                 };
@@ -281,7 +281,7 @@ namespace Portofolio.Database
 
         private static void SeedUserRoles(ModelBuilder modelBuilder)
         {
-            UserRole backEnd = new UserRole
+            UserRoleInProject backEnd = new UserRoleInProject
             {
                 Id = 1,
                 Role = "Back End Developer",
@@ -289,7 +289,7 @@ namespace Portofolio.Database
                 UpdatedAt = DateTime.Now
             };
 
-            UserRole frontEnd = new UserRole
+            UserRoleInProject frontEnd = new UserRoleInProject
             {
                 Id = 2,
                 Role = "Front End Developer",
@@ -297,7 +297,7 @@ namespace Portofolio.Database
                 UpdatedAt = DateTime.Now
             };
 
-            UserRole teamLeader = new UserRole
+            UserRoleInProject teamLeader = new UserRoleInProject
             {
                 Id = 3,
                 Role = "Team Leader",
@@ -305,7 +305,7 @@ namespace Portofolio.Database
                 UpdatedAt = DateTime.Now
             };
 
-            UserRole mobile = new UserRole
+            UserRoleInProject mobile = new UserRoleInProject
             {
                 Id = 4,
                 Role = "Mobile Developer",
@@ -313,7 +313,7 @@ namespace Portofolio.Database
                 UpdatedAt = DateTime.Now
             };
 
-            modelBuilder.Entity<UserRole>().HasData(backEnd, frontEnd, mobile, teamLeader);
+            modelBuilder.Entity<UserRoleInProject>().HasData(backEnd, frontEnd, mobile, teamLeader);
         }
 
         private static void SeedUsersInProject(ModelBuilder modelBuilder)

@@ -1,6 +1,5 @@
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\appsettings.Development.json
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\appsettings.json
-E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Portofolio.exe
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Portofolio.deps.json
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Portofolio.runtimeconfig.json
@@ -33,7 +32,6 @@ E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\System.ComponentModel.Annotations.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\de-DE\Faker.Net.Core.3.1.resources.dll
-E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.csprojAssemblyReference.cache
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.AssemblyInfoInputs.cache
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.AssemblyInfo.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.csproj.CoreCompileInputs.cache
@@ -68,3 +66,14 @@ E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\staticwebassets\Portofolio.Static
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.dll
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.pdb
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.genruntimeconfig.cache
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Login.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_DashboardLayout.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.csproj.AssemblyReference.cache
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.GeneratedMSBuildEditorConfig.editorconfig
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\scopedcss\bundle\Portofolio.styles.css
+E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Portofolio.StaticWebAssets.xml
+E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
+E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Core.dll
+E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Identity.Stores.dll

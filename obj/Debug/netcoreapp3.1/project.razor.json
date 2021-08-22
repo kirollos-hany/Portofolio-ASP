@@ -14457,6 +14457,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Shared\\_DashboardLayout.cshtml",
+      "TargetPath": "Views\\Shared\\_DashboardLayout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Home\\BlogSingle.cshtml",
       "TargetPath": "Views\\Home\\BlogSingle.cshtml",
       "FileKind": "mvc"
@@ -14474,6 +14479,11 @@
     {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Shared\\_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\Login.cshtml",
+      "TargetPath": "Views\\Dashboard\\Login.cshtml",
       "FileKind": "mvc"
     },
     {

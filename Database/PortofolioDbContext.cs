@@ -2,11 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Portofolio.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 #nullable disable
 
 namespace Portofolio.Database
 {
-    public partial class PortofolioDbContext : DbContext
+    public partial class PortofolioDbContext : IdentityDbContext<User, UserRole, int>
     {
         public PortofolioDbContext(DbContextOptions<PortofolioDbContext> options)
             : base(options)
@@ -23,16 +24,14 @@ namespace Portofolio.Database
         public virtual DbSet<ProjectImage> ProjectImages { get; set; }
         public virtual DbSet<ProjectLink> ProjectLinks { get; set; }
         public virtual DbSet<ProjectType> ProjectTypes { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserLink> UserLinks { get; set; }
-        public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<UserRoleInProject> UserProjectRoles { get; set; }
         public virtual DbSet<UsersInProject> UsersInProjects { get; set; }
-
         public virtual DbSet<Service> Services { get; set; }
 
-        public virtual DbSet<ProjectTool> ProjectTools {get; set;}
+        public virtual DbSet<ProjectTool> ProjectTools { get; set; }
 
-        public virtual DbSet<RequestedService> RequestedServices {get; set;}
+        public virtual DbSet<RequestedService> RequestedServices { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -126,7 +125,7 @@ namespace Portofolio.Database
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("usersinprojects_ibfk_1");
             });
-
+            base.OnModelCreating(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
             modelBuilder.Seed();
             modelBuilder.SeedServices();

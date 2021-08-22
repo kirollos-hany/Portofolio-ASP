@@ -25,8 +25,8 @@ namespace Portofolio.Models
         [InverseProperty("UsersInProjects")]
         public virtual Project Project { get; set; }
         [ForeignKey(nameof(RoleId))]
-        [InverseProperty(nameof(UserRole.UsersInProjects))]
-        public virtual UserRole Role { get; set; }
+        [InverseProperty(nameof(UserRoleInProject.UsersInProjects))]
+        public virtual UserRoleInProject Role { get; set; }
         [ForeignKey(nameof(UserId))]
         [InverseProperty("UsersInProjects")]
         public virtual User User { get; set; }
