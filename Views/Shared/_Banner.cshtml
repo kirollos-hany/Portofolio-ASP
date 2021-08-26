@@ -1,21 +1,19 @@
-
 <section class="banner-area relative about-banner" id="home">
     <div class="overlay overlay-bg"></div>
     <div class="container">
         <div class="row d-flex align-items-center justify-content-center">
             <div class="about-content col-lg-12">
                 <h1 class="text-white">
-                    @ViewData["BannerTitle"]
+                    @ViewData[BannerTitleKey]
                 </h1>
                 <p class="text-white link-nav"><a asp-action="index" asp-controller="home">Home </a> <span
                         class="lnr lnr-arrow-right"></span>
-                        @if (ViewData["BannerNavRouteValue"] != null)
+                        @if (ViewData[BannerNavRouteValueKey] != null)
                         {
-                            <a asp-action=@ViewData["BannerNavAction"] asp-controller=@ViewData["BannerNavController"] asp-route-id=@ViewData["BannerNavRouteValue"]> @ViewData["BannerNavTitle"]</a>
+                            <a asp-action=@ViewData[BannerNavActionKey] asp-controller=@ViewData[BannerNavControllerKey] asp-route-id=@ViewData[BannerNavRouteValueKey]> @ViewData[BannerNavTitleKey]</a>
                         }else{
-                            <a asp-action=@ViewData["BannerNavAction"] asp-controller=@ViewData["BannerNavController"]> @ViewData["BannerNavTitle"]</a>
+                            <a asp-action=@ViewData[BannerNavActionKey] asp-controller=@ViewData[BannerNavControllerKey]> @ViewData[BannerNavTitleKey]</a>
                         }
-                    
                 </p>
             </div>
         </div>

@@ -253,7 +253,8 @@ namespace Portofolio.Database
                     PhoneNumber = "+201206784139",
                     PasswordHash = Faker.Identification.SocialSecurityNumber(),
                     CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
+                    UpdatedAt = DateTime.Now,
+                    Specialization = "Backend Developer"
                 };
                 users[i] = user;
             }

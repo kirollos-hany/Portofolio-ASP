@@ -14417,8 +14417,18 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\User\\NewPasswordForm.cshtml",
+      "TargetPath": "Views\\User\\NewPasswordForm.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Projects\\Details.cshtml",
       "TargetPath": "Views\\Projects\\Details.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\User\\Create.cshtml",
+      "TargetPath": "Views\\User\\Create.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -14437,8 +14447,23 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\ProjectDetails.cshtml",
+      "TargetPath": "Views\\Dashboard\\ProjectDetails.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\_ViewStart.cshtml",
       "TargetPath": "Views\\_ViewStart.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\User\\ResetPassword.cshtml",
+      "TargetPath": "Views\\User\\ResetPassword.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\User\\PasswordChange.cshtml",
+      "TargetPath": "Views\\User\\PasswordChange.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -14447,8 +14472,18 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\User\\ForgotPassword.cshtml",
+      "TargetPath": "Views\\User\\ForgotPassword.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Shared\\Error.cshtml",
       "TargetPath": "Views\\Shared\\Error.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\User\\Login.cshtml",
+      "TargetPath": "Views\\User\\Login.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -14472,6 +14507,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\User\\Profile.cshtml",
+      "TargetPath": "Views\\User\\Profile.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "FileKind": "mvc"
@@ -14482,13 +14522,13 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\Login.cshtml",
-      "TargetPath": "Views\\Dashboard\\Login.cshtml",
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Shared\\_Header.cshtml",
+      "TargetPath": "Views\\Shared\\_Header.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "e:\\Personal\\Portofolio\\Views\\Shared\\_Header.cshtml",
-      "TargetPath": "Views\\Shared\\_Header.cshtml",
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\Index.cshtml",
+      "TargetPath": "Views\\Dashboard\\Index.cshtml",
       "FileKind": "mvc"
     }
   ],

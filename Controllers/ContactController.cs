@@ -5,6 +5,9 @@ using Portofolio.AppModels.Repositories;
 using System.Diagnostics;
 using Portofolio.ViewModels;
 using Portofolio.AppModels.Services;
+using Json.Net;
+using static Portofolio.AppModels.Utils.KeyConstants;
+using Portofolio.AppModels.Extensions;
 namespace Portofolio.Controllers
 {
     public class ContactController : Controller
@@ -35,16 +38,27 @@ namespace Portofolio.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitContact(ContactWithServicesViewModel contactData)
         {
             if (!ModelState.IsValid)
             {
+                TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
+                {
+                    Message = ModelState.GetErrors(),
+                    CssClass = ResultMsgViewModel.CssClassFailed
+                });
                 return RedirectToAction(controllerName: "Contact", actionName: "Index");
             }
             Contact savedContact = await contactRepository.Create(contactData.Contact);
             await requestedServicesRepository.CreateFromIds(contactData.RequestedServicesIds, savedContact.Id);
             var mailRequest = contactEmailParser.Parse(await contactRepository.GetById(savedContact.Id));
             await mailService.SendEmailAsync(mailRequest);
+            TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
+            {
+                Message = "Contact received successfuly, we will contact you asap!",
+                CssClass = ResultMsgViewModel.CssClassSuccess
+            });
             return RedirectToAction(controllerName: "Contact", actionName: "Index");
         }
 

@@ -12,7 +12,23 @@ namespace Portofolio.Models
         {
             UserLinks = new HashSet<UserLink>();
             UsersInProjects = new HashSet<UsersInProject>();
+            PhoneNumber = "Not Assigned";
+            Specialization = "Not Assigned";
+            ImagePath = "~/img/avatar.png";
         }
+
+        [Required(ErrorMessage = "Username is required")]
+        public override string UserName {get; set;}
+        [Required]
+        [EmailAddress]
+        public override string Email {get; set;}
+
+        [Phone(ErrorMessage = "Phone number format is invalid, correct format +xx xxxxxxxxxx")]
+        [DataType(DataType.PhoneNumber, ErrorMessage = "Phone number format is invalid, correct format +xx xxxxxxxxxx")]
+        public override string PhoneNumber {get; set;}
+
+        [StringLength(maximumLength: 255)]
+        public string Specialization {get; set;}
 
         [Required]
         public string ImagePath { get; set; }

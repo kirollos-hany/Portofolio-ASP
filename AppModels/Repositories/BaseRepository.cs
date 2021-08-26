@@ -21,9 +21,9 @@ namespace Portofolio.AppModels.Repositories
 
         public abstract Task<T> FindByCondition(Expression<Func<T, bool>> expression);
 
-        public abstract Task<List<T>> FindCollectionByCondition(Expression<Func<T, bool>> expression);
+        public abstract Task<ICollection<T>> FindCollectionByCondition(Expression<Func<T, bool>> expression);
 
-        public abstract Task<List<T>> GetAll();
+        public abstract Task<ICollection<T>> GetAll();
 
         public abstract Task<T> GetById(int id);
 

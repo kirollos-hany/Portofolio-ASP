@@ -49,12 +49,12 @@ namespace Portofolio.AppModels.Repositories
             return await dbContext.Contacts.Include(Contact => Contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).FirstOrDefaultAsync(expression);
         }
 
-        public async override Task<List<Contact>> FindCollectionByCondition(Expression<Func<Contact, bool>> expression)
+        public async override Task<ICollection<Contact>> FindCollectionByCondition(Expression<Func<Contact, bool>> expression)
         {
             return await Task.Run(() => dbContext.Contacts.Include(contact => contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).Where(expression).ToList());
         }
 
-        public async override Task<List<Contact>> GetAll()
+        public async override Task<ICollection<Contact>> GetAll()
         {
             return await Task.Run(() => dbContext.Contacts.Include(contact => contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).ToList<Contact>());
         }

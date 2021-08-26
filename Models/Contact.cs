@@ -21,6 +21,8 @@ namespace Portofolio.Models
         public string ContactName { get; set; }
         [Required]
         [StringLength(15)]
+        [Phone]
+        [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
         [Required]
         [StringLength(320)]

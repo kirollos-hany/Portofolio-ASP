@@ -6,7 +6,7 @@ namespace Portofolio.AppModels.Repositories
 {
     interface IRepository<T> where T : class
     {
-        Task<List<T>> GetAll();
+        Task<ICollection<T>> GetAll();
 
         Task<T> GetById(int id);
 
@@ -16,7 +16,7 @@ namespace Portofolio.AppModels.Repositories
 
         Task<T> Delete(T entity);
 
-        Task<List<T>> FindCollectionByCondition(Expression<Func<T, bool>> expression);
+        Task<ICollection<T>> FindCollectionByCondition(Expression<Func<T, bool>> expression);
 
         Task<T> FindByCondition(Expression<Func<T, bool>> expression);
     }

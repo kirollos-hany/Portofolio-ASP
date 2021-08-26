@@ -1,0 +1,33 @@
+@{
+	Layout = "_DashboardLayout";
+}
+@model ProjectsDashboardViewModel
+<!-- Start View All Projects -->
+<section class="popular-courses-area section-gap courses-page">
+    <div class="container">
+        <div class="row">
+            @if (Model.Projects.Count != 0)
+            {
+                @foreach (Project project in Model.Projects)
+                {
+                    <div class="single-popular-carusel col-lg-3 col-md-6">
+                        <div class="thumb-wrap relative">
+                            <div class="thumb relative">
+                                <div class="overlay overlay-bg"></div>
+                                <img class="img-fluid" src="~/img/committee/mm.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="details">
+                            <a asp-controller="dashboard" asp-action="projectdetails" asp-route-id=@project.Id>
+                                <h4>
+                                    @project.Title
+                                </h4>
+                            </a>
+                            <p>@project.Description</p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+</section>
+<!-- End View All Projects  -->

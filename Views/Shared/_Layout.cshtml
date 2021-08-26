@@ -14,7 +14,7 @@
     <meta name="keywords" content="" />
     <!-- meta character set -->
     <meta charset="UTF-8" />
-    <title>@ViewData["Title"] | Portofolio</title>
+    <title>@ViewData[TitleKey] | Portofolio</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet" />
@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="~/css/owl.carousel.css" />
     <link rel="stylesheet" href="~/css/jquery-ui.css" />
     <link rel="stylesheet" href="~/css/main.css" />
+    <link rel="stylesheet" href="~/css/customcss.css"/>
 </head>
 
 <body>
@@ -40,15 +41,13 @@
     @RenderBody()
     @{
         await Html.RenderPartialAsync("_Footer");
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
     <script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/js/vendor/jquery-2.2.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"

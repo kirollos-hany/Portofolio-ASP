@@ -7,5 +7,9 @@ namespace Portofolio.AppModels.Services
         void ValidateImgExtension(IFormFile file);
 
         Task<string> UploadImg(IFormFile file, string directoryName);
+
+        string GetImgExtension(string imagePath);
+
+        Task DeleteImg(string imagePath);
     }
 }

@@ -1,13 +1,11 @@
 @{
-    ViewData["Title"] = "Contact";
-    ViewData["BannerTitle"] = "Contact Us";
-    ViewData["BannerNavTitle"] = ViewData["BannerTitle"];
-    ViewData["BannerNavAction"] = "index";
-    ViewData["BannerNavController"] = "contact";
+    ViewData[TitleKey] = "Contact";
+    ViewData[BannerTitleKey] = "Contact Us";
+    ViewData[BannerNavTitleKey] = ViewData[BannerTitleKey];
+    ViewData[BannerNavActionKey] = "index";
+    ViewData[BannerNavControllerKey] = "contact";
 }
 @model ContactWithServicesViewModel
-
-
 <!-- Start contact-page Area -->
 <section class="contact-page-area section-gap">
     <div class="container">
@@ -44,8 +42,15 @@
                 </div>
             </div>
             <div class="col-lg-8">
-                <form class="form-area contact-form text-right" id="myForm" asp-controller="contact"
-                    asp-action="SubmitContact" enctype="multipart/form-data">
+            <form class="form-area contact-form text-right" id="myForm" asp-controller="contact"
+                    asp-action="SubmitContact" enctype="multipart/form-data" method="post">
+                @if(TempData[ResultMessageKey] != null)
+                {
+                ResultMsgViewModel resultVM = JsonNet.Deserialize<ResultMsgViewModel>(TempData[ResultMessageKey].ToString());
+                <div class="modal-header">
+                <div class="@resultVM.CssClass">@resultVM.Message</div>
+                </div>
+                }
                     <div class="row">
                         <div class="col-lg-6 form-group">
                             <input placeholder="Enter your name" onfocus="this.placeholder = ''"
@@ -80,7 +85,7 @@
                                     }
                                 }
                             </select>
-
+                            <span asp-validation-for="RequestedServicesIds"></span>
                         </div>
                         <div class="col-lg-12">
                             <div class="alert-msg" style="text-align: left;"></div>

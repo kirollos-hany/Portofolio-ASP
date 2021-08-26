@@ -5,12 +5,12 @@ namespace Portofolio.ViewModels
 {
     public class ContactWithServicesViewModel
     {
-        public List<Service> Services { get; set; }
+        public ICollection<Service> Services { get; set; }
 
         public Contact Contact { get; set; }
 
-        [Required]
-        public List<int> RequestedServicesIds{get; set;}
+        [Required(ErrorMessage = "Please select service(s) you require")]
+        public ICollection<int> RequestedServicesIds { get; set; }
 
     }
 }

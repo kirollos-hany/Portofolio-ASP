@@ -44,12 +44,12 @@ namespace Portofolio.AppModels.Repositories
             return await dbContext.Services.Include(service => service.Requests).Where(expression).FirstOrDefaultAsync();
         }
 
-        public async override Task<List<Service>> FindCollectionByCondition(Expression<Func<Service, bool>> expression)
+        public async override Task<ICollection<Service>> FindCollectionByCondition(Expression<Func<Service, bool>> expression)
         {
             return await dbContext.Services.Include(service => service.Requests).Where(expression).ToListAsync();
         }
 
-        public async override Task<List<Service>> GetAll()
+        public async override Task<ICollection<Service>> GetAll()
         {
             return await dbContext.Services.Include(service => service.Requests).ToListAsync();
         }

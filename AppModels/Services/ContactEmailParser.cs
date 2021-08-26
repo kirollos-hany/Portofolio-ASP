@@ -1,11 +1,13 @@
 using Portofolio.Models;
 using Microsoft.Extensions.Options;
+using System.Threading.Tasks;
 namespace Portofolio.AppModels.Services
 {
     public class ContactEmailParser : IEmailParserFromModel<Contact>
     {
         private readonly MailSettings mailSettings;
-        public ContactEmailParser(IOptions<MailSettings> mailSettings){
+        public ContactEmailParser(IOptions<MailSettings> mailSettings)
+        {
             this.mailSettings = mailSettings.Value;
         }
         public MailRequest Parse(Contact contact)

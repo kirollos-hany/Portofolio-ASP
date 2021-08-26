@@ -6,7 +6,7 @@ namespace Portofolio.AppModels.Repositories
 {
     public static class RequestedServiceRepoExtensions
     {
-        public async static Task CreateFromIds(this BaseRepository<RequestedService> repository, List<int> servicesIds, int contactId)
+        public async static Task CreateFromIds(this BaseRepository<RequestedService> repository, ICollection<int> servicesIds, int contactId)
         {
             foreach (int id in servicesIds)
             {

@@ -21,14 +21,23 @@ namespace Portofolio.AppModels.Services
             imageExtensions.Add(".bmp");
             rootPath = env.ContentRootPath;
         }
+
+        public string GetImgExtension(string imagePath)
+        {
+            FileInfo fi = new FileInfo(imagePath);
+            return fi.Extension.ToLower();
+        }
+
         public async Task<string> UploadImg(IFormFile file, string directoryPath)
         {
             FileInfo fileInfo = new FileInfo(file.FileName);
             string extension = fileInfo.Extension;
             string fileName = string.Concat(Guid.NewGuid().ToString(), extension);
             string fullPath = Path.Combine(rootPath, directoryPath, fileName);
-            FileStream fs = new FileStream(fullPath, FileMode.Create);
-            await file.CopyToAsync(fs);
+            using (FileStream fs = new FileStream(fullPath, FileMode.Create))
+            {
+                await file.CopyToAsync(fs);
+            }
             return Path.Combine(directoryPath, fileName);
         }
 
@@ -44,6 +53,11 @@ namespace Portofolio.AppModels.Services
                 }
                 throw new CustomException($"Image extension not supported.\nSupported extensions:\n{supportedExtensions}");
             }
+        }
+
+        public async Task DeleteImg(string imagePath)
+        {
+            await Task.Run(() => File.Delete(imagePath));
         }
     }
 }

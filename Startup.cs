@@ -8,6 +8,8 @@ using Portofolio.Models;
 using Microsoft.EntityFrameworkCore;
 using Portofolio.AppModels.Repositories;
 using Portofolio.AppModels.Services;
+using Microsoft.AspNetCore.Identity;
+using Portofolio.AppModels.Models;
 namespace Portofolio
 {
     public class Startup
@@ -39,9 +41,21 @@ namespace Portofolio
             services.AddScoped(typeof(BaseRepository<Project>), typeof(ProjectsRepository));
             services.AddScoped(typeof(IImageService), typeof(ImageServices));
             services.AddScoped(typeof(BaseRepository<RequestedService>), typeof(RequestedServicesRepository));
+            services.AddScoped(typeof(BaseRepository<UsersInProject>), typeof(UIPRepository));
+            services.AddScoped(typeof(BaseRepository<UserLink>), typeof(UserLinksRepository));
+            services.AddScoped(typeof(BaseRepository<LinkType>), typeof(LinkTypesRepository));
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
-            services.AddTransient(typeof(IMailService), typeof(MailService));
-            services.AddTransient(typeof(IEmailParserFromModel<Contact>), typeof(ContactEmailParser));
+            services.AddScoped(typeof(IMailService), typeof(MailService));
+            services.AddScoped(typeof(IEmailParserFromModel<Contact>), typeof(ContactEmailParser));
+            services.AddScoped(typeof(IEmailParserFromModelAsync<HTMLModel>), typeof(HTMLEmailParser));
+            services.AddIdentity<User, UserRole>().AddEntityFrameworkStores<PortofolioDbContext>().AddDefaultTokenProviders();
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.User.RequireUniqueEmail = false;
+                options.Password.RequireUppercase = false;
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +75,7 @@ namespace Portofolio
             app.UseStaticFiles();
 
             app.UseRouting();
+
 
             app.UseAuthentication();
 

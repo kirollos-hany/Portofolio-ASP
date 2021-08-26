@@ -57,7 +57,7 @@ namespace Portofolio.AppModels.Repositories
             .Where(expression).FirstOrDefaultAsync();
         }
 
-        public async override Task<List<Project>> FindCollectionByCondition(Expression<Func<Project, bool>> expression)
+        public async override Task<ICollection<Project>> FindCollectionByCondition(Expression<Func<Project, bool>> expression)
         {
             return await dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks).Include(project => project.ProjectImages)
@@ -68,7 +68,7 @@ namespace Portofolio.AppModels.Repositories
             .Where(expression).ToListAsync();
         }
 
-        public async override Task<List<Project>> GetAll()
+        public async override Task<ICollection<Project>> GetAll()
         {
             return await dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks).Include(project => project.ProjectImages)

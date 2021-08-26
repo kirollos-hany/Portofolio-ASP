@@ -44,12 +44,12 @@ namespace Portofolio.AppModels.Repositories
             return await dbContext.ContactStatuses.Include(cs => cs.Contacts).Where(expression).FirstOrDefaultAsync();
         }
 
-        public async override Task<List<ContactStatus>> FindCollectionByCondition(Expression<Func<ContactStatus, bool>> expression)
+        public async override Task<ICollection<ContactStatus>> FindCollectionByCondition(Expression<Func<ContactStatus, bool>> expression)
         {
             return await Task.Run(() => dbContext.ContactStatuses.Include(cs => cs.Contacts).Where(expression).ToList());
         }
 
-        public async override Task<List<ContactStatus>> GetAll()
+        public async override Task<ICollection<ContactStatus>> GetAll()
         {
             return await Task.Run(() => dbContext.ContactStatuses.Include(cs => cs.Contacts).ToList());
         }

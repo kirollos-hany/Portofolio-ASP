@@ -1,9 +1,9 @@
 @{
-    ViewData["Title"] = "Projects";
-    ViewData["BannerNavAction"] = "index";
-    ViewData["BannerNavController"] = "projects";
-    ViewData["BannerNavTitle"] = ViewData["Title"];
-    ViewData["BannerTitle"] = ViewData["Title"];
+    ViewData[TitleKey] = "Projects";
+    ViewData[BannerNavActionKey] = "index";
+    ViewData[BannerNavControllerKey] = "projects";
+    ViewData[BannerNavTitleKey] = ViewData[TitleKey];
+    ViewData[BannerTitleKey] = ViewData[TitleKey];
 }
 @model List<Project>
 <!-- Start popular-courses Area -->
@@ -12,7 +12,7 @@
         <div class="row d-flex justify-content-center">
             <div class="menu-content pb-70 col-lg-8">
                 <div class="title text-center">
-                    <h1 class="mb-10">Our @ViewData["Title"]</h1>
+                    <h1 class="mb-10">Our @ViewData[TitleKey]</h1>
                 </div>
             </div>
         </div>

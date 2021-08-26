@@ -1,32 +1,12 @@
 @{
-	ViewData["Title"] = "Details";
-	ViewData["BannerTitle"] = "Project Details";
-	ViewData["BannerNavTitle"] = ViewData["BannerTitle"];
-	ViewData["BannerNavRouteValue"] = Model.Id;
-	ViewData["BannerNavAction"] = "details";
-	ViewData["BannerNavController"] = "projects";
+	ViewData[TitleKey] = "Details";
+	ViewData[BannerTitleKey] = "Project Details";
+	ViewData[BannerNavTitleKey] = ViewData[BannerTitleKey];
+	ViewData[BannerNavRouteValueKey] = Model.Id;
+	ViewData[BannerNavActionKey] = "details";
+	ViewData[BannerNavControllerKey] = "projects";
 }
 @model Project
-
-<!-- start banner Area -->
-<section class="banner-area relative about-banner" id="home">
- <div class="overlay overlay-bg"></div>
- <div class="container">
-  <div class="row d-flex align-items-center justify-content-center">
-   <div class="about-content col-lg-12">
-	<h1 class="text-white">
-	 Project @ViewData["Title"]
-	</h1>
-	<p class="text-white link-nav"><a asp-controller="home" asp-action="index">Home </a> <span
-						class="lnr lnr-arrow-right"></span>
-	 <a asp-action="details" asp-controller="projects" asp-route-id=@Model.Id> Project @ViewData["Title"]
-	 </a>
-	</p>
-   </div>
-  </div>
- </div>
-</section>
-<!-- End banner Area -->
 
 <!-- Start course-details Area -->
 <section class="course-details-area pt-120">

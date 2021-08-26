@@ -13,12 +13,16 @@ namespace Portofolio.Models
     [Index(nameof(UserId), Name = "UserId")]
     public partial class UserLink
     {
+        public UserLink()
+        {
+            Link = "Not Assigned";
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int UserId { get; set; }
         public int TypeId { get; set; }
-        [Required]
+        
         [Column(TypeName = "text")]
         public string Link { get; set; }
         [Column(TypeName = "datetime")]

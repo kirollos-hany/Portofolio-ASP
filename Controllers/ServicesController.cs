@@ -16,7 +16,7 @@ namespace Portofolio.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            List<Service> services = await repository.GetAll();
+            ICollection<Service> services = await repository.GetAll();
             return View(services);
         }
 
