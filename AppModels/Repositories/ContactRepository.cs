@@ -21,6 +21,7 @@ namespace Portofolio.AppModels.Repositories
         {
             ContactStatus cs = await contactStatusRepository.FindByCondition(cs => cs.Status == "Pending");
             entity.CreatedAt = DateTime.Now;
+            entity.UpdatedAt = DateTime.Now;
             entity.StatusId = cs.Id;
             await dbContext.Contacts.AddAsync(entity);
             await SaveChanges();
@@ -38,7 +39,6 @@ namespace Portofolio.AppModels.Repositories
         {
             Contact contact = await dbContext.Contacts.Include(contact => contact.Status).FirstOrDefaultAsync(contact => contact.Id == entity.Id);
             contact.StatusId = entity.StatusId;
-            contact.Status = entity.Status;
             contact.UpdatedAt = DateTime.Now;
             await SaveChanges();
             return entity;

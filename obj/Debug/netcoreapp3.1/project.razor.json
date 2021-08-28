@@ -14407,6 +14407,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Contact\\ContactDetails.cshtml",
+      "TargetPath": "Views\\Contact\\ContactDetails.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Home\\Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
@@ -14467,8 +14472,18 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\Contacts.cshtml",
+      "TargetPath": "Views\\Dashboard\\Contacts.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Projects\\Index.cshtml",
       "TargetPath": "Views\\Projects\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Errors\\error404.cshtml",
+      "TargetPath": "Views\\Errors\\error404.cshtml",
       "FileKind": "mvc"
     },
     {

@@ -19,6 +19,7 @@ E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Portofolio.Views.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Portofolio.Views.pdb
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Faker.Net.Core.3.1.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Humanizer.dll
+E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Json.Net.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\MailKit.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
@@ -53,8 +54,10 @@ E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.TagHelpers.input.cache
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.TagHelpers.output.cache
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.RazorCoreGenerate.cache
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Contact\Index.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Contacts.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Index.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\ProjectDetails.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Errors\error404.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\Blog.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\BlogSingle.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\Gallery.cshtml.g.cs
@@ -70,9 +73,12 @@ E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Header.cshtml
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\User\Create.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\User\ForgotPassword.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\User\Login.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\User\NewPasswordForm.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\User\PasswordChange.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\User\Profile.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\User\ResetPassword.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.RazorTargetAssemblyInfo.cache
@@ -82,7 +88,4 @@ E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.csproj.CopyComplete
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.dll
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.pdb
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.genruntimeconfig.cache
-E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Json.Net.dll
-E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\User\ForgotPassword.cshtml.g.cs
-E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\User\NewPasswordForm.cshtml.g.cs
-E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\User\ResetPassword.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Contact\ContactDetails.cshtml.g.cs

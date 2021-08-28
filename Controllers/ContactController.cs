@@ -8,6 +8,10 @@ using Portofolio.AppModels.Services;
 using Json.Net;
 using static Portofolio.AppModels.Utils.KeyConstants;
 using Portofolio.AppModels.Extensions;
+using Portofolio.AppModels.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System;
 namespace Portofolio.Controllers
 {
     public class ContactController : Controller
@@ -19,14 +23,20 @@ namespace Portofolio.Controllers
 
         private readonly BaseRepository<RequestedService> requestedServicesRepository;
 
-        private readonly IEmailParserFromModel<Contact> contactEmailParser;
-        public ContactController(BaseRepository<Contact> contactRepository, IEmailParserFromModel<Contact> contactEmailParser, BaseRepository<Service> serviceRepository, BaseRepository<RequestedService> requestedServicesRepository, IMailService mailService)
+        private readonly IEmailParserFromModelAsync<HTMLWithModel<Contact>> contactEmailParser;
+
+        private readonly UserManager<User> userManager;
+
+        private readonly BaseRepository<ContactStatus> contactStatusRepository;
+        public ContactController(BaseRepository<ContactStatus> contactStatusRepository, UserManager<User> userManager, BaseRepository<Contact> contactRepository, IEmailParserFromModelAsync<HTMLWithModel<Contact>> contactEmailParser, BaseRepository<Service> serviceRepository, BaseRepository<RequestedService> requestedServicesRepository, IMailService mailService)
         {
             this.mailService = mailService;
             this.contactRepository = contactRepository;
             this.serviceRepository = serviceRepository;
             this.requestedServicesRepository = requestedServicesRepository;
             this.contactEmailParser = contactEmailParser;
+            this.userManager = userManager;
+            this.contactStatusRepository = contactStatusRepository;
         }
         public async Task<IActionResult> Index()
         {
@@ -52,7 +62,13 @@ namespace Portofolio.Controllers
             }
             Contact savedContact = await contactRepository.Create(contactData.Contact);
             await requestedServicesRepository.CreateFromIds(contactData.RequestedServicesIds, savedContact.Id);
-            var mailRequest = contactEmailParser.Parse(await contactRepository.GetById(savedContact.Id));
+            var contact = await contactRepository.GetById(savedContact.Id);
+            var mailRequest = await contactEmailParser.ParseAsync(new HTMLWithModel<Contact>
+            {
+                Model = contactData.Contact,
+                Path = "templates/servicerequest.html",
+                HrefValue = $"href={Url.ActionLink(nameof(ContactController.ContactDetails), "Contact", new {id = contactData.Contact.Id}, Request.Scheme)}"
+            });
             await mailService.SendEmailAsync(mailRequest);
             TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
             {
@@ -60,6 +76,46 @@ namespace Portofolio.Controllers
                 CssClass = ResultMsgViewModel.CssClassSuccess
             });
             return RedirectToAction(controllerName: "Contact", actionName: "Index");
+        }
+        [Authorize]
+        public async Task<IActionResult> ContactDetails(int id)
+        {
+            var contact = await contactRepository.GetById(id);
+            var user = await userManager.GetUserAsync(HttpContext.User);
+            var statuses = await contactStatusRepository.GetAll();
+            return View(new ContactDetailsViewModel
+            {
+                Contact = contact,
+                User = user,
+                ContactStatuses = statuses
+            });
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditContactStatus(ContactDetailsViewModel editViewModel)
+        {
+            if (editViewModel.StatusId == default(int))
+            {
+                TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
+                {
+                    Message = "Please select a new status for the contact",
+                    CssClass = ResultMsgViewModel.CssClassFailed
+                });
+            }
+            else
+            {
+                var contact = await contactRepository.GetById(editViewModel.Contact.Id);
+                contact.StatusId = editViewModel.StatusId;
+                await contactRepository.Edit(contact);
+                TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
+                {
+                    Message = "Contact editted successfuly",
+                    CssClass = ResultMsgViewModel.CssClassSuccess
+                });
+            }
+            return RedirectToAction(nameof(ContactDetails), new {id = editViewModel.Contact.Id});
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

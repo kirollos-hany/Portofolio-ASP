@@ -15,10 +15,10 @@
                @if(Model.User.ImagePath.StartsWith('~'))
                 {
                   var imgSrc = @Url.Content(Model.User.ImagePath);
-                  <img class="img-xs rounded-circle" src="@imgSrc" alt="Profile Img" />
+                  <img class="img-lg rounded-circle" src="@imgSrc" alt="Profile Img" />
                 }else
                 {
-                  <img class="img-xs rounded-circle" src="~/user/profileimage/@Model.User.Id" alt="Profile Img" />
+                  <img class="img-lg rounded-circle" src="~/user/profileimage/@Model.User.Id" alt="Profile Img" />
                 }
                 </div>
                 <h6 class="f-w-600">@Model.User.UserName</h6>
@@ -64,23 +64,12 @@
                     {
                       @foreach (var ul in Model.User.UserLinks)
                       {
-                        if (ul.Type.Type == "Github" && ul.Link != " ")
+                        if(ul.Link != "Not Assigned" && ul.Link != null)
                         {
-                          <a href="@ul.Link" target="_blank" data-toggle="tooltip" data-placement="bottom" title=""
-                      data-original-title="facebook" data-abc="true"><i
-                        class="mdi mdi-github-box feather icon-facebook facebook" aria-hidden="true"></i></a>
-                        }
-                        else if (ul.Type.Type == "LinkedIn" && ul.Link != " ")
-                        {
-                          <a href="@ul.Link" target="_blank" data-toggle="tooltip" data-placement="bottom" title=""
-                      data-original-title="facebook" data-abc="true"><i
-                        class="mdi mdi-linkedin-box feather icon-facebook facebook" aria-hidden="true"></i></a>
-                        }
-                        else if (ul.Type.Type == "Facebook" && ul.Link != " ")
-                        {
-                          <a href="@ul.Link" target="_blank" data-toggle="tooltip" data-placement="bottom" title=""
-                      data-original-title="facebook" data-abc="true"><i
-                        class="mdi mdi-facebook-box feather icon-facebook facebook" aria-hidden="true"></i></a>
+                          var linkType = ul.Type.Type.ToLower();
+                        <a href="@ul.Link" target="_blank" data-toggle="tooltip" data-placement="bottom" title=""
+                        data-original-title="facebook" data-abc="true"><i
+                          class="mdi mdi-@linkType-box feather icon-facebook facebook" aria-hidden="true"></i></a>
                         }
                       }
                     }

@@ -132,3 +132,8 @@ h6 {
 .clickable:hover{
     cursor: pointer;
 }
+
+.clickable-bg:hover{
+    cursor:pointer;
+    background-color: #e0e0e0;
+}

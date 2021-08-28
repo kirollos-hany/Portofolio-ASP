@@ -1,0 +1,61 @@
+@{
+    Layout = "_DashboardLayout";
+    ((List<Contact>)Model.Contacts).Sort((c1, c2) => DateTime.Compare(c2.UpdatedAt, c1.UpdatedAt));
+}
+@model ContactsDashboardViewModel
+              <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Contacts</h4>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>PhoneNumber</th>
+                            <th>Requested Services</th>
+                            <th>Status</th>
+                            <th>Updated At</th>
+                            <th>Created At</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var contact in Model.Contacts)
+                            {
+                              
+                              <tr class="clickable-bg">
+                                    <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id">@contact.Id</a></td>
+                                    <td>@contact.ContactName</td>
+                                    <td>@contact.Email</td>
+                                    <td>@contact.Phone</td>
+                                    <td><ul>
+                                        @foreach(var service in contact.RequestedServices)
+                                        {
+                                            <li>@service.AssociatedService.ServiceName</li>
+                                        }
+                                    </ul></td>
+                                    @{
+                                        var status = contact.Status.Status.ToLower();
+                                    }
+                                    @if(status == "pending")
+                                    {
+                                        <td><label class="badge badge-info">@contact.Status.Status</label></td>
+                                    }else if(status == "in progress")
+                                    {
+                                        <td><label class="badge badge-warning">@contact.Status.Status</label></td>
+                                    }else if(status == "completed")
+                                    {
+                                        <td><label class="badge badge-success">@contact.Status.Status</label></td>
+                                    }
+                                    <td>@contact.UpdatedAt</td>
+                                    <td>@contact.CreatedAt</td>
+                              </tr>
+                            }
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>

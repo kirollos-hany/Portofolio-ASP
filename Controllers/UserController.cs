@@ -44,8 +44,9 @@ namespace Portofolio.Controllers
             this.htmlEmailParser = htmlEmailParser;
             this.mailServices = mailServices;
         }
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
@@ -72,10 +73,17 @@ namespace Portofolio.Controllers
                 var user = await userManager.FindByEmailAsync(loginData.Email);
                 if (user != null)
                 {
-                    var result = await signInManager.PasswordSignInAsync(user.UserName, loginData.Password, false, false);
+                    var result = await signInManager.PasswordSignInAsync(user.UserName, loginData.Password, true, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction(controllerName: "Dashboard", actionName: nameof(DashboardController.Index));
+                        if (loginData.ReturnUrl == null)
+                        {
+                            return RedirectToAction(controllerName: "Dashboard", actionName: nameof(DashboardController.Index));
+                        }
+                        else
+                        {
+                            return Redirect(loginData.ReturnUrl);
+                        }
                     }
                     else
                     {
@@ -265,12 +273,12 @@ namespace Portofolio.Controllers
                 return RedirectToAction(nameof(ForgotPassword));
             }
             var resetToken = await userManager.GeneratePasswordResetTokenAsync(user);
-            var callback = Url.Action(nameof(ResetPassword), "User", new { token = resetToken, email = user.Email }, Request.Scheme);
+            var callback = Url.ActionLink(nameof(ResetPassword), "User", new { token = resetToken, email = user.Email }, Request.Scheme);
             var mailRequest = await htmlEmailParser.ParseAsync(new HTMLModel()
             {
                 Path = "templates/resetpassword.html",
-                PlaceHolder = "[href]",
-                PlaceHolderValue = $" href={callback}",
+                PlaceHolders = new string[] { "[href]" },
+                PlaceHolderValues = new string[] { $" href={callback}" },
                 ToEmail = user.Email
             });
             await mailServices.SendEmailAsync(mailRequest);
@@ -304,7 +312,7 @@ namespace Portofolio.Controllers
             var result = await userManager.ResetPasswordAsync(user, newPasswordViewModel.Token, newPasswordViewModel.Password);
             if (result.Succeeded)
             {
-                var loginResult = await signInManager.PasswordSignInAsync(user.UserName, newPasswordViewModel.Password, false, false);
+                var loginResult = await signInManager.PasswordSignInAsync(user.UserName, newPasswordViewModel.Password, true, false);
                 if (loginResult.Succeeded)
                 {
                     return RedirectToAction(actionName: nameof(DashboardController.Index), controllerName: "Dashboard");
