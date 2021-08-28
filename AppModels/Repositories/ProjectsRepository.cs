@@ -7,7 +7,6 @@ using Portofolio.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace Portofolio.AppModels.Repositories
 {
     public class ProjectsRepository : BaseRepository<Project>
@@ -18,6 +17,8 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<Project> Create(Project entity)
         {
+            entity.CreatedAt = DateTime.Now;
+            entity.UpdatedAt = DateTime.Now;
             await dbContext.Projects.AddAsync(entity);
             await SaveChanges();
             return entity;
@@ -25,7 +26,7 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<Project> Delete(Project entity)
         {
-            await Task.Run(() => dbContext.Projects.Remove(entity));
+            dbContext.Projects.Remove(entity);
             await SaveChanges();
             return entity;
         }
@@ -35,6 +36,7 @@ namespace Portofolio.AppModels.Repositories
             Project project = await dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectImages)
             .Include(project => project.ProjectLinks)
+            .Include(project => project.ProjectFeedbacks)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
             .FirstOrDefaultAsync(project => project.Id == entity.Id);

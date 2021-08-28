@@ -20,6 +20,10 @@ namespace Portofolio.Models
         [Column(TypeName = "text")]
         public string ServiceDescription { get; set; }
 
+        public DateTime UpdatedAt { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
         [Required]
         public string ServiceImage { get; set; }
 

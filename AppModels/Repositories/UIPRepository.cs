@@ -16,6 +16,8 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<UsersInProject> Create(UsersInProject entity)
         {
+            entity.CreatedAt = DateTime.Now;
+            entity.UpdatedAt = DateTime.Now;
             await dbContext.UsersInProjects.AddAsync(entity);
             await SaveChanges();
             return entity;
@@ -23,7 +25,8 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<UsersInProject> Delete(UsersInProject entity)
         {
-            await Task.Run(() => dbContext.UsersInProjects.Remove(entity));
+            dbContext.UsersInProjects.Remove(entity);
+            await SaveChanges();
             return entity;
         }
 
@@ -31,6 +34,7 @@ namespace Portofolio.AppModels.Repositories
         {
             var uip = await dbContext.UsersInProjects.FindAsync(entity);
             uip = entity;
+            uip.UpdatedAt = DateTime.Now;
             await SaveChanges();
             return uip;
         }

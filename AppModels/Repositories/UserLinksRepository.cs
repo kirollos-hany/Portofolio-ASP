@@ -17,7 +17,8 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<UserLink> Create(UserLink entity)
         {
-
+            entity.CreatedAt = DateTime.Now;
+            entity.UpdatedAt = DateTime.Now;
             await dbContext.UserLinks.AddAsync(entity);
             await SaveChanges();
             return entity;
@@ -25,7 +26,7 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<UserLink> Delete(UserLink entity)
         {
-            await Task.Run(() => dbContext.UserLinks.Remove(entity));
+            dbContext.UserLinks.Remove(entity);
             await SaveChanges();
             return entity;
         }
@@ -34,6 +35,7 @@ namespace Portofolio.AppModels.Repositories
         {
             var ul = await dbContext.UserLinks.FindAsync(entity.Id);
             ul.Link = entity.Link;
+            ul.UpdatedAt = DateTime.Now;
             await SaveChanges();
             return entity;
         }

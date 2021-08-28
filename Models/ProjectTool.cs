@@ -17,6 +17,10 @@ namespace Portofolio.Models
 
         public string ToolUsed{get; set;}
 
+        public DateTime CreatedAt {get; set;}
+
+        public DateTime UpdatedAt {get; set;}
+
         [Required]
         public int ProjectId {get; set;}
 

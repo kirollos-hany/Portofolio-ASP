@@ -14,6 +14,10 @@ namespace Portofolio.Models
 
         public int ContactId { get; set; }
 
+        public DateTime UpdatedAt {get; set;}
+
+        public DateTime CreatedAt {get; set;}
+
         [ForeignKey(nameof(ContactId))]
         [InverseProperty(nameof(Contact.RequestedServices))]
         public virtual Contact AssociatedContact { get; set; }

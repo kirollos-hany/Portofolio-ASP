@@ -21,6 +21,10 @@ namespace Portofolio.Models
         public int ProjectId { get; set; }
         public int RoleId { get; set; }
 
+        public DateTime UpdatedAt { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
         [ForeignKey(nameof(ProjectId))]
         [InverseProperty("UsersInProjects")]
         public virtual Project Project { get; set; }

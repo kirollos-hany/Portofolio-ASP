@@ -17,13 +17,14 @@ namespace Portofolio.AppModels.Repositories
         public async override Task<ContactStatus> Create(ContactStatus entity)
         {
             entity.CreatedAt = DateTime.Now;
+            entity.UpdatedAt = DateTime.Now;
             await dbContext.ContactStatuses.AddAsync(entity);
             return entity;
         }
 
         public async override Task<ContactStatus> Delete(ContactStatus entity)
         {
-            await Task.Run(() => dbContext.ContactStatuses.Remove(entity));
+            dbContext.ContactStatuses.Remove(entity);
             await SaveChanges();
             return entity;
         }
@@ -31,10 +32,8 @@ namespace Portofolio.AppModels.Repositories
         public async override Task<ContactStatus> Edit(ContactStatus entity)
         {
             ContactStatus contactStatus = await dbContext.ContactStatuses.Include(contactStatus => contactStatus.Contacts).FirstOrDefaultAsync(cs => cs.Id == entity.Id);
-            contactStatus.Contacts = entity.Contacts;
             contactStatus.UpdatedAt = DateTime.Now;
             contactStatus.Status = entity.Status;
-            contactStatus.CreatedAt = entity.CreatedAt;
             await SaveChanges();
             return entity;
         }

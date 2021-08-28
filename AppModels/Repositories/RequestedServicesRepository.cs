@@ -17,6 +17,8 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<RequestedService> Create(RequestedService entity)
         {
+            entity.CreatedAt = DateTime.Now;
+            entity.UpdatedAt = DateTime.Now;
             await dbContext.RequestedServices.AddAsync(entity);
             await SaveChanges();
             return entity;
@@ -24,7 +26,7 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<RequestedService> Delete(RequestedService entity)
         {
-            await Task.Run(() => dbContext.RequestedServices.Remove(entity));
+            dbContext.RequestedServices.Remove(entity);
             await SaveChanges();
             return entity;
         }
@@ -34,6 +36,7 @@ namespace Portofolio.AppModels.Repositories
             RequestedService rs = await dbContext.RequestedServices.FindAsync(entity.Id);
             rs.ServiceId = entity.ServiceId;
             rs.ContactId = entity.ContactId;
+            rs.UpdatedAt = DateTime.Now;
             return entity;
         }
 

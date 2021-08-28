@@ -17,6 +17,8 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<LinkType> Create(LinkType entity)
         {
+            entity.CreatedAt = DateTime.Now;
+            entity.UpdatedAt = DateTime.Now;
             await dbContext.LinkTypes.AddAsync(entity);
             await SaveChanges();
             return entity;
@@ -24,7 +26,7 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<LinkType> Delete(LinkType entity)
         {
-            await Task.Run(() => dbContext.LinkTypes.Remove(entity));
+            dbContext.LinkTypes.Remove(entity);
             await SaveChanges();
             return entity;
         }
@@ -33,6 +35,7 @@ namespace Portofolio.AppModels.Repositories
         {
             var lt = await dbContext.LinkTypes.FindAsync(entity.Id);
             lt = entity;
+            lt.UpdatedAt = DateTime.Now;
             await SaveChanges();
             return lt;
         }

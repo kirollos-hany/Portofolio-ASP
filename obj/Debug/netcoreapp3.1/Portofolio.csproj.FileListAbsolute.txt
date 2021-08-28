@@ -53,6 +53,7 @@ E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\scopedcss\bundle\Portofolio.style
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.TagHelpers.input.cache
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.TagHelpers.output.cache
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.RazorCoreGenerate.cache
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Contact\ContactDetails.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Contact\Index.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Contacts.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Index.cshtml.g.cs
@@ -88,4 +89,3 @@ E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.csproj.CopyComplete
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.dll
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.pdb
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.genruntimeconfig.cache
-E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Contact\ContactDetails.cshtml.g.cs

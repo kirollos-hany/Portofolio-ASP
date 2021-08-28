@@ -30,7 +30,7 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<Contact> Delete(Contact entity)
         {
-            await Task.Run(() => dbContext.Contacts.Remove(entity));
+            dbContext.Contacts.Remove(entity);
             await SaveChanges();
             return entity;
         }
