@@ -14457,6 +14457,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\Services.cshtml",
+      "TargetPath": "Views\\Dashboard\\Services.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\ProjectDetails.cshtml",
       "TargetPath": "Views\\Dashboard\\ProjectDetails.cshtml",
       "FileKind": "mvc"

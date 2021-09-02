@@ -8,6 +8,10 @@ namespace Portofolio.Models
 {
     public class Service
     {
+        public Service()
+        {
+            ServiceImage = "~/img/committees-temp.jpg";
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

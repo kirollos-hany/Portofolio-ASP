@@ -33,7 +33,9 @@ namespace Portofolio.Controllers
         private readonly BaseRepository<ProjectImage> projectImagesRepository;
 
         private readonly BaseImageServices<Project> imageServices;
-        public DashboardController(BaseImageServices<Project> imageServices, BaseRepository<ProjectImage> projectImagesRepository, BaseRepository<ProjectLink> projectLinksRepository, BaseRepository<ImageType> imageTypeRepository, BaseRepository<UserRoleInProject> uripRepository, BaseRepository<LinkType> linkTypesRepository, BaseRepository<ProjectType> projectTypeRepository, BaseRepository<Contact> contactsRepository, BaseRepository<Project> projectsRepository, UserManager<User> userManager, BaseRepository<UsersInProject> uipRepository)
+
+        private readonly BaseRepository<Service> servicesRepository;
+        public DashboardController(BaseRepository<Service> servicesRepository, BaseImageServices<Project> imageServices, BaseRepository<ProjectImage> projectImagesRepository, BaseRepository<ProjectLink> projectLinksRepository, BaseRepository<ImageType> imageTypeRepository, BaseRepository<UserRoleInProject> uripRepository, BaseRepository<LinkType> linkTypesRepository, BaseRepository<ProjectType> projectTypeRepository, BaseRepository<Contact> contactsRepository, BaseRepository<Project> projectsRepository, UserManager<User> userManager, BaseRepository<UsersInProject> uipRepository)
         {
             this.projectsRepository = projectsRepository;
             this.userManager = userManager;
@@ -46,6 +48,7 @@ namespace Portofolio.Controllers
             this.projectLinksRepository = projectLinksRepository;
             this.projectImagesRepository = projectImagesRepository;
             this.imageServices = imageServices;
+            this.servicesRepository = servicesRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -96,7 +99,14 @@ namespace Portofolio.Controllers
             });
         }
 
-
+        public async Task<IActionResult> Services()
+        {
+            var services = await servicesRepository.GetAll();
+            return View(new ServicesDashboardVM{
+                User = await userManager.GetUserAsync(HttpContext.User),
+                Services = services
+            });
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

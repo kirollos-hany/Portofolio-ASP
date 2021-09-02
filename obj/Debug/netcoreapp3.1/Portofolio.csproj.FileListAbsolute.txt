@@ -90,3 +90,4 @@ E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.csproj.CopyComplete
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.dll
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.pdb
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.genruntimeconfig.cache
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Services.cshtml.g.cs
