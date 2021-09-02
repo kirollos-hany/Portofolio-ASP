@@ -23,16 +23,10 @@ namespace Portofolio.AppModels.Extensions
         {
             for (int i = 0; i < links.Count; i++)
             {
-                string link = " ";
-                if (links.ElementAt(i) != string.Empty && links.ElementAt(i) != null)
-                {
-                    link = links.ElementAt(i);
-                }
                 var newUserLink = new UserLink
                 {
                     UserId = userId,
                     TypeId = linkTypeIds.ElementAt(i),
-                    Link = link
                 };
                 await repository.Create(newUserLink);
             }

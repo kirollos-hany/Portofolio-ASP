@@ -24,7 +24,7 @@ namespace Portofolio.AppModels.Extensions
             return user;
         }
 
-        public static async Task<User> EditUserWithImageAsync(this UserManager<User> userManager, User newUserData, string imagePath, IImageService imageServices)
+        public static async Task<User> EditUserWithImageAsync(this UserManager<User> userManager, User newUserData, string imagePath, BaseImageServices<User> imageServices)
         {
             var user = await Task.Run(() => userManager.Users.Where(user => user.Id == newUserData.Id).FirstOrDefault());
             user.UserName = newUserData.UserName;
@@ -32,18 +32,18 @@ namespace Portofolio.AppModels.Extensions
             user.PhoneNumber = newUserData.PhoneNumber;
             user.Specialization = newUserData.Specialization;
             user.UpdatedAt = DateTime.Now;
-            await imageServices.DeleteImg(user.ImagePath);
+            imageServices.DeleteImg(user.ImagePath);
             user.ImagePath = imagePath;
             await userManager.UpdateAsync(user);
             return user;
         }
 
-        public static async Task<ImageModel> GetProfileImageAsync(this UserManager<User> userManager, IImageService imageServices, int id)
+        public static async Task<ImageModel> GetProfileImageAsync(this UserManager<User> userManager, BaseImageServices<User> imageServices, int id)
         {
             var user = await Task.Run(() => userManager.Users.Where(user => user.Id == id).FirstOrDefault());
             return new ImageModel
             {
-                FileStream = File.ReadAllBytes(user.ImagePath),
+                FileStream = await File.ReadAllBytesAsync(user.ImagePath),
                 ContentType = "image/" + imageServices.GetImgExtension(user.ImagePath)
             };
         }

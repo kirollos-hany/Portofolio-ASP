@@ -35,6 +35,13 @@ namespace Portofolio.AppModels.Repositories
             return entity;
         }
 
+        public async override Task<ICollection<Contact>> DeleteCollection(ICollection<Contact> entities)
+        {
+            dbContext.Contacts.RemoveRange(entities);
+            await SaveChanges();
+            return entities;
+        }
+
         public async override Task<Contact> Edit(Contact entity)
         {
             Contact contact = await dbContext.Contacts.Include(contact => contact.Status).FirstOrDefaultAsync(contact => contact.Id == entity.Id);

@@ -48,15 +48,11 @@ namespace Portofolio.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SubmitContact(ContactWithServicesViewModel contactData)
+        public async Task<IActionResult> Create(ContactWithServicesViewModel contactData)
         {
             if (!ModelState.IsValid)
             {
-                TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                {
-                    Message = ModelState.GetErrors(),
-                    CssClass = ResultMsgViewModel.CssClassFailed
-                });
+                ModelState.AssignTempDataWithErrors(TempData);
                 return RedirectToAction(controllerName: "Contact", actionName: "Index");
             }
             Contact savedContact = await contactRepository.Create(contactData.Contact);

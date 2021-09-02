@@ -13,6 +13,10 @@ namespace Portofolio.Models
     [Index(nameof(TypeId), Name = "TypeId")]
     public partial class ProjectImage
     {
+        public ProjectImage()
+        {
+            ImagePath = "~/img/committee/mm.jpg";
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

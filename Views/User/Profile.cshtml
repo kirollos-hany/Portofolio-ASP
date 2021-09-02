@@ -64,7 +64,7 @@
                     {
                       @foreach (var ul in Model.User.UserLinks)
                       {
-                        if(ul.Link != "Not Assigned" && ul.Link != null)
+                        if(ul.Link != null && ul.Link != "#")
                         {
                           var linkType = ul.Type.Type.ToLower();
                         <a href="@ul.Link" target="_blank" data-toggle="tooltip" data-placement="bottom" title=""

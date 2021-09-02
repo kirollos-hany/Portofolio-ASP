@@ -30,11 +30,19 @@ namespace Portofolio.AppModels.Repositories
             return entity;
         }
 
+        public async override Task<ICollection<UsersInProject>> DeleteCollection(ICollection<UsersInProject> entities)
+        {
+            dbContext.UsersInProjects.RemoveRange(entities);
+            await SaveChanges();
+            return entities;
+        }
+
         public async override Task<UsersInProject> Edit(UsersInProject entity)
         {
-            var uip = await dbContext.UsersInProjects.FindAsync(entity);
-            uip = entity;
+            var uip = await dbContext.UsersInProjects.FindAsync(entity.Id);
             uip.UpdatedAt = DateTime.Now;
+            uip.UserId = entity.UserId;
+            uip.RoleId = entity.RoleId;
             await SaveChanges();
             return uip;
         }

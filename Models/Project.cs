@@ -18,7 +18,7 @@ namespace Portofolio.Models
             ProjectImages = new HashSet<ProjectImage>();
             ProjectLinks = new HashSet<ProjectLink>();
             UsersInProjects = new HashSet<UsersInProject>();
-            Tools = new HashSet<ProjectTool>();
+            ToolsUsed = "N/A";
         }
 
         [Key]
@@ -32,6 +32,10 @@ namespace Portofolio.Models
         [Required]
         [Column(TypeName = "text")]
         public string Description { get; set; }
+
+        [Required]
+        [RegularExpression("(([A-Z]|[a-z]) | [0-9] | -)+", ErrorMessage = "Please make sure tools follow the Tool1-Tool2 format")]
+        public string ToolsUsed {get; set;}
         [Column(TypeName = "datetime")]
         public DateTime CreatedAt { get; set; }
         [Column(TypeName = "datetime")]
@@ -48,8 +52,5 @@ namespace Portofolio.Models
         public virtual ICollection<ProjectLink> ProjectLinks { get; set; }
         [InverseProperty(nameof(UsersInProject.Project))]
         public virtual ICollection<UsersInProject> UsersInProjects { get; set; }
-
-        [InverseProperty(nameof(ProjectTool.AssociatedProject))]
-        public virtual ICollection<ProjectTool> Tools{get; set;}
     }
 }

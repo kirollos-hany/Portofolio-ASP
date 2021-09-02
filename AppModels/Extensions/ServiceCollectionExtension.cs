@@ -17,7 +17,8 @@ namespace Portofolio.AppModels.Extensions
             services.AddScoped(typeof(BaseRepository<ContactStatus>), typeof(ContactStatusRepository));
             services.AddScoped(typeof(BaseRepository<Service>), typeof(ServicesRepository));
             services.AddScoped(typeof(BaseRepository<Project>), typeof(ProjectsRepository));
-            services.AddScoped(typeof(IImageService), typeof(ImageServices));
+            services.AddScoped(typeof(BaseImageServices<User>), typeof(UserImageServices));
+            services.AddScoped(typeof(BaseImageServices<Project>), typeof(ProjectImageServices));
             services.AddScoped(typeof(BaseRepository<RequestedService>), typeof(RequestedServicesRepository));
             services.AddScoped(typeof(BaseRepository<UsersInProject>), typeof(UIPRepository));
             services.AddScoped(typeof(BaseRepository<UserLink>), typeof(UserLinksRepository));
@@ -25,8 +26,9 @@ namespace Portofolio.AppModels.Extensions
             services.AddScoped(typeof(BaseRepository<ProjectFeedback>), typeof(ProjectFeedbacksRepository));
             services.AddScoped(typeof(BaseRepository<ProjectImage>), typeof(ProjectImagesRepository));
             services.AddScoped(typeof(BaseRepository<ProjectLink>), typeof(ProjectLinksRepository));
-            services.AddScoped(typeof(BaseRepository<ProjectToolsRepository>), typeof(ProjectToolsRepository));
             services.AddScoped(typeof(BaseRepository<ProjectType>), typeof(ProjectTypeRepository));
+            services.AddScoped(typeof(BaseRepository<UserRoleInProject>), typeof(UserRoleInProjectRepository));
+            services.AddScoped(typeof(BaseRepository<ImageType>), typeof(ImageTypeRepository));
             services.AddScoped(typeof(IMailService), typeof(MailService));
             services.AddScoped(typeof(IEmailParserFromModelAsync<HTMLWithModel<Contact>>), typeof(HTMLWithContactEmailParser));
             services.AddScoped(typeof(IEmailParserFromModelAsync<HTMLModel>), typeof(HTMLEmailParser));

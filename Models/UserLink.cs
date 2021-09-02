@@ -15,7 +15,7 @@ namespace Portofolio.Models
     {
         public UserLink()
         {
-            Link = "Not Assigned";
+            Link = "#";
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

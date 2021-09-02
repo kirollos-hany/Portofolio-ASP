@@ -29,8 +29,6 @@ namespace Portofolio.Database
         public virtual DbSet<UsersInProject> UsersInProjects { get; set; }
         public virtual DbSet<Service> Services { get; set; }
 
-        public virtual DbSet<ProjectTool> ProjectTools { get; set; }
-
         public virtual DbSet<RequestedService> RequestedServices { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -129,7 +127,6 @@ namespace Portofolio.Database
             OnModelCreatingPartial(modelBuilder);
             modelBuilder.Seed();
             modelBuilder.SeedServices();
-            modelBuilder.SeedProjectTools();
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

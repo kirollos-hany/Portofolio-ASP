@@ -31,6 +31,13 @@ namespace Portofolio.AppModels.Repositories
             return entity;
         }
 
+        public async override Task<ICollection<UserLink>> DeleteCollection(ICollection<UserLink> entities)
+        {
+            dbContext.UserLinks.RemoveRange(entities);
+            await SaveChanges();
+            return entities;
+        }
+
         public async override Task<UserLink> Edit(UserLink entity)
         {
             var ul = await dbContext.UserLinks.FindAsync(entity.Id);

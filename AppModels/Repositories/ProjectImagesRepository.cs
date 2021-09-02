@@ -31,6 +31,13 @@ namespace Portofolio.AppModels.Repositories
             return entity;
         }
 
+        public async override Task<ICollection<ProjectImage>> DeleteCollection(ICollection<ProjectImage> entities)
+        {
+            dbContext.ProjectImages.RemoveRange(entities);
+            await SaveChanges();
+            return entities;
+        }
+
         public async override Task<ProjectImage> Edit(ProjectImage entity)
         {
             var pi = await dbContext.ProjectImages.FindAsync(entity.Id);

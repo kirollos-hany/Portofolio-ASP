@@ -363,33 +363,5 @@ namespace Portofolio.Database
             modelBuilder.Entity<Service>().HasData(webAppService, desktopAppService, mobileAppService);
         }
 
-        public static void SeedProjectTools(this ModelBuilder modelBuilder)
-        {
-            ProjectTool[] tools = new ProjectTool[NUM_OF_RANDOM_DATA];
-            for (int i = 0; i < tools.Length / 2; i++)
-            {
-                var tool = new ProjectTool
-                {
-                    ProjectId = i + 1,
-                    Id = i + 1,
-                    ToolUsed = "ASP.NET CORE C#"
-                };
-                tools[i] = tool;
-            }
-
-            for (int i = tools.Length / 2; i < tools.Length; i++)
-            {
-                var tool = new ProjectTool
-                {
-                    ProjectId = i + 1,
-                    Id = i + 1,
-                    ToolUsed = "Laravel PHP"
-                };
-                tools[i] = tool;
-            }
-
-            modelBuilder.Entity<ProjectTool>().HasData(tools);
-        }
-
     }
 }

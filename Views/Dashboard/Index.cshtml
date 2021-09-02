@@ -14,7 +14,17 @@
                         <div class="thumb-wrap relative">
                             <div class="thumb relative">
                                 <div class="overlay overlay-bg"></div>
-                                <img class="img-fluid" src="~/img/committee/mm.jpg" alt="">
+                                @{
+                                    var thumbnail = project.ProjectImages.Where((pi) => pi.Type.ImgType == "Thumbnail").FirstOrDefault<ProjectImage>();
+                                }
+                                @if(thumbnail.ImagePath.StartsWith("~"))
+                                {
+                                    var imgSrc = @Url.Content(thumbnail.ImagePath);
+                                    <img class="img-fluid" src="imgSrc" alt="Project thumbnail">
+                                }else
+                                {
+                                    <img class="img-fluid" src="~/projects/image/@thumbnail.Id" alt="Project thumbnail">
+                                }
                             </div>
                         </div>
                         <div class="details">

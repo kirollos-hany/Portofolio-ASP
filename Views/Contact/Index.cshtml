@@ -43,7 +43,7 @@
             </div>
             <div class="col-lg-8">
             <form class="form-area contact-form text-right" id="myForm" asp-controller="contact"
-                    asp-action="SubmitContact" enctype="multipart/form-data" method="post">
+                    asp-action="create" enctype="multipart/form-data" method="post">
                 @if(TempData[ResultMessageKey] != null)
                 {
                 ResultMsgViewModel resultVM = JsonNet.Deserialize<ResultMsgViewModel>(TempData[ResultMessageKey].ToString());

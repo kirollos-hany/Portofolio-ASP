@@ -23,7 +23,7 @@ namespace Portofolio.Controllers
 
         private readonly BaseRepository<UsersInProject> uipRepository;
 
-        private readonly IImageService imageServices;
+        private readonly BaseImageServices<User> imageServices;
 
         private readonly BaseRepository<UserLink> userLinksRepository;
 
@@ -33,7 +33,7 @@ namespace Portofolio.Controllers
 
         private readonly IMailService mailServices;
 
-        public UserController(SignInManager<User> signInManager, UserManager<User> userManager, BaseRepository<UsersInProject> uipRepository, IImageService imageServices, BaseRepository<UserLink> userLinksRepository, BaseRepository<LinkType> linkTypesRepository, IEmailParserFromModelAsync<HTMLModel> htmlEmailParser, IMailService mailServices)
+        public UserController(SignInManager<User> signInManager, UserManager<User> userManager, BaseRepository<UsersInProject> uipRepository, BaseImageServices<User> imageServices, BaseRepository<UserLink> userLinksRepository, BaseRepository<LinkType> linkTypesRepository, IEmailParserFromModelAsync<HTMLModel> htmlEmailParser, IMailService mailServices)
         {
             this.uipRepository = uipRepository;
             this.signInManager = signInManager;
@@ -95,11 +95,7 @@ namespace Portofolio.Controllers
                     }
                 }
             }
-            TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-            {
-                Message = ModelState.GetErrors(),
-                CssClass = ResultMsgViewModel.CssClassFailed
-            });
+            ModelState.AssignTempDataWithErrors(TempData);
             return RedirectToAction(nameof(Login));
         }
         [HttpPost]
@@ -113,7 +109,7 @@ namespace Portofolio.Controllers
                 try
                 {
                     imageServices.ValidateImgExtension(userImageFile);
-                    imagePath = await imageServices.UploadImg(userImageFile, "Images/Users");
+                    imagePath = await imageServices.UploadImgAsync(userImageFile);
                     await userManager.EditUserWithImageAsync(profileViewModel.User, imagePath, imageServices);
                     await userLinksRepository.EditUserLinks(profileViewModel.Links, profileViewModel.LinksIds);
                 }
@@ -167,11 +163,7 @@ namespace Portofolio.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                {
-                    Message = ModelState.GetErrors(),
-                    CssClass = ResultMsgViewModel.CssClassFailed
-                });
+                ModelState.AssignTempDataWithErrors(TempData);
                 return RedirectToAction(nameof(Create));
             }
             try
@@ -181,7 +173,7 @@ namespace Portofolio.Controllers
                 if (userImageFile != null)
                 {
                     imageServices.ValidateImgExtension(userImageFile);
-                    newUser.ImagePath = await imageServices.UploadImg(userImageFile, "Images/Users");
+                    newUser.ImagePath = await imageServices.UploadImgAsync(userImageFile);
                     await userManager.UpdateAsync(newUser);
                 }
             }
@@ -219,11 +211,7 @@ namespace Portofolio.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                {
-                    Message = ModelState.GetErrors(),
-                    CssClass = ResultMsgViewModel.CssClassFailed
-                });
+                ModelState.AssignTempDataWithErrors(TempData);
                 return RedirectToAction(nameof(PasswordChange));
             }
             var user = await userManager.GetUserAsync(HttpContext.User);
@@ -256,11 +244,7 @@ namespace Portofolio.Controllers
             var user = await userManager.FindByEmailAsync(resetPasswordViewModel.Email);
             if (!ModelState.IsValid)
             {
-                TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                {
-                    Message = ModelState.GetErrors(),
-                    CssClass = ResultMsgViewModel.CssClassFailed
-                });
+                ModelState.AssignTempDataWithErrors(TempData);
                 return RedirectToAction(nameof(ForgotPassword));
             }
             else if (user == null)
@@ -301,11 +285,7 @@ namespace Portofolio.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                {
-                    Message = ModelState.GetErrors(),
-                    CssClass = ResultMsgViewModel.CssClassFailed
-                });
+                ModelState.AssignTempDataWithErrors(TempData);
                 return RedirectToAction(nameof(ResetPassword), new { token = newPasswordViewModel.Token, email = newPasswordViewModel.Email });
             }
             var user = await userManager.FindByEmailAsync(newPasswordViewModel.Email);

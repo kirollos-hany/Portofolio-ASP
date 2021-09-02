@@ -31,6 +31,13 @@ namespace Portofolio.AppModels.Repositories
             return entity;
         }
 
+        public async override Task<ICollection<RequestedService>> DeleteCollection(ICollection<RequestedService> entities)
+        {
+           dbContext.RequestedServices.RemoveRange(entities);
+           await SaveChanges();
+           return entities;
+        }
+
         public async override Task<RequestedService> Edit(RequestedService entity)
         {
             RequestedService rs = await dbContext.RequestedServices.FindAsync(entity.Id);

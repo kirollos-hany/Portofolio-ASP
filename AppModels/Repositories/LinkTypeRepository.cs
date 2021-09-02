@@ -31,6 +31,13 @@ namespace Portofolio.AppModels.Repositories
             return entity;
         }
 
+        public async override Task<ICollection<LinkType>> DeleteCollection(ICollection<LinkType> entities)
+        {
+            dbContext.LinkTypes.RemoveRange(entities);
+            await SaveChanges();
+            return entities;
+        }
+
         public async override Task<LinkType> Edit(LinkType entity)
         {
             var lt = await dbContext.LinkTypes.FindAsync(entity.Id);

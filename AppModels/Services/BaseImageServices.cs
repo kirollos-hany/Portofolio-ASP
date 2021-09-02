@@ -1,17 +1,20 @@
+
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
-using Portofolio.AppModels.Exceptions;
 using System;
-using System.Threading.Tasks;
+using Portofolio.AppModels.Exceptions;
+using System.Collections.Generic;
 namespace Portofolio.AppModels.Services
 {
-    public class ImageServices : IImageService
+    public abstract class BaseImageServices<T> : IImageService where T : class
     {
-        private readonly List<string> imageExtensions;
-        private readonly string rootPath;
-        public ImageServices(IWebHostEnvironment env)
+        protected List<string> imageExtensions;
+        protected string rootPath;
+        protected abstract string DirectoryName { get; }
+
+        public BaseImageServices(IWebHostEnvironment env)
         {
             imageExtensions = new List<string>();
             imageExtensions.Add(".jpg");
@@ -21,27 +24,31 @@ namespace Portofolio.AppModels.Services
             imageExtensions.Add(".bmp");
             rootPath = env.ContentRootPath;
         }
+        public virtual void DeleteImg(string imagePath)
+        {
+             File.Delete(imagePath);
+        }
 
-        public string GetImgExtension(string imagePath)
+        public virtual string GetImgExtension(string imagePath)
         {
             FileInfo fi = new FileInfo(imagePath);
             return fi.Extension.ToLower();
         }
 
-        public async Task<string> UploadImg(IFormFile file, string directoryPath)
+        public async virtual Task<string> UploadImgAsync(IFormFile file)
         {
             FileInfo fileInfo = new FileInfo(file.FileName);
             string extension = fileInfo.Extension;
             string fileName = string.Concat(Guid.NewGuid().ToString(), extension);
-            string fullPath = Path.Combine(rootPath, directoryPath, fileName);
+            string fullPath = Path.Combine(rootPath, DirectoryName, fileName);
             using (FileStream fs = new FileStream(fullPath, FileMode.Create))
             {
                 await file.CopyToAsync(fs);
             }
-            return Path.Combine(directoryPath, fileName);
+            return Path.Combine(DirectoryName, fileName);
         }
 
-        public void ValidateImgExtension(IFormFile file)
+        public virtual void ValidateImgExtension(IFormFile file)
         {
             FileInfo fileInfo = new FileInfo(file.FileName);
             if (!imageExtensions.Contains(fileInfo.Extension.ToLower()))
@@ -52,12 +59,6 @@ namespace Portofolio.AppModels.Services
                     supportedExtensions = string.Concat(supportedExtensions, ext, "\n");
                 }
                 throw new CustomException($"Image extension not supported.\nSupported extensions:\n{supportedExtensions}");
-            }
-        }
-
-        public async Task DeleteImg(string imagePath)
-        {
-            await Task.Run(() => File.Delete(imagePath));
-        }
+            }        }
     }
 }

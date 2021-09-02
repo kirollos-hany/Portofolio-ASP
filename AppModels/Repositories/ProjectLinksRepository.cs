@@ -31,14 +31,20 @@ namespace Portofolio.AppModels.Repositories
             return entity;
         }
 
+        public async override Task<ICollection<ProjectLink>> DeleteCollection(ICollection<ProjectLink> entities)
+        {
+            dbContext.ProjectLinks.RemoveRange(entities);
+            await SaveChanges();
+            return entities;
+        }
+
         public async override Task<ProjectLink> Edit(ProjectLink entity)
         {
             var pl = await dbContext.ProjectLinks.FindAsync(entity.Id);
             pl.Link = entity.Link;
             pl.UpdatedAt = DateTime.Now;
-            pl.TypeId = entity.TypeId;
             await SaveChanges();
-            return entity;
+            return pl;
         }
 
         public async override Task<ProjectLink> FindByCondition(Expression<Func<ProjectLink, bool>> expression)

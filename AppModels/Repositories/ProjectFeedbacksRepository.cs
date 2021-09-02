@@ -30,6 +30,13 @@ namespace Portofolio.AppModels.Repositories
             return entity;
         }
 
+        public async override Task<ICollection<ProjectFeedback>> DeleteCollection(ICollection<ProjectFeedback> entities)
+        {
+            dbContext.ProjectFeedbacks.RemoveRange(entities);
+            await SaveChanges();
+            return entities;
+        }
+
         public override Task<ProjectFeedback> Edit(ProjectFeedback entity)
         {
             throw new NotImplementedException();

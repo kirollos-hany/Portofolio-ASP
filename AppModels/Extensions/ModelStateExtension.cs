@@ -1,5 +1,9 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Json.Net;
+using Portofolio.ViewModels;
+using static Portofolio.AppModels.Utils.KeyConstants;
 namespace Portofolio.AppModels.Extensions
 {
     public static class ModelStateExtension
@@ -13,6 +17,15 @@ namespace Portofolio.AppModels.Extensions
                 });
             }));
             return errors;
+        }
+
+        public static void AssignTempDataWithErrors(this ModelStateDictionary modelState, ITempDataDictionary tempData)
+        {
+            tempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
+            {
+                Message = modelState.GetErrors(),
+                CssClass = ResultMsgViewModel.CssClassFailed
+            });
         }
     }
 }

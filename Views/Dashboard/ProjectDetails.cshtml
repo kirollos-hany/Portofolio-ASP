@@ -1,13 +1,34 @@
 @{
     Layout = "_DashboardLayout";
 }
+@model ProjectDetailsDashboardViewModel
 <!-- Start course-details Area -->
 <section class="course-details-area pt-120">
  <div class="container">
   <div class="row">
    <div class="col-lg-8 left-contents">
 	<div class="main-image">
-	 <img class="img-fluid" src="~/img/committee/it.jpg" alt="">
+	@{
+        var thumbnail = Model.ChosenProject.ProjectImages.Where((pi) => pi.Type.ImgType == "Thumbnail").FirstOrDefault<ProjectImage>();
+    }
+    @if(thumbnail.ImagePath.StartsWith("~"))
+    {
+         var imgSrc = @Url.Content(thumbnail.ImagePath);
+    	<img class="img-fluid" src="imgSrc" alt="Project thumbnail">
+		<i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16 clickable" data-toggle="modal"
+                  data-target="#editProjectModal"></i>
+      <a asp-action="delete" asp-controller="projects" asp-route-id="@Model.ChosenProject.Id">
+        <i class="mdi mdi-delete-forever clickable light"></i>
+      </a>
+    }else
+    {
+        <img class="img-fluid" src="~/projects/image/@thumbnail.Id" alt="Project thumbnail">
+		<i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16 clickable" data-toggle="modal"
+                  data-target="#editProjectModal"></i>
+      <a asp-action="delete" asp-controller="projects" asp-route-id="@Model.ChosenProject.Id">
+        <i class="mdi mdi-delete-forever clickable light"></i>
+      </a>
+    }
 	</div>
 	<div class="jq-tab-wrapper" id="horizontalTab">
 	 <div class="jq-tab-menu">
@@ -35,8 +56,8 @@
 						{
 							<li>
 								<a class="justify-content-between d-flex">
-									<h5>@userInProject.Role.Role</h5>
-									<span class="or">@userInProject.User.UserName</span>
+									<h5 class="dark">@userInProject.Role.Role</h5>
+									<span class="or dark">@userInProject.User.UserName</span>
 								</a>
 							</li>
 						}
@@ -44,21 +65,13 @@
 	 <li>
 	  <a class="justify-content-between d-flex" href="#go">
 	   <h5>Team Members</h5>
-	   <span>@Model.ChosenProject.UsersInProjects.Count</span>
+	   <span class="or">@Model.ChosenProject.UsersInProjects.Count</span>
 	  </a>
 	 </li>
 	 <li>
 	  <a class="justify-content-between d-flex">
-	   <h5>Technologies & Tools</h5>
-	   @{
-		   string tools = string.Empty;
-		   if(Model.ChosenProject.Tools.Count != 0){
-			   foreach(ProjectTool tool in Model.ChosenProject.Tools){
-				   tools = string.Concat(tools, tool.ToolUsed, "-");
-			   }
-		   }
-	   }
-	   <span style="margin-left: 20px">@tools</span>
+	   <h5 class="dark">Technologies & Tools</h5>
+	   <span style="margin-left: 20px;" class="or">@Model.ChosenProject.ToolsUsed</span>
 	  </a>
 	 </li>
 	</ul>
@@ -70,60 +83,39 @@
 <!-- Start Featured Work -->
 <div id="go" class="featured-work text-center">
  <div class="container">
-  <h2>TEAM</h2>
-		@* <ul class="list-unstyled row">
-			<li data-class="ALL" class="active col-md">ALL </li>
-			<li data-class=".HEAD" class="col-md">LEADER</li>
-			<li data-class=".VICE" class="col-md">VICE HEAD</li>
-			<li data-class=".MEMBERS" class="col-md">MEMBERS</li>
-			</ul> *@
+  <h2>Gallery</h2>
  </div>
  <div class="lol">
   <div class="row shuffle-images">
-   <div class="col-md">
-	<img class="HEAD" src="~/img/committee/h_it.jpg" alt="" />
-   </div>
-   <div class="col-md">
-	<img class="VICE" src="~/img/committee/v_it.jpg" alt="" />
-   </div>
-   <div class="col-md">
-	<img class="MEMBERS" src="~/img/committee/m1_it.jpg" alt="" />
-   </div>
-   <div class="col-md">
-	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
-   </div>
-  </div>
-  <div class="row shuffle-images">
-   <div class="col-md">
-	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
-   </div>
-   <div class="col-md">
-	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
-   </div>
-   <div class="col-md">
-	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
-   </div>
-   <div class="col-md">
-	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
-   </div>
-  </div>
-  <div class="row shuffle-images">
-   <div class="col-md">
-	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
-   </div>
-   <div class="col-md">
-	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
-   </div>
-   <div class="col-md">
-	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
-   </div>
-   <div class="col-md">
-	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
-   </div>
+	  @if(Model.ChosenProject.ProjectImages != null && Model.ChosenProject.ProjectImages.Count != 0)
+	  {
+		  foreach(var image in Model.ChosenProject.ProjectImages)
+		  {
+			  if(image.Type.ImgType == "Thumbnail")
+			  {
+				  continue;
+			  }
+			<div class="col-md">
+				@if(image.ImagePath.StartsWith("~"))
+				{
+					var imgSrc = @Url.Content(image.ImagePath);
+					<img class="img-195" src="@imgSrc" alt="Project img" />
+      <a asp-action="deleteimage" asp-controller="projects" asp-route-id="@image.Id">
+        <i class="mdi mdi-delete-forever clickable light"></i>
+      </a>
+				}else
+				{
+					<img class="img-195" src="~/projects/image/@image.Id" alt="Project img" />
+      <a asp-action="deleteimage" asp-controller="projects" asp-route-id="@image.Id">
+        <i class="mdi mdi-delete-forever clickable light"></i>
+      </a>
+				}
+			</div>
+		  }
+	  }
   </div>
  </div>
 </div>
-
 <!-- End Featured Work -->
 
 
@@ -135,5 +127,127 @@
 	projects</a>
   </div>
  </div>
+
+         <!-- Modal HTML Markup -->
+<div id="editProjectModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-xs-center">Edit Project</h4>
+      </div>
+    @if (TempData[ResultMessageKey] != null)
+      {
+        ResultMsgViewModel resultVM = JsonNet.Deserialize<ResultMsgViewModel>(TempData[ResultMessageKey].ToString());
+        <div class="modal-header">
+          <div class="@resultVM.CssClass">@resultVM.Message</div>
+        </div>
+      }
+      <div class="modal-body">
+        <form role="form" asp-action="Edit" asp-controller="Projects" enctype="multipart/form-data" method="post">
+        <div class="form-group">
+          <label>Title</label>
+          <input type="hidden" asp-for="ProjectId" value="@Model.ChosenProject.Id">
+          <input type="text" class="form-control" asp-for="Title" value="@Model.ChosenProject.Title">
+          <span class="text-danger" asp-validation-for="Title"></span>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea asp-for="Description" class="form-control">@Model.ChosenProject.Description</textarea>
+          <span class="text-danger" asp-validation-for="Description"></span>
+        </div>
+        <div class="form-group">
+          <label>Tools Used</label>
+          <input type="text" class="form-control" asp-for="ToolsUsed" value="@Model.ChosenProject.ToolsUsed">
+          <span class="text-danger" asp-validation-for="ToolsUsed"></span>
+        </div>
+        <div class="form-group">
+          <label>Edit Contributors & Roles</label>
+          <select class="form-control" multiple asp-for="UsersNRolesIds">
+            @if (Model.UserRolesInProject.Count != 0 && Model.ChosenProject.UsersInProjects.Count != 0)
+            {
+              foreach (var userInProject in Model.ChosenProject.UsersInProjects)
+              {
+                <option disabled class="light">@userInProject.User.UserName</option>
+                <option selected value="@userInProject.Role.Id-@userInProject.User.Id">@userInProject.Role.Role</option>
+                @foreach (var userRole in Model.UserRolesInProject)
+                {
+                  if(userRole.Id == userInProject.Role.Id)
+                  {
+                    continue;
+                  }
+                  <option value="@userRole.Id-@userInProject.User.Id">@userRole.Role</option>
+                }
+                <option class="light" disabled>---------------------</option>
+              }
+            }
+          </select>
+          <span class="text-danger" asp-validation-for="UsersNRolesIds"></span>
+        </div>
+        <div class="form-group">
+          <label>Add Contributors & Roles</label>
+          <select class="form-control" multiple asp-for="AddUsersNRolesIds">
+            @if (Model.UserRolesInProject.Count != 0 && Model.Users.Count != 0)
+            {
+              foreach (var user in Model.Users)
+              {
+                <option disabled class="light">@user.UserName</option>
+                @foreach (var userRole in Model.UserRolesInProject)
+                {
+                  <option value="@userRole.Id-@user.Id">@userRole.Role</option>
+                }
+                <option class="light" disabled>---------------------</option>
+              }
+            }
+          </select>
+          <span class="text-danger" asp-validation-for="UsersNRolesIds"></span>
+        </div>
+        <div class="form-group">
+          <label>Edit Thumbnail</label>
+          <input type="hidden" value="@Model.ThumbnailTypeId" asp-for="ThumbnailTypeId">
+          <input type="file" accept ="image/*" asp-for="ProjectThumbnail">
+          <span class="text-danger" asp-validation-for="ProjectThumbnail"></span>
+        </div>
+        <div class="form-group">
+          <label>Add Other Images</label>
+          <input type="hidden" value="@Model.OtherTypeId" asp-for="OtherTypeId">
+          <input type="file" accept="image/*" multiple="multiple" asp-for="ProjectImages">
+        </div>
+        <div class="form-group">
+          <label>Project Type</label>
+          <select class="form-control" asp-for="ProjectTypeId">
+			  <option value="@Model.ChosenProject.Type.Id" selected>@Model.ChosenProject.Type.Type</option>
+            @if (Model.ProjectTypes.Count != 0)
+            {
+              foreach (var pt in Model.ProjectTypes)
+              {
+                <option value="@pt.Id">@pt.Type</option>
+              }
+            }
+          </select>
+          <span asp-validation-for="ProjectTypeId" class="text-danger"></span>
+        </div>
+        @if (Model.ChosenProject.ProjectLinks.Count != 0)
+        {
+          @foreach (var projectLink in Model.ChosenProject.ProjectLinks)
+          {
+            <div class="form-group">
+              <label class="control-label">@projectLink.Type.Type</label>
+              <div>
+                <input type="hidden" value="@projectLink.Id" asp-for="LinksIds"/>
+                <input type="text" class="form-control input-lg" asp-for="ProjectLinks" value="@projectLink.Link"/>
+              </div>
+            </div>
+          }
+          <span class="text-danger" asp-validation-for="ProjectLinks"></span>
+        }
+        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 </section>
 <!-- End  -->

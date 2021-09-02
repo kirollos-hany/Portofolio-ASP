@@ -12,8 +12,8 @@ namespace Portofolio.Models
         {
             UserLinks = new HashSet<UserLink>();
             UsersInProjects = new HashSet<UsersInProject>();
-            PhoneNumber = "Not Assigned";
-            Specialization = "Not Assigned";
+            PhoneNumber = "N/A";
+            Specialization = "N/A";
             ImagePath = "~/img/avatar.png";
         }
 

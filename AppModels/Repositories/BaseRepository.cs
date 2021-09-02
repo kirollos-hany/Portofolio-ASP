@@ -17,6 +17,8 @@ namespace Portofolio.AppModels.Repositories
 
         public abstract Task<T> Delete(T entity);
 
+        public abstract Task<ICollection<T>> DeleteCollection(ICollection<T> entities);
+
         public abstract Task<T> Edit(T entity);
 
         public abstract Task<T> FindByCondition(Expression<Func<T, bool>> expression);

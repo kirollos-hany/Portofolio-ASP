@@ -13,6 +13,10 @@ namespace Portofolio.Models
     [Index(nameof(TypeId), Name = "TypeId")]
     public partial class ProjectLink
     {
+        public ProjectLink()
+        {
+            Link = "#";
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

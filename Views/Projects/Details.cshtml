@@ -14,7 +14,17 @@
   <div class="row">
    <div class="col-lg-8 left-contents">
 	<div class="main-image">
-	 <img class="img-fluid" src="~/img/committee/it.jpg" alt="">
+	@{
+        var thumbnail = Model.ProjectImages.Where((pi) => pi.Type.ImgType == "Thumbnail").FirstOrDefault<ProjectImage>();
+    }
+    @if(thumbnail.ImagePath.StartsWith("~"))
+    {
+         var imgSrc = @Url.Content(thumbnail.ImagePath);
+    	<img class="img-fluid" src="imgSrc" alt="Project thumbnail">
+    }else
+    {
+        <img class="img-fluid" src="~/projects/image/@thumbnail.Id" alt="Project thumbnail">
+    }
 	</div>
 	<div class="jq-tab-wrapper" id="horizontalTab">
 	 <div class="jq-tab-menu">
@@ -42,7 +52,7 @@
 						{
 							<li>
 								<a class="justify-content-between d-flex">
-									<h5>@userInProject.Role.Role</h5>
+									<h5 class="dark">@userInProject.Role.Role</h5>
 									<span class="or">@userInProject.User.UserName</span>
 								</a>
 							</li>
@@ -50,22 +60,14 @@
 					}
 	 <li>
 	  <a class="justify-content-between d-flex" href="#go">
-	   <h5>Team Members</h5>
-	   <span>@Model.UsersInProjects.Count</span>
+	   <h5 class="dark">Team Members</h5>
+	   <span class="or">@Model.UsersInProjects.Count</span>
 	  </a>
 	 </li>
 	 <li>
 	  <a class="justify-content-between d-flex">
-	   <h5>Technologies & Tools</h5>
-	   @{
-		   string tools = string.Empty;
-		   if(Model.Tools.Count != 0){
-			   foreach(ProjectTool tool in Model.Tools){
-				   tools = string.Concat(tools, tool.ToolUsed, "-");
-			   }
-		   }
-	   }
-	   <span style="margin-left: 20px">@tools</span>
+	   <h5 class="dark">Technologies & Tools</h5>
+	   <span style="margin-left: 20px" class="or">@Model.ToolsUsed</span>
 	  </a>
 	 </li>
 	</ul>
@@ -77,24 +79,40 @@
 <!-- Start Featured Work -->
 <div id="go" class="featured-work text-center">
  <div class="container">
-  <h2>TEAM</h2>
-		@* <ul class="list-unstyled row">
-			<li data-class="ALL" class="active col-md">ALL </li>
-			<li data-class=".HEAD" class="col-md">LEADER</li>
-			<li data-class=".VICE" class="col-md">VICE HEAD</li>
-			<li data-class=".MEMBERS" class="col-md">MEMBERS</li>
-			</ul> *@
+  <h2>Gallery</h2>
  </div>
  <div class="lol">
   <div class="row shuffle-images">
+	  	  @if(Model.ProjectImages != null && Model.ProjectImages.Count != 0)
+	  {
+		  foreach(var image in Model.ProjectImages)
+		  {
+			  if(image.Type.ImgType == "Thumbnail")
+			  {
+				  continue;
+			  }
+			<div class="col-md">
+				@if(image.ImagePath.StartsWith("~"))
+				{
+					var imgSrc = @Url.Content(image.ImagePath);
+					<img class="img-195" src="@imgSrc" alt="Project img" />
+				}else
+				{
+					<img class="img-195" src="~/projects/image/@image.Id" alt="Project img" />
+				}
+			</div>
+		  }
+	  }
+  </div>
+  @* <div class="row shuffle-images">
    <div class="col-md">
-	<img class="HEAD" src="~/img/committee/h_it.jpg" alt="" />
+	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
    </div>
    <div class="col-md">
-	<img class="VICE" src="~/img/committee/v_it.jpg" alt="" />
+	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
    </div>
    <div class="col-md">
-	<img class="MEMBERS" src="~/img/committee/m1_it.jpg" alt="" />
+	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
    </div>
    <div class="col-md">
 	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
@@ -113,21 +131,7 @@
    <div class="col-md">
 	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
    </div>
-  </div>
-  <div class="row shuffle-images">
-   <div class="col-md">
-	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
-   </div>
-   <div class="col-md">
-	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
-   </div>
-   <div class="col-md">
-	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
-   </div>
-   <div class="col-md">
-	<img class="MEMBERS" src="~/img/committee/t.def.jpg" alt="" />
-   </div>
-  </div>
+  </div> *@
  </div>
 </div>
 

@@ -29,6 +29,13 @@ namespace Portofolio.AppModels.Repositories
             return entity;
         }
 
+        public async override Task<ICollection<ContactStatus>> DeleteCollection(ICollection<ContactStatus> entities)
+        {
+            dbContext.ContactStatuses.RemoveRange(entities);
+            await SaveChanges();
+            return entities;
+        }
+
         public async override Task<ContactStatus> Edit(ContactStatus entity)
         {
             ContactStatus contactStatus = await dbContext.ContactStatuses.Include(contactStatus => contactStatus.Contacts).FirstOrDefaultAsync(cs => cs.Id == entity.Id);
