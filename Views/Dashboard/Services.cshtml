@@ -5,6 +5,7 @@
 <!-- Start events-list Area -->
 <section class="events-list-area section-gap event-page-lists" style="padding: 60px 0;">
     <div class="container">
+        <i class="btn btn-primary mr-2 clickable mb-10" data-target="#createServiceModal" data-toggle="modal">+ Create New Service</i>
         <div class="row align-items-center">
     @if (Model.Services.Count != 0)
     {
@@ -13,11 +14,25 @@
                     <div class="col-lg-6 pb-30">
                         <div class="single-carusel row align-items-center">
                             <div class="col-12 col-md-6 thumb">
-                                <img class="img-fluid" src="~/img/committees-temp.jpg" alt="">
+                                @if(service.ServiceImage.StartsWith("~"))
+                                {
+                                    var imgSrc = @Url.Content(service.ServiceImage);
+                                    <img class="img-fluid" src="@imgSrc" alt="service img">
+                                }
+                                else
+                                {
+                                    <img class="img-fluid" src="~/services/image/@service.Id" alt="service img">
+                                }
+                                
                             </div>
                             <div class="detials col-12 col-md-6">
                                 <h4>@service.ServiceName</h4>
                                 <p>@service.ServiceDescription</p>
+                                <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16 clickable service-edit" data-toggle="modal"
+                                        data-target="#editServiceModal" service-id="@service.Id" service-name="@service.ServiceName" service-description="@service.ServiceDescription"></i>
+                            <a asp-action="delete" asp-controller="services" asp-route-id="@service.Id">
+                                <i class="mdi mdi-delete-forever clickable light"></i>
+                            </a>
                             </div>
                         </div>
                     </div>
@@ -25,5 +40,87 @@
     }
         </div>
     </div>
+     <!-- Modal HTML Markup -->
+<div id="editServiceModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-xs-center">Edit Service</h4>
+      </div>
+    @if (TempData[ResultMessageKey] != null)
+      {
+        ResultMsgViewModel resultVM = JsonNet.Deserialize<ResultMsgViewModel>(TempData[ResultMessageKey].ToString());
+        <div class="modal-header">
+          <div class="@resultVM.CssClass">@resultVM.Message</div>
+        </div>
+      }
+      <div class="modal-body">
+        <form role="form" id="editServiceForm" asp-action="Edit" asp-controller="Services" enctype="multipart/form-data" method="post">
+        <div class="form-group">
+          <label>Service Name</label>
+          <input type="hidden" asp-for="Id">
+          <input type="text" class="form-control" asp-for="Name">
+          <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea asp-for="Description" class="form-control"></textarea>
+          <span class="text-danger" asp-validation-for="Description"></span>
+        </div>
+        <div class="form-group">
+          <label>Image</label>
+          <input type="file" accept ="image/*" asp-for="ServiceImage">
+          <span class="text-danger" asp-validation-for="ServiceImage"></span>
+        </div>
+        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+    <!-- Modal HTML Markup -->
+<div id="createServiceModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-xs-center">Create Service</h4>
+      </div>
+    @if (TempData[ResultMessageKey] != null)
+      {
+        ResultMsgViewModel resultVM = JsonNet.Deserialize<ResultMsgViewModel>(TempData[ResultMessageKey].ToString());
+        <div class="modal-header">
+          <div class="@resultVM.CssClass">@resultVM.Message</div>
+        </div>
+      }
+      <div class="modal-body">
+        <form role="form" id="createServiceForm" asp-action="Create" asp-controller="Services" enctype="multipart/form-data" method="post">
+        <div class="form-group">
+          <label>Service Name</label>
+          <input type="text" class="form-control" asp-for="Name">
+          <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea asp-for="Description" class="form-control"></textarea>
+          <span class="text-danger" asp-validation-for="Description"></span>
+        </div>
+        <div class="form-group">
+          <label>Image</label>
+          <input type="file" accept ="image/*" asp-for="ServiceImage">
+          <span class="text-danger" asp-validation-for="ServiceImage"></span>
+        </div>
+        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<script src="~/js/servicecrud.js"></script>
+<!-- /.modal -->
 </section>
 <!-- End events-list Area -->

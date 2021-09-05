@@ -19,6 +19,7 @@ namespace Portofolio.AppModels.Extensions
             services.AddScoped(typeof(BaseRepository<Project>), typeof(ProjectsRepository));
             services.AddScoped(typeof(BaseImageServices<User>), typeof(UserImageServices));
             services.AddScoped(typeof(BaseImageServices<Project>), typeof(ProjectImageServices));
+            services.AddScoped(typeof(BaseImageServices<Service>), typeof(ServiceImageServices));
             services.AddScoped(typeof(BaseRepository<RequestedService>), typeof(RequestedServicesRepository));
             services.AddScoped(typeof(BaseRepository<UsersInProject>), typeof(UIPRepository));
             services.AddScoped(typeof(BaseRepository<UserLink>), typeof(UserLinksRepository));

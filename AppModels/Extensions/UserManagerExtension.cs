@@ -38,16 +38,6 @@ namespace Portofolio.AppModels.Extensions
             return user;
         }
 
-        public static async Task<ImageModel> GetProfileImageAsync(this UserManager<User> userManager, BaseImageServices<User> imageServices, int id)
-        {
-            var user = await Task.Run(() => userManager.Users.Where(user => user.Id == id).FirstOrDefault());
-            return new ImageModel
-            {
-                FileStream = await File.ReadAllBytesAsync(user.ImagePath),
-                ContentType = "image/" + imageServices.GetImgExtension(user.ImagePath)
-            };
-        }
-
         public static async Task<User> CreateUserAsync(this UserManager<User> userManager, CreateProfileViewModel userProfileViewModel)
         {
             var newUser = new User

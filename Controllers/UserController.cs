@@ -13,6 +13,7 @@ using Portofolio.AppModels.Exceptions;
 using static Portofolio.AppModels.Utils.KeyConstants;
 using Json.Net;
 using Portofolio.AppModels.Models;
+using Microsoft.EntityFrameworkCore;
 namespace Portofolio.Controllers
 {
     public class UserController : Controller
@@ -132,7 +133,8 @@ namespace Portofolio.Controllers
 
         public async Task<IActionResult> ProfileImage(int id)
         {
-            var imageModel = await userManager.GetProfileImageAsync(imageServices, id);
+            var user = await userManager.Users.FirstOrDefaultAsync((user) => user.Id == id);
+            var imageModel = await imageServices.GetImageAsync(user.ImagePath);
             return File(imageModel.FileStream, imageModel.ContentType);
         }
 

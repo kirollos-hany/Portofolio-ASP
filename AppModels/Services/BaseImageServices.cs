@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using System;
 using Portofolio.AppModels.Exceptions;
 using System.Collections.Generic;
+using Portofolio.AppModels.Models;
 namespace Portofolio.AppModels.Services
 {
     public abstract class BaseImageServices<T> : IImageService where T : class
@@ -26,7 +27,11 @@ namespace Portofolio.AppModels.Services
         }
         public virtual void DeleteImg(string imagePath)
         {
-             File.Delete(imagePath);
+            if(imagePath.StartsWith("~"))
+            {
+                return;
+            }
+            File.Delete(imagePath);
         }
 
         public virtual string GetImgExtension(string imagePath)
@@ -59,6 +64,16 @@ namespace Portofolio.AppModels.Services
                     supportedExtensions = string.Concat(supportedExtensions, ext, "\n");
                 }
                 throw new CustomException($"Image extension not supported.\nSupported extensions:\n{supportedExtensions}");
-            }        }
+            }
+        }
+
+        public async virtual Task<ImageModel> GetImageAsync(string imagePath)
+        {
+            return new ImageModel
+            {
+                FileStream = await File.ReadAllBytesAsync(imagePath),
+                ContentType = "image/" + GetImgExtension(imagePath)
+            };
+        }
     }
 }

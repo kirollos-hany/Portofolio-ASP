@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "e:\\Personal\\Portofolio\\Portofolio.csproj": {}
+    "E:\\Personal\\Portofolio\\Portofolio.csproj": {}
   },
   "projects": {
-    "e:\\Personal\\Portofolio\\Portofolio.csproj": {
+    "E:\\Personal\\Portofolio\\Portofolio.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "e:\\Personal\\Portofolio\\Portofolio.csproj",
+        "projectUniqueName": "E:\\Personal\\Portofolio\\Portofolio.csproj",
         "projectName": "Portofolio",
-        "projectPath": "e:\\Personal\\Portofolio\\Portofolio.csproj",
+        "projectPath": "E:\\Personal\\Portofolio\\Portofolio.csproj",
         "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "e:\\Personal\\Portofolio\\obj\\",
+        "outputPath": "E:\\Personal\\Portofolio\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config"

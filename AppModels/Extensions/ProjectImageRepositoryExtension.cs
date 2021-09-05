@@ -4,8 +4,6 @@ using Portofolio.Models;
 using System.Linq;
 using Portofolio.AppModels.Services;
 using Microsoft.AspNetCore.Http;
-using Portofolio.AppModels.Models;
-using System.IO;
 namespace Portofolio.AppModels.Extensions
 {
     public static class ProjectImageRepositoryExtension
@@ -22,16 +20,6 @@ namespace Portofolio.AppModels.Extensions
                     ImagePath = imagePath
                 });
             }
-        }
-
-        public async static Task<ImageModel> GetThumbnail(this BaseRepository<ProjectImage> repository, int imageId, BaseImageServices<Project> imageServices)
-        {
-            var image = await repository.GetById(imageId);
-            return new ImageModel
-            {
-                FileStream = await File.ReadAllBytesAsync(image.ImagePath),
-                ContentType = "image/" + imageServices.GetImgExtension(image.ImagePath)
-            };
         }
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 03, 2021 at 12:14 PM
+-- Generation Time: Sep 05, 2021 at 02:19 PM
 -- Server version: 8.0.26
 -- PHP Version: 7.4.2
 
@@ -103,7 +103,7 @@ CREATE TABLE `aspnetusers` (
   `PasswordHash` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `SecurityStamp` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `ConcurrencyStamp` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-  `PhoneNumber` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'N/A',
+  `PhoneNumber` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT 'Not Assigned',
   `PhoneNumberConfirmed` tinyint(1) NOT NULL,
   `TwoFactorEnabled` tinyint(1) NOT NULL,
   `LockoutEnd` datetime(6) DEFAULT NULL,
@@ -488,8 +488,7 @@ INSERT INTO `requestedservices` (`Id`, `ServiceId`, `ContactId`, `CreatedAt`, `U
 (18, 2, 60, '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000'),
 (19, 1, 61, '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000'),
 (20, 2, 61, '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000'),
-(21, 3, 62, '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000'),
-(22, 4, 62, '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000');
+(21, 3, 62, '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000');
 
 -- --------------------------------------------------------
 
@@ -511,10 +510,12 @@ CREATE TABLE `services` (
 --
 
 INSERT INTO `services` (`Id`, `ServiceName`, `ServiceDescription`, `ServiceImage`, `CreatedAt`, `UpdatedAt`) VALUES
-(1, 'Web Application Service', 'Nihil necessitatibus aliquid doloribus eius quis. Vel laborum sed et tempore ullam sint in tempore. Ad sint blanditiis sunt beatae minima veritatis.', 'Impedit repellat nostrum consequatur culpa quia.', '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000'),
-(2, 'Desktop Application Service', 'A libero quia qui dolorum iure voluptas illo ut. Distinctio voluptas temporibus illum molestiae earum. Voluptatem fugiat ea quaerat qui illum voluptatibus natus. Labore consectetur sunt saepe. Ea distinctio est in dicta sit sequi molestiae non consequatur. Velit et repellendus a.', 'Natus sapiente voluptatem eum modi adipisci consequatur libero voluptas non.', '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000'),
-(3, 'Mobile Application Service', 'Illum ea eaque est commodi. Quaerat nam voluptate sit quaerat in. Vel ut ea eum deserunt possimus et aperiam necessitatibus qui. Ducimus autem est est minima quaerat dolores modi commodi et. Vitae laudantium fugiat quibusdam dolor autem eius ut iste ducimus. Et illum corrupti ipsum qui totam.', 'Recusandae porro quia officia tempore eaque fugiat suscipit ut. Pariatur cumque rerum sint sunt consequatur fuga consequatur quasi.', '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000'),
-(4, 'Other', 'Other services by demand', '~/img/committees-temp.jpg', '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000');
+(1, 'Web Application Service', 'A libero quia qui dolorum iure voluptas illo ut. Distinctio voluptas temporibus illum molestiae earum. Voluptatem fugiat ea quaerat qui illum voluptatibus natus. Labore consectetur sunt saepe. Ea distinctio est in dicta sit sequi molestiae non consequatur. Velit et repellendus a.', 'Images/Services\\4f29b64f-bcf8-4740-83b5-a705e08b02da.jpg', '0001-01-01 00:00:00.000000', '2021-09-05 14:03:45.578370'),
+(2, 'Desktop Application Service', 'A libero quia qui dolorum iure voluptas illo ut. Distinctio voluptas temporibus illum molestiae earum. Voluptatem fugiat ea quaerat qui illum voluptatibus natus. Labore consectetur sunt saepe. Ea distinctio est in dicta sit sequi molestiae non consequatur. Velit et repellendus a.', 'Images/Services\\unnamed.jpg', '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000'),
+(3, 'Mobile Application Service', 'Illum ea eaque est commodi. Quaerat nam voluptate sit quaerat in. Vel ut ea eum deserunt possimus et aperiam necessitatibus qui. Ducimus autem est est minima quaerat dolores modi commodi et. Vitae laudantium fugiat quibusdam dolor autem eius ut iste ducimus. Et illum corrupti ipsum qui totam.', 'Images/Services\\unnamed.jpg', '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000'),
+(5, 'Other', 'Other services by demand', 'Images/Services\\unnamed.jpg', '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000'),
+(6, 'Data Analysis', 'A libero quia qui dolorum iure voluptas illo ut. Distinctio voluptas temporibus illum molestiae earum. Voluptatem fugiat ea quaerat qui illum voluptatibus natus. Labore consectetur sunt saepe. Ea distinctio est in dicta sit sequi molestiae non consequatur. Velit et repellendus a.', 'Images/Services\\169d599c-f2f7-4feb-bd5a-1e90cbda5658.jpg', '2021-09-05 14:18:08.159428', '2021-09-05 14:18:08.159467'),
+(7, 'Machine Learning', 'A libero quia qui dolorum iure voluptas illo ut. Distinctio voluptas temporibus illum molestiae earum. Voluptatem fugiat ea quaerat qui illum voluptatibus natus. Labore consectetur sunt saepe. Ea distinctio est in dicta sit sequi molestiae non consequatur. Velit et repellendus a.', 'Images/Services\\6f9fbcb6-0374-4e8f-87ab-c9ebbf42742b.jpg', '2021-09-05 14:18:33.614816', '2021-09-05 14:18:48.244526');
 
 -- --------------------------------------------------------
 
@@ -920,7 +921,7 @@ ALTER TABLE `requestedservices`
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `userlinks`

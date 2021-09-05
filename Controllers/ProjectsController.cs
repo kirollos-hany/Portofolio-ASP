@@ -216,11 +216,11 @@ namespace Portofolio.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var project = await projectsRepository.GetById(id);
-            if(project.ProjectFeedbacks != null && project.ProjectFeedbacks.Count != 0)
+            if (project.ProjectFeedbacks != null && project.ProjectFeedbacks.Count != 0)
             {
                 await feedbackRepository.DeleteCollection(project.ProjectFeedbacks);
             }
-            foreach(var image in project.ProjectImages)
+            foreach (var image in project.ProjectImages)
             {
                 imageServices.DeleteImg(image.ImagePath);
             }
@@ -237,12 +237,13 @@ namespace Portofolio.Controllers
             var image = await projectImagesRepository.GetById(id);
             imageServices.DeleteImg(image.ImagePath);
             await projectImagesRepository.Delete(image);
-            return RedirectToAction(nameof(DashboardController.ProjectDetails), "Dashboard", new {id = image.ProjectId});
+            return RedirectToAction(nameof(DashboardController.ProjectDetails), "Dashboard", new { id = image.ProjectId });
         }
 
         public async Task<IActionResult> Image(int id)
         {
-            var imageModel = await projectImagesRepository.GetThumbnail(id, imageServices);
+            var project = await projectImagesRepository.GetById(id);
+            var imageModel = await imageServices.GetImageAsync(project.ImagePath);
             return File(imageModel.FileStream, imageModel.ContentType);
         }
 

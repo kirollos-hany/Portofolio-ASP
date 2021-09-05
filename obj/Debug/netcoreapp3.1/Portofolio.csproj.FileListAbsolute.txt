@@ -58,6 +58,7 @@ E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Contact\Index.cshtml.
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Contacts.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Index.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\ProjectDetails.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Services.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Errors\error404.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\Blog.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\BlogSingle.cshtml.g.cs
@@ -90,4 +91,3 @@ E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.csproj.CopyComplete
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.dll
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.pdb
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.genruntimeconfig.cache
-E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Services.cshtml.g.cs
