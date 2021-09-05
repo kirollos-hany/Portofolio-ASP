@@ -28,6 +28,10 @@ namespace Portofolio.AppModels.Extensions
                     UserId = userId,
                     TypeId = linkTypeIds.ElementAt(i),
                 };
+                if(links.ElementAt(i) != null)
+                {
+                    newUserLink.Link = links.ElementAt(i);
+                }
                 await repository.Create(newUserLink);
             }
         }

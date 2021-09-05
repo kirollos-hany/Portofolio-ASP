@@ -12,12 +12,15 @@ namespace Portofolio.AppModels.Extensions
         {
             for (int i = 0; i < links.Count; i++)
             {
-                await repository.Create(new ProjectLink
-                {
+                var link = new ProjectLink{
                     ProjectId = projectId,
-                    TypeId = linkTypesIds.ElementAt(i),
-                    Link = links.ElementAt(i) == null ? "#" : links.ElementAt(i)
-                });
+                    TypeId = linkTypesIds.ElementAt(i)
+                };
+                if(links.ElementAt(i) != null)
+                {
+                    link.Link = links.ElementAt(i);
+                }
+                await repository.Create(link);
             }
         }
 

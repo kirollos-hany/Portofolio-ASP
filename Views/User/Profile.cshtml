@@ -66,10 +66,9 @@
                       {
                         if(ul.Link != null && ul.Link != "#")
                         {
-                          var linkType = ul.Type.Type.ToLower();
                         <a href="@ul.Link" target="_blank" data-toggle="tooltip" data-placement="bottom" title=""
                         data-original-title="facebook" data-abc="true"><i
-                          class="mdi mdi-@linkType-box feather icon-facebook facebook" aria-hidden="true"></i></a>
+                          class="@ul.Type.IconClass" aria-hidden="true"></i></a>
                         }
                       }
                     }
