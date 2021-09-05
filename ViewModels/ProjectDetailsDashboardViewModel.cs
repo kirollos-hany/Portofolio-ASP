@@ -10,10 +10,6 @@ namespace Portofolio.ViewModels
         public ICollection<User> Users { get; set; }
         public Project ChosenProject { get; set; }
 
-        [Required]
-        public int ThumbnailTypeId { get; set; }
-
-        public int OtherTypeId { get; set; }
         public ICollection<ProjectType> ProjectTypes { get; set; }
 
         public IFormFile ProjectThumbnail { get; set; }

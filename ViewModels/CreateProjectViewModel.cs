@@ -6,10 +6,6 @@ namespace Portofolio.ViewModels
 {
     public class CreateProjectViewModel : DashboardViewModel
     {
-        [Required]
-        public int ThumbnailTypeId { get; set; }
-
-        public int OtherTypeId { get; set; }
         public ICollection<ProjectType> ProjectTypes { get; set; }
         [Required(ErrorMessage = "A project thumbnail is required")]
         public IFormFile ProjectThumbnail { get; set; }
@@ -38,10 +34,6 @@ namespace Portofolio.ViewModels
 
         [Required(ErrorMessage = "Contributors and roles are required")]
         public ICollection<string> UsersNRolesIds { get; set; }
-
-        
-        [Required(ErrorMessage = "Contributors and roles are required")]
-        public ICollection<string> AddUsersNRolesIds { get; set; }
 
         [Required(ErrorMessage = "Tools used in project are required")]
         [RegularExpression("([A-Z]|[a-z]|[0-9]|-)+", ErrorMessage = "Please make sure tools follow the Tool1-Tool2 format")]

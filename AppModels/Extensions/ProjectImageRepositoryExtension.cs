@@ -8,7 +8,7 @@ namespace Portofolio.AppModels.Extensions
 {
     public static class ProjectImageRepositoryExtension
     {
-        public async static Task CreateFromCollection(this BaseRepository<ProjectImage> repository, int projectId, int imgTypeId, IFormFileCollection images,BaseImageServices<Project> imageService)
+        public async static Task CreateFromCollection(this BaseRepository<ProjectImage> repository, int projectId, IFormFileCollection images,BaseImageServices<Project> imageService)
         {
             for(int i = 0; i < images.Count; i++)
             {
@@ -16,7 +16,6 @@ namespace Portofolio.AppModels.Extensions
                 string imagePath = await imageService.UploadImgAsync(images.ElementAt(i));
                 await repository.Create(new ProjectImage{
                     ProjectId = projectId,
-                    TypeId = imgTypeId,
                     ImagePath = imagePath
                 });
             }

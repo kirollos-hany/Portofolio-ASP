@@ -16,7 +16,7 @@ namespace Portofolio.AppModels.Extensions
                 {
                     ProjectId = projectId,
                     TypeId = linkTypesIds.ElementAt(i),
-                    Link = links.ElementAt(i)
+                    Link = links.ElementAt(i) == null ? "#" : links.ElementAt(i)
                 });
             }
         }

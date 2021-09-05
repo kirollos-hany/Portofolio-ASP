@@ -14,16 +14,13 @@
   <div class="row">
    <div class="col-lg-8 left-contents">
 	<div class="main-image">
-	@{
-        var thumbnail = Model.ProjectImages.Where((pi) => pi.Type.ImgType == "Thumbnail").FirstOrDefault<ProjectImage>();
-    }
-    @if(thumbnail.ImagePath.StartsWith("~"))
+    @if(Model.Thumbnail.StartsWith("~"))
     {
-         var imgSrc = @Url.Content(thumbnail.ImagePath);
-    	<img class="img-fluid" src="imgSrc" alt="Project thumbnail">
+         var imgSrc = @Url.Content(Model.Thumbnail);
+    	<img class="img-fluid" src="@imgSrc" alt="Project thumbnail">
     }else
     {
-        <img class="img-fluid" src="~/projects/image/@thumbnail.Id" alt="Project thumbnail">
+        <img class="img-fluid" src="~/projects/image/@Model.Id?isThumbnail=true" alt="Project thumbnail">
     }
 	</div>
 	<div class="jq-tab-wrapper" id="horizontalTab">
@@ -87,10 +84,6 @@
 	  {
 		  foreach(var image in Model.ProjectImages)
 		  {
-			  if(image.Type.ImgType == "Thumbnail")
-			  {
-				  continue;
-			  }
 			<div class="col-md">
 				@if(image.ImagePath.StartsWith("~"))
 				{

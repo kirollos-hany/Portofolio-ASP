@@ -11,7 +11,6 @@ namespace Portofolio.Database
         {
             SeedContactStatuses(modelBuilder);
             SeedContacts(modelBuilder);
-            SeedImageTypes(modelBuilder);
             SeedLinkTypes(modelBuilder);
             SeedProjectTypes(modelBuilder);
             SeedProjects(modelBuilder);
@@ -75,27 +74,6 @@ namespace Portofolio.Database
                 csViewed,
                 csCompleted
             );
-        }
-
-        private static void SeedImageTypes(ModelBuilder modelBuilder)
-        {
-            ImageType thumbnail = new ImageType
-            {
-                Id = 1,
-                ImgType = "Thumbnail",
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
-            };
-
-            ImageType other = new ImageType
-            {
-                Id = 2,
-                ImgType = "Other",
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
-            };
-
-            modelBuilder.Entity<ImageType>().HasData(thumbnail, other);
         }
 
         private static void SeedLinkTypes(ModelBuilder modelBuilder)
@@ -210,7 +188,6 @@ namespace Portofolio.Database
                 {
                     Id = i + 1,
                     ProjectId = i + 1,
-                    TypeId = 1,
                     ImagePath = Faker.Lorem.Paragraph(1),
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now

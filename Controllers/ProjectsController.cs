@@ -13,6 +13,7 @@ using static Portofolio.AppModels.Utils.KeyConstants;
 using Portofolio.AppModels.Exceptions;
 using Json.Net;
 using Microsoft.AspNetCore.Http;
+using Portofolio.AppModels.Models;
 namespace Portofolio.Controllers
 {
     public class ProjectsController : Controller
@@ -27,8 +28,6 @@ namespace Portofolio.Controllers
 
         private readonly BaseRepository<UserRoleInProject> uripRepository;
 
-        private readonly BaseRepository<ImageType> imageTypeRepository;
-
         private readonly BaseRepository<ProjectLink> projectLinksRepository;
 
         private readonly BaseRepository<ProjectImage> projectImagesRepository;
@@ -37,14 +36,13 @@ namespace Portofolio.Controllers
 
         private readonly BaseRepository<ProjectFeedback> feedbackRepository;
 
-        public ProjectsController(BaseRepository<ProjectFeedback> feedbackRepository, BaseRepository<ProjectImage> projectImagesRepository, BaseRepository<ProjectLink> projectLinksRepository, BaseRepository<UsersInProject> uipRepository, BaseImageServices<Project> imageServices, BaseRepository<ImageType> imageTypeRepository, BaseRepository<UserRoleInProject> uripRepository, BaseRepository<LinkType> linkTypesRepository, BaseRepository<Project> projectsRepository, UserManager<User> userManager, BaseRepository<ProjectType> projectTypeRepository)
+        public ProjectsController(BaseRepository<ProjectFeedback> feedbackRepository, BaseRepository<ProjectImage> projectImagesRepository, BaseRepository<ProjectLink> projectLinksRepository, BaseRepository<UsersInProject> uipRepository, BaseImageServices<Project> imageServices, BaseRepository<UserRoleInProject> uripRepository, BaseRepository<LinkType> linkTypesRepository, BaseRepository<Project> projectsRepository, UserManager<User> userManager, BaseRepository<ProjectType> projectTypeRepository)
         {
             this.userManager = userManager;
             this.projectsRepository = projectsRepository;
             this.projectTypeRepository = projectTypeRepository;
             this.linkTypesRepository = linkTypesRepository;
             this.uripRepository = uripRepository;
-            this.imageTypeRepository = imageTypeRepository;
             this.imageServices = imageServices;
             this.uipRepository = uipRepository;
             this.projectLinksRepository = projectLinksRepository;
@@ -69,17 +67,13 @@ namespace Portofolio.Controllers
             var projectTypes = await projectTypeRepository.GetAll();
             var linkTypes = await linkTypesRepository.GetAll();
             var urips = await uripRepository.GetAll();
-            var thumbnailId = (await imageTypeRepository.FindByCondition((it => it.ImgType == "Thumbnail"))).Id;
-            var otherId = (await imageTypeRepository.FindByCondition((it => it.ImgType == "Other"))).Id;
             return View(new CreateProjectViewModel
             {
                 User = user,
                 Users = users,
                 ProjectTypes = projectTypes,
                 LinkTypes = linkTypes,
-                UserRolesInProject = urips,
-                ThumbnailTypeId = thumbnailId,
-                OtherTypeId = otherId
+                UserRolesInProject = urips
             });
         }
 
@@ -105,13 +99,8 @@ namespace Portofolio.Controllers
             try
             {
                 imageServices.ValidateImgExtension(projectViewModel.ProjectThumbnail);
-                string imagePath = await imageServices.UploadImgAsync(projectViewModel.ProjectThumbnail);
-                await projectImagesRepository.Create(new ProjectImage
-                {
-                    ProjectId = project.Id,
-                    TypeId = projectViewModel.ThumbnailTypeId,
-                    ImagePath = imagePath
-                });
+                project.Thumbnail = await imageServices.UploadImgAsync(projectViewModel.ProjectThumbnail);
+                await projectsRepository.Edit(project);
             }
             catch (CustomException ex)
             {
@@ -125,7 +114,7 @@ namespace Portofolio.Controllers
             {
                 try
                 {
-                    await projectImagesRepository.CreateFromCollection(project.Id, projectViewModel.OtherTypeId, projectViewModel.ProjectImages, imageServices);
+                    await projectImagesRepository.CreateFromCollection(project.Id, projectViewModel.ProjectImages, imageServices);
                 }
                 catch (CustomException ex)
                 {
@@ -175,10 +164,9 @@ namespace Portofolio.Controllers
                 {
                     imageServices.ValidateImgExtension(editViewModel.ProjectThumbnail);
                     string imagePath = await imageServices.UploadImgAsync(editViewModel.ProjectThumbnail);
-                    var projectThumbnail = await projectImagesRepository.FindByCondition((pi) => pi.Type.ImgType == "Thumbnail" && pi.ProjectId == edittedProject.Id);
-                    imageServices.DeleteImg(projectThumbnail.ImagePath);
-                    projectThumbnail.ImagePath = imagePath;
-                    await projectImagesRepository.Edit(projectThumbnail);
+                    imageServices.DeleteImg(edittedProject.Thumbnail);
+                    edittedProject.Thumbnail = imagePath;
+                    await projectsRepository.Edit(edittedProject);
                 }
                 catch (CustomException ex)
                 {
@@ -193,7 +181,7 @@ namespace Portofolio.Controllers
             {
                 try
                 {
-                    await projectImagesRepository.CreateFromCollection(edittedProject.Id, editViewModel.OtherTypeId, editViewModel.ProjectImages, imageServices);
+                    await projectImagesRepository.CreateFromCollection(edittedProject.Id, editViewModel.ProjectImages, imageServices);
                 }
                 catch (CustomException ex)
                 {
@@ -240,10 +228,19 @@ namespace Portofolio.Controllers
             return RedirectToAction(nameof(DashboardController.ProjectDetails), "Dashboard", new { id = image.ProjectId });
         }
 
-        public async Task<IActionResult> Image(int id)
+        public async Task<IActionResult> Image(int id, [FromQuery] bool isThumbnail)
         {
-            var project = await projectImagesRepository.GetById(id);
-            var imageModel = await imageServices.GetImageAsync(project.ImagePath);
+            ImageModel imageModel = new ImageModel();
+            if (isThumbnail)
+            {
+                var project = await projectsRepository.GetById(id);
+                imageModel = await imageServices.GetImageAsync(project.Thumbnail);
+            }
+            else
+            {
+                var project = await projectImagesRepository.GetById(id);
+                imageModel = await imageServices.GetImageAsync(project.ImagePath);
+            }
             return File(imageModel.FileStream, imageModel.ContentType);
         }
 

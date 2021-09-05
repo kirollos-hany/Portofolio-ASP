@@ -19,6 +19,7 @@ namespace Portofolio.Models
             ProjectLinks = new HashSet<ProjectLink>();
             UsersInProjects = new HashSet<UsersInProject>();
             ToolsUsed = "N/A";
+            Thumbnail = "~/img/committee/mm.jpg";
         }
 
         [Key]
@@ -35,7 +36,10 @@ namespace Portofolio.Models
 
         [Required]
         [RegularExpression("(([A-Z]|[a-z]) | [0-9] | -)+", ErrorMessage = "Please make sure tools follow the Tool1-Tool2 format")]
-        public string ToolsUsed {get; set;}
+        public string ToolsUsed { get; set; }
+
+        [Required]
+        public string Thumbnail { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime CreatedAt { get; set; }
         [Column(TypeName = "datetime")]

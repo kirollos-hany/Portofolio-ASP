@@ -43,7 +43,7 @@ namespace Portofolio.AppModels.Repositories
             Project project = await dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks)
             .Include(project => project.ProjectLinks)
-            .Include(project => project.ProjectImages).ThenInclude(projectImage => projectImage.Type)
+            .Include(project => project.ProjectImages)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
             .FirstOrDefaultAsync((project) => project.Id == entity.Id);
@@ -61,7 +61,7 @@ namespace Portofolio.AppModels.Repositories
             return await dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks)
             .Include(project => project.ProjectLinks)
-            .Include(project => project.ProjectImages).ThenInclude(projectImage => projectImage.Type)
+            .Include(project => project.ProjectImages)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
             .Where(expression).FirstOrDefaultAsync();
@@ -72,7 +72,7 @@ namespace Portofolio.AppModels.Repositories
             return await dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks)
             .Include(project => project.ProjectLinks)
-            .Include(project => project.ProjectImages).ThenInclude(projectImage => projectImage.Type)
+            .Include(project => project.ProjectImages)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
             .Where(expression).ToListAsync();
@@ -83,7 +83,7 @@ namespace Portofolio.AppModels.Repositories
             return await dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks)
             .Include(project => project.ProjectLinks)
-            .Include(project => project.ProjectImages).ThenInclude(projectImage => projectImage.Type)
+            .Include(project => project.ProjectImages)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
             .ToListAsync();
@@ -94,7 +94,7 @@ namespace Portofolio.AppModels.Repositories
             return await dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks)
             .Include(project => project.ProjectLinks)
-            .Include(project => project.ProjectImages).ThenInclude(projectImage => projectImage.Type)
+            .Include(project => project.ProjectImages)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
             .FirstOrDefaultAsync(project => project.Id == id);

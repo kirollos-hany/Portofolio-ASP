@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 05, 2021 at 02:19 PM
+-- Generation Time: Sep 05, 2021 at 03:57 PM
 -- Server version: 8.0.26
 -- PHP Version: 7.4.2
 
@@ -294,27 +294,6 @@ INSERT INTO `contactstatuses` (`Id`, `Status`, `CreatedAt`, `UpdatedAt`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `imagetypes`
---
-
-CREATE TABLE `imagetypes` (
-  `Id` int NOT NULL,
-  `ImgType` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `CreatedAt` datetime NOT NULL,
-  `UpdatedAt` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `imagetypes`
---
-
-INSERT INTO `imagetypes` (`Id`, `ImgType`, `CreatedAt`, `UpdatedAt`) VALUES
-(1, 'Thumbnail', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
-(2, 'Other', '2021-08-23 19:15:22', '2021-08-23 19:15:22');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `linktypes`
 --
 
@@ -356,23 +335,11 @@ CREATE TABLE `projectfeedbacks` (
 
 CREATE TABLE `projectimages` (
   `Id` int NOT NULL,
-  `TypeId` int NOT NULL,
   `ProjectId` int NOT NULL,
   `ImagePath` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `CreatedAt` datetime NOT NULL,
   `UpdatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `projectimages`
---
-
-INSERT INTO `projectimages` (`Id`, `TypeId`, `ProjectId`, `ImagePath`, `CreatedAt`, `UpdatedAt`) VALUES
-(51, 1, 55, 'Images/Projects\\031a95a6-1299-4f99-83bf-def220753726.JPG', '2021-08-31 15:11:02', '2021-09-02 10:07:25'),
-(52, 2, 55, 'Images/Projects\\c1fabbe1-329b-4f9e-9586-a5ef99e176dc.JPG', '2021-08-31 15:11:02', '2021-08-31 15:11:02'),
-(54, 2, 55, 'Images/Projects\\f0dd1fbc-11a3-4192-aeca-7c2f98c60fb0.JPG', '2021-08-31 15:11:02', '2021-08-31 15:11:02'),
-(55, 1, 56, 'Images/Projects\\55342af9-9591-4def-8839-f8a2a7743324.JPG', '2021-08-31 15:16:25', '2021-08-31 15:16:25'),
-(59, 2, 55, 'Images/Projects\\de72d3c3-f9e3-400b-88cf-204639e4b30b.JPG', '2021-09-02 09:32:52', '2021-09-02 09:32:52');
 
 -- --------------------------------------------------------
 
@@ -394,14 +361,10 @@ CREATE TABLE `projectlinks` (
 --
 
 INSERT INTO `projectlinks` (`Id`, `ProjectId`, `TypeId`, `Link`, `CreatedAt`, `UpdatedAt`) VALUES
-(59, 55, 1, '#', '2021-08-31 15:11:02', '2021-09-02 10:07:25'),
-(60, 55, 2, '#', '2021-08-31 15:11:02', '2021-09-02 10:07:25'),
-(61, 55, 3, '#', '2021-08-31 15:11:02', '2021-09-02 10:07:25'),
-(62, 55, 4, '#', '2021-08-31 15:11:02', '2021-09-02 10:07:25'),
-(63, 56, 1, '#', '2021-08-31 15:16:25', '2021-08-31 15:16:25'),
-(64, 56, 2, '#', '2021-08-31 15:16:25', '2021-08-31 15:16:25'),
-(65, 56, 3, '#', '2021-08-31 15:16:25', '2021-08-31 15:16:25'),
-(66, 56, 4, '#', '2021-08-31 15:16:25', '2021-08-31 15:16:25');
+(75, 60, 1, '#', '2021-09-05 15:38:49', '2021-09-05 15:43:35'),
+(76, 60, 2, '#', '2021-09-05 15:38:49', '2021-09-05 15:43:35'),
+(77, 60, 3, '#', '2021-09-05 15:38:49', '2021-09-05 15:43:35'),
+(78, 60, 4, '#', '2021-09-05 15:38:49', '2021-09-05 15:43:35');
 
 -- --------------------------------------------------------
 
@@ -416,16 +379,16 @@ CREATE TABLE `projects` (
   `Description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `CreatedAt` datetime NOT NULL,
   `UpdatedAt` datetime NOT NULL,
-  `ToolsUsed` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+  `ToolsUsed` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Thumbnail` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` (`Id`, `TypeId`, `Title`, `Description`, `CreatedAt`, `UpdatedAt`, `ToolsUsed`) VALUES
-(55, 1, 'Title', 'Some Description', '2021-08-31 15:11:02', '2021-09-02 10:07:25', 'Tool1-Tool2'),
-(56, 1, 'Test2', 'Test2', '2021-08-31 15:16:25', '2021-08-31 15:16:25', 'Tool1');
+INSERT INTO `projects` (`Id`, `TypeId`, `Title`, `Description`, `CreatedAt`, `UpdatedAt`, `ToolsUsed`, `Thumbnail`) VALUES
+(60, 3, 'Portofolio', 'Our Startup Portofolio', '2021-09-05 15:38:49', '2021-09-05 15:43:35', 'CSharp-ASPNETCOREMVC-HTML-CSS-JS', 'Images/Projects\\3cb828c9-ec93-45cf-8edd-c82a60825153.JPG');
 
 -- --------------------------------------------------------
 
@@ -642,10 +605,9 @@ CREATE TABLE `usersinprojects` (
 --
 
 INSERT INTO `usersinprojects` (`Id`, `UserId`, `ProjectId`, `RoleId`, `CreatedAt`, `UpdatedAt`) VALUES
-(61, 61, 55, 1, '2021-08-31 15:11:02.070715', '2021-09-02 10:07:24.961940'),
-(62, 59, 55, 2, '2021-08-31 15:11:02.097248', '2021-09-02 10:07:24.967121'),
-(63, 61, 56, 1, '2021-08-31 15:16:25.207166', '2021-08-31 15:16:25.207202'),
-(67, 1, 55, 3, '2021-09-02 08:37:44.835572', '2021-09-02 10:07:24.970201');
+(71, 58, 60, 1, '2021-09-05 15:38:49.302671', '2021-09-05 15:43:35.096806'),
+(72, 61, 60, 1, '2021-09-05 15:38:49.320765', '2021-09-05 15:43:35.109768'),
+(73, 59, 60, 2, '2021-09-05 15:38:49.324432', '2021-09-05 15:43:35.113132');
 
 -- --------------------------------------------------------
 
@@ -666,7 +628,8 @@ INSERT INTO `__efmigrationshistory` (`MigrationId`, `ProductVersion`) VALUES
 ('20210822143603_ResettingDbAddIdentity', '5.0.9'),
 ('20210823171523_AddedSpecializationToUser', '5.0.9'),
 ('20210831071228_AddedTimeStampsForSomeModels', '5.0.9'),
-('20210831102314_EditedRelationProjectTools', '5.0.9');
+('20210831102314_EditedRelationProjectTools', '5.0.9'),
+('20210905125450_RemovedImageTypes', '5.0.9');
 
 --
 -- Indexes for dumped tables
@@ -736,13 +699,6 @@ ALTER TABLE `contactstatuses`
   ADD UNIQUE KEY `Status` (`Status`);
 
 --
--- Indexes for table `imagetypes`
---
-ALTER TABLE `imagetypes`
-  ADD PRIMARY KEY (`Id`),
-  ADD UNIQUE KEY `ImgType` (`ImgType`);
-
---
 -- Indexes for table `linktypes`
 --
 ALTER TABLE `linktypes`
@@ -761,8 +717,7 @@ ALTER TABLE `projectfeedbacks`
 --
 ALTER TABLE `projectimages`
   ADD PRIMARY KEY (`Id`),
-  ADD KEY `ProjectId1` (`ProjectId`),
-  ADD KEY `TypeId1` (`TypeId`);
+  ADD KEY `ProjectId1` (`ProjectId`);
 
 --
 -- Indexes for table `projectlinks`
@@ -770,7 +725,7 @@ ALTER TABLE `projectimages`
 ALTER TABLE `projectlinks`
   ADD PRIMARY KEY (`Id`),
   ADD KEY `ProjectId2` (`ProjectId`),
-  ADD KEY `TypeId2` (`TypeId`);
+  ADD KEY `TypeId1` (`TypeId`);
 
 --
 -- Indexes for table `projects`
@@ -805,7 +760,7 @@ ALTER TABLE `services`
 --
 ALTER TABLE `userlinks`
   ADD PRIMARY KEY (`Id`),
-  ADD KEY `TypeId3` (`TypeId`),
+  ADD KEY `TypeId2` (`TypeId`),
   ADD KEY `UserId` (`UserId`);
 
 --
@@ -870,12 +825,6 @@ ALTER TABLE `contactstatuses`
   MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `imagetypes`
---
-ALTER TABLE `imagetypes`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT for table `linktypes`
 --
 ALTER TABLE `linktypes`
@@ -891,19 +840,19 @@ ALTER TABLE `projectfeedbacks`
 -- AUTO_INCREMENT for table `projectimages`
 --
 ALTER TABLE `projectimages`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `projectlinks`
 --
 ALTER TABLE `projectlinks`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `projecttypes`
@@ -939,7 +888,7 @@ ALTER TABLE `userrolesinproject`
 -- AUTO_INCREMENT for table `usersinprojects`
 --
 ALTER TABLE `usersinprojects`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- Constraints for dumped tables
@@ -992,8 +941,7 @@ ALTER TABLE `projectfeedbacks`
 -- Constraints for table `projectimages`
 --
 ALTER TABLE `projectimages`
-  ADD CONSTRAINT `projectimages_ibfk_1` FOREIGN KEY (`ProjectId`) REFERENCES `projects` (`Id`) ON DELETE RESTRICT,
-  ADD CONSTRAINT `projectimages_ibfk_2` FOREIGN KEY (`TypeId`) REFERENCES `imagetypes` (`Id`) ON DELETE RESTRICT;
+  ADD CONSTRAINT `projectimages_ibfk_1` FOREIGN KEY (`ProjectId`) REFERENCES `projects` (`Id`) ON DELETE RESTRICT;
 
 --
 -- Constraints for table `projectlinks`

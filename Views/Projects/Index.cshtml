@@ -1,4 +1,3 @@
-@using System.Linq
 @{
     ViewData[TitleKey] = "Projects";
     ViewData[BannerNavActionKey] = "index";
@@ -26,16 +25,13 @@
                         <div class="thumb-wrap relative">
                             <div class="thumb relative">
                                 <div class="overlay overlay-bg"></div>
-                                @{
-                                    var thumbnail = project.ProjectImages.Where((pi) => pi.Type.ImgType == "Thumbnail").FirstOrDefault<ProjectImage>();
-                                }
-                                @if(thumbnail.ImagePath.StartsWith("~"))
+                                @if(project.Thumbnail.StartsWith("~"))
                                 {
-                                    var imgSrc = @Url.Content(thumbnail.ImagePath);
-                                    <img class="img-fluid" src="imgSrc" alt="Project thumbnail">
+                                    var imgSrc = @Url.Content(project.Thumbnail);
+                                    <img class="img-fluid" src="@imgSrc" alt="Project thumbnail">
                                 }else
                                 {
-                                    <img class="img-fluid" src="~/projects/image/@thumbnail.Id" alt="Project thumbnail">
+                                    <img class="img-fluid" src="~/projects/image/@project.Id?isThumbnail=true" alt="Project thumbnail">
                                 }
                             </div>
                         </div>

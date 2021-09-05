@@ -49,22 +49,22 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<ProjectImage> FindByCondition(Expression<Func<ProjectImage, bool>> expression)
         {
-            return await dbContext.ProjectImages.Include(pi => pi.Type).FirstOrDefaultAsync(expression);
+            return await dbContext.ProjectImages.FirstOrDefaultAsync(expression);
         }
 
         public async override Task<ICollection<ProjectImage>> FindCollectionByCondition(Expression<Func<ProjectImage, bool>> expression)
         {
-            return await dbContext.ProjectImages.Include(pi => pi.Type).Where(expression).ToListAsync();
+            return await dbContext.ProjectImages.Where(expression).ToListAsync();
         }
 
         public async override Task<ICollection<ProjectImage>> GetAll()
         {
-            return await dbContext.ProjectImages.Include(pi => pi.Type).ToListAsync();
+            return await dbContext.ProjectImages.ToListAsync();
         }
 
         public async override Task<ProjectImage> GetById(int id)
         {
-            return await dbContext.ProjectImages.Include(pi => pi.Type).FirstOrDefaultAsync(pi => pi.Id == id);
+            return await dbContext.ProjectImages.FindAsync(id);
         }
     }
 }

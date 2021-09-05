@@ -25,9 +25,6 @@ namespace Portofolio.Controllers
         private readonly BaseRepository<LinkType> linkTypesRepository;
 
         private readonly BaseRepository<UserRoleInProject> uripRepository;
-
-        private readonly BaseRepository<ImageType> imageTypeRepository;
-
         private readonly BaseRepository<ProjectLink> projectLinksRepository;
 
         private readonly BaseRepository<ProjectImage> projectImagesRepository;
@@ -35,7 +32,7 @@ namespace Portofolio.Controllers
         private readonly BaseImageServices<Project> imageServices;
 
         private readonly BaseRepository<Service> servicesRepository;
-        public DashboardController(BaseRepository<Service> servicesRepository, BaseImageServices<Project> imageServices, BaseRepository<ProjectImage> projectImagesRepository, BaseRepository<ProjectLink> projectLinksRepository, BaseRepository<ImageType> imageTypeRepository, BaseRepository<UserRoleInProject> uripRepository, BaseRepository<LinkType> linkTypesRepository, BaseRepository<ProjectType> projectTypeRepository, BaseRepository<Contact> contactsRepository, BaseRepository<Project> projectsRepository, UserManager<User> userManager, BaseRepository<UsersInProject> uipRepository)
+        public DashboardController(BaseRepository<Service> servicesRepository, BaseImageServices<Project> imageServices, BaseRepository<ProjectImage> projectImagesRepository, BaseRepository<ProjectLink> projectLinksRepository, BaseRepository<UserRoleInProject> uripRepository, BaseRepository<LinkType> linkTypesRepository, BaseRepository<ProjectType> projectTypeRepository, BaseRepository<Contact> contactsRepository, BaseRepository<Project> projectsRepository, UserManager<User> userManager, BaseRepository<UsersInProject> uipRepository)
         {
             this.projectsRepository = projectsRepository;
             this.userManager = userManager;
@@ -44,7 +41,6 @@ namespace Portofolio.Controllers
             this.projectTypeRepository = projectTypeRepository;
             this.linkTypesRepository = linkTypesRepository;
             this.uripRepository = uripRepository;
-            this.imageTypeRepository = imageTypeRepository;
             this.projectLinksRepository = projectLinksRepository;
             this.projectImagesRepository = projectImagesRepository;
             this.imageServices = imageServices;
@@ -76,8 +72,6 @@ namespace Portofolio.Controllers
             var projectTypes = await projectTypeRepository.GetAll();
             var linkTypes = await linkTypesRepository.GetAll();
             var urips = await uripRepository.GetAll();
-            var thumbnailId = (await imageTypeRepository.FindByCondition((it => it.ImgType == "Thumbnail"))).Id;
-            var otherId = (await imageTypeRepository.FindByCondition((it => it.ImgType == "Other"))).Id;
             return View(new ProjectDetailsDashboardViewModel
             {
                 User = user,
@@ -85,8 +79,6 @@ namespace Portofolio.Controllers
                 ChosenProject = project,
                 ProjectTypes = projectTypes,
                 UserRolesInProject = urips,
-                ThumbnailTypeId = thumbnailId,
-                OtherTypeId = otherId
             });
         }
 

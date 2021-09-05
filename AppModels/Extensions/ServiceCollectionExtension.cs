@@ -29,7 +29,6 @@ namespace Portofolio.AppModels.Extensions
             services.AddScoped(typeof(BaseRepository<ProjectLink>), typeof(ProjectLinksRepository));
             services.AddScoped(typeof(BaseRepository<ProjectType>), typeof(ProjectTypeRepository));
             services.AddScoped(typeof(BaseRepository<UserRoleInProject>), typeof(UserRoleInProjectRepository));
-            services.AddScoped(typeof(BaseRepository<ImageType>), typeof(ImageTypeRepository));
             services.AddScoped(typeof(IMailService), typeof(MailService));
             services.AddScoped(typeof(IEmailParserFromModelAsync<HTMLWithModel<Contact>>), typeof(HTMLWithContactEmailParser));
             services.AddScoped(typeof(IEmailParserFromModelAsync<HTMLModel>), typeof(HTMLEmailParser));

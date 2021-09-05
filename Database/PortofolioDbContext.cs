@@ -17,7 +17,6 @@ namespace Portofolio.Database
 
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<ContactStatus> ContactStatuses { get; set; }
-        public virtual DbSet<ImageType> ImageTypes { get; set; }
         public virtual DbSet<LinkType> LinkTypes { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ProjectFeedback> ProjectFeedbacks { get; set; }
@@ -69,12 +68,6 @@ namespace Portofolio.Database
                     .HasForeignKey(d => d.ProjectId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("projectimages_ibfk_1");
-
-                entity.HasOne(d => d.Type)
-                    .WithMany(p => p.ProjectImages)
-                    .HasForeignKey(d => d.TypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("projectimages_ibfk_2");
             });
 
             modelBuilder.Entity<ProjectLink>(entity =>

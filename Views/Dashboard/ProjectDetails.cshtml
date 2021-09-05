@@ -8,13 +8,10 @@
   <div class="row">
    <div class="col-lg-8 left-contents">
 	<div class="main-image">
-	@{
-        var thumbnail = Model.ChosenProject.ProjectImages.Where((pi) => pi.Type.ImgType == "Thumbnail").FirstOrDefault<ProjectImage>();
-    }
-    @if(thumbnail.ImagePath.StartsWith("~"))
+    @if(Model.ChosenProject.Thumbnail.StartsWith("~"))
     {
-         var imgSrc = @Url.Content(thumbnail.ImagePath);
-    	<img class="img-fluid" src="imgSrc" alt="Project thumbnail">
+        var imgSrc = @Url.Content(Model.ChosenProject.Thumbnail);
+    	<img class="img-fluid" src="@imgSrc" alt="Project thumbnail">
 		<i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16 clickable" data-toggle="modal"
                   data-target="#editProjectModal"></i>
       <a asp-action="delete" asp-controller="projects" asp-route-id="@Model.ChosenProject.Id">
@@ -22,7 +19,7 @@
       </a>
     }else
     {
-        <img class="img-fluid" src="~/projects/image/@thumbnail.Id" alt="Project thumbnail">
+        <img class="img-fluid" src="~/projects/image/@Model.ChosenProject.Id?isThumbnail=true" alt="Project thumbnail">
 		<i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16 clickable" data-toggle="modal"
                   data-target="#editProjectModal"></i>
       <a asp-action="delete" asp-controller="projects" asp-route-id="@Model.ChosenProject.Id">
@@ -91,10 +88,6 @@
 	  {
 		  foreach(var image in Model.ChosenProject.ProjectImages)
 		  {
-			  if(image.Type.ImgType == "Thumbnail")
-			  {
-				  continue;
-			  }
 			<div class="col-md">
 				@if(image.ImagePath.StartsWith("~"))
 				{
@@ -203,13 +196,11 @@
         </div>
         <div class="form-group">
           <label>Edit Thumbnail</label>
-          <input type="hidden" value="@Model.ThumbnailTypeId" asp-for="ThumbnailTypeId">
           <input type="file" accept ="image/*" asp-for="ProjectThumbnail">
           <span class="text-danger" asp-validation-for="ProjectThumbnail"></span>
         </div>
         <div class="form-group">
           <label>Add Other Images</label>
-          <input type="hidden" value="@Model.OtherTypeId" asp-for="OtherTypeId">
           <input type="file" accept="image/*" multiple="multiple" asp-for="ProjectImages">
         </div>
         <div class="form-group">
