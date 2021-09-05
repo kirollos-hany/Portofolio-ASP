@@ -26,23 +26,29 @@
         <i class="mdi mdi-delete-forever clickable light"></i>
       </a>
     }
-	</div>
-	<div class="jq-tab-wrapper" id="horizontalTab">
-	 <div class="jq-tab-menu">
-	  <div class="jq-tab-title active" data-tab="1">Description</div>
-	  <div class="jq-tab-title" data-tab="5">Feedback</div>
-	 </div>
-	 <div class="jq-tab-content-wrapper">
-	  <div class="jq-tab-content active" data-tab="1">@Model.ChosenProject.Description</div>
-	  <div class="jq-tab-content" data-tab="5">
-	   <div class="feedeback">
-		<h4 class="pb-20">Your Feedback</h4>
-		<textarea name="feedback" class="form-control" cols="10" rows="10"></textarea>
-		<a href="#" class="mt-20 primary-btn text-right text-uppercase">Submit</a>
-	   </div>
-	  </div>
-	 </div>
-	</div>
+  </div>
+  <div class="row padding-sides-9">
+    <div id="descriptionContainer" class="active-container col-6 btn-inverse-info btn-lg clickable ">
+      <h5 id="descriptionBtn">Description</h5>
+    </div>
+    <div id="feedbackContainer" class="col-6 btn-inverse-info btn-lg clickable">
+      <h5 id="feedbackBtn">Feedback</h5>
+    </div>
+    <div id="displayDescription" class="white-bg col-12 dark border-dark-2 padding-vertical-10">
+      <p>@Model.ChosenProject.Description</p>
+    </div>
+    <div id="displayFeedback" class="white-bg col-12 dark border-dark-2 padding-vertical-10">
+      @if(Model.ChosenProject.ProjectFeedbacks != null && Model.ChosenProject.ProjectFeedbacks.Count != 0)
+      {
+        foreach(var feedback in Model.ChosenProject.ProjectFeedbacks)
+        {
+          <p>@feedback.Feedback</p>
+          <span>@feedback.CreatedAt</span>
+          <hr>
+        }
+      }
+    </div>
+  </div>
    </div>
    <div class="col-lg-4 right-contents">
 	<a href="#" class="primary-btn text-uppercase">@Model.ChosenProject.Title</a>
@@ -80,7 +86,7 @@
 <!-- Start Featured Work -->
 <div id="go" class="featured-work text-center">
  <div class="container">
-  <h2>Gallery</h2>
+  <h5 class="light h2 padding-vertical-10">Gallery</h5>
  </div>
  <div class="lol">
   <div class="row shuffle-images">
@@ -122,6 +128,10 @@
  </div>
 
          <!-- Modal HTML Markup -->
+
+<!-- /.modal -->
+</section>
+
 <div id="editProjectModal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -237,8 +247,7 @@
     </div>
     <!-- /.modal-content -->
   </div>
+  <script src="~/js/dashboard-project-details.js"></script>
   <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
-</section>
 <!-- End  -->

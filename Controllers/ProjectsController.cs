@@ -56,7 +56,28 @@ namespace Portofolio.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            return View(await projectsRepository.GetById(id));
+            return View(new ProjectDetailsViewModel{
+                Project = await projectsRepository.GetById(id)
+            });
+        }
+
+        public async Task<IActionResult> Feedback(ProjectDetailsViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                ModelState.AssignTempDataWithErrors(TempData);
+                return RedirectToAction(nameof(Details), new {id = model.ProjectId});
+            }
+            await feedbackRepository.Create(new ProjectFeedback{
+                ProjectId = model.ProjectId,
+                Feedback = model.Feedback
+            });
+            TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
+            {
+                Message = "Feedback submitted successfully",
+                CssClass = ResultMsgViewModel.CssClassSuccess
+            });
+            return RedirectToAction(nameof(Details), new {id = model.ProjectId});
         }
 
         [Authorize]
