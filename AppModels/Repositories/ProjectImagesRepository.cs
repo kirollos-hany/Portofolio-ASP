@@ -19,28 +19,28 @@ namespace Portofolio.AppModels.Repositories
         {
             entity.CreatedAt = DateTime.Now;
             entity.UpdatedAt = DateTime.Now;
-            await dbContext.ProjectImages.AddAsync(entity);
+            await _dbContext.ProjectImages.AddAsync(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<ProjectImage> Delete(ProjectImage entity)
         {
-            dbContext.ProjectImages.Remove(entity);
+            _dbContext.ProjectImages.Remove(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<ICollection<ProjectImage>> DeleteCollection(ICollection<ProjectImage> entities)
         {
-            dbContext.ProjectImages.RemoveRange(entities);
+            _dbContext.ProjectImages.RemoveRange(entities);
             await SaveChanges();
             return entities;
         }
 
         public async override Task<ProjectImage> Edit(ProjectImage entity)
         {
-            var pi = await dbContext.ProjectImages.FindAsync(entity.Id);
+            var pi = await _dbContext.ProjectImages.FindAsync(entity.Id);
             pi.ImagePath = entity.ImagePath;
             pi.UpdatedAt = DateTime.Now;
             await SaveChanges();
@@ -49,22 +49,22 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<ProjectImage> FindByCondition(Expression<Func<ProjectImage, bool>> expression)
         {
-            return await dbContext.ProjectImages.FirstOrDefaultAsync(expression);
+            return await _dbContext.ProjectImages.FirstOrDefaultAsync(expression);
         }
 
         public async override Task<ICollection<ProjectImage>> FindCollectionByCondition(Expression<Func<ProjectImage, bool>> expression)
         {
-            return await dbContext.ProjectImages.Where(expression).ToListAsync();
+            return await Task.Run(() => _dbContext.ProjectImages.Where(expression).ToHashSet());
         }
 
         public async override Task<ICollection<ProjectImage>> GetAll()
         {
-            return await dbContext.ProjectImages.ToListAsync();
+            return await Task.Run(() => _dbContext.ProjectImages.ToHashSet());
         }
 
         public async override Task<ProjectImage> GetById(int id)
         {
-            return await dbContext.ProjectImages.FindAsync(id);
+            return await _dbContext.ProjectImages.FindAsync(id);
         }
     }
 }

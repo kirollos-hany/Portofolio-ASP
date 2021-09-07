@@ -8,10 +8,10 @@ namespace Portofolio.AppModels.Repositories
 {
     public abstract class BaseRepository<T> : IRepository<T> where T : class
     {
-        protected readonly PortofolioDbContext dbContext;
+        protected readonly PortofolioDbContext _dbContext;
         public BaseRepository(PortofolioDbContext dbContext)
         {
-            this.dbContext = dbContext;
+            _dbContext = dbContext;
         }
         public abstract Task<T> Create(T entity);
 
@@ -31,7 +31,7 @@ namespace Portofolio.AppModels.Repositories
 
         protected async Task<int> SaveChanges()
         {
-            return await Task.Run(() => dbContext.SaveChanges());
+            return await Task.Run(() => _dbContext.SaveChanges());
         }
     }
 }

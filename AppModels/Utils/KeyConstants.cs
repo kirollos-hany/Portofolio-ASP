@@ -3,6 +3,27 @@ namespace Portofolio.AppModels.Utils
 {
     public class KeyConstants
     {
+        public static string PaginationDisplayCount
+        {
+            get
+            {
+                return "DisplayCount";
+            }
+        }
+        public static string PaginationMaxPageCount
+        {
+            get
+            {
+                return "MaxPageCount";
+            }
+        }
+        public static string PaginationCurrentPage
+        {
+            get
+            {
+                return "CurrentPage";
+            }
+        }
         public static string BannerTitleKey
         {
             get

@@ -19,28 +19,28 @@ namespace Portofolio.AppModels.Repositories
         {
             entity.CreatedAt = DateTime.Now;
             entity.UpdatedAt = DateTime.Now;
-            await dbContext.UserLinks.AddAsync(entity);
+            await _dbContext.UserLinks.AddAsync(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<UserLink> Delete(UserLink entity)
         {
-            dbContext.UserLinks.Remove(entity);
+            _dbContext.UserLinks.Remove(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<ICollection<UserLink>> DeleteCollection(ICollection<UserLink> entities)
         {
-            dbContext.UserLinks.RemoveRange(entities);
+            _dbContext.UserLinks.RemoveRange(entities);
             await SaveChanges();
             return entities;
         }
 
         public async override Task<UserLink> Edit(UserLink entity)
         {
-            var ul = await dbContext.UserLinks.FindAsync(entity.Id);
+            var ul = await _dbContext.UserLinks.FindAsync(entity.Id);
             ul.Link = entity.Link;
             ul.UpdatedAt = DateTime.Now;
             await SaveChanges();
@@ -49,22 +49,22 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<UserLink> FindByCondition(Expression<Func<UserLink, bool>> expression)
         {
-            return await dbContext.UserLinks.Include(ul => ul.Type).Include(ul => ul.User).Where(expression).FirstOrDefaultAsync();
+            return await _dbContext.UserLinks.Include(ul => ul.Type).Include(ul => ul.User).Where(expression).FirstOrDefaultAsync();
         }
 
         public async override Task<ICollection<UserLink>> FindCollectionByCondition(Expression<Func<UserLink, bool>> expression)
         {
-            return await dbContext.UserLinks.Include(ul => ul.Type).Include(ul => ul.User).Where(expression).ToListAsync();
+            return await Task.Run(()=>_dbContext.UserLinks.Include(ul => ul.Type).Include(ul => ul.User).Where(expression).ToHashSet());
         }
 
         public async override Task<ICollection<UserLink>> GetAll()
         {
-            return await dbContext.UserLinks.Include(ul => ul.Type).Include(ul => ul.User).ToListAsync();
+            return await Task.Run(()=>_dbContext.UserLinks.Include(ul => ul.Type).Include(ul => ul.User).ToHashSet());
         }
 
         public async override Task<UserLink> GetById(int id)
         {
-            return await dbContext.UserLinks.Include(ul => ul.Type).Include(ul => ul.User).FirstOrDefaultAsync(ul => ul.Id == id);
+            return await _dbContext.UserLinks.Include(ul => ul.Type).Include(ul => ul.User).FirstOrDefaultAsync(ul => ul.Id == id);
         }
     }
 }

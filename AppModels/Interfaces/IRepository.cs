@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System;
 namespace Portofolio.AppModels.Repositories
 {
-    interface IRepository<T> where T : class
+    public interface IRepository<T> where T : class
     {
         Task<ICollection<T>> GetAll();
 

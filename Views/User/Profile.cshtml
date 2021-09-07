@@ -15,10 +15,10 @@
                @if(Model.User.ImagePath.StartsWith('~'))
                 {
                   var imgSrc = @Url.Content(Model.User.ImagePath);
-                  <img class="img-lg rounded-circle" src="@imgSrc" alt="Profile Img" />
+                  <img class="img-fluid rounded-circle" src="@imgSrc" alt="Profile Img" />
                 }else
                 {
-                  <img class="img-lg rounded-circle" src="~/user/profileimage/@Model.User.Id" alt="Profile Img" />
+                  <img class="img-fluid rounded-circle" src="~/user/profileimage/@Model.User.Id" alt="Profile Img" />
                 }
                 </div>
                 <h6 class="f-w-600">@Model.User.UserName</h6>

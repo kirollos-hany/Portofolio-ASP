@@ -15,19 +15,23 @@ namespace Portofolio.Controllers
 {
     public class ServicesController : Controller
     {
-        private readonly BaseRepository<Service> repository;
+        private readonly IRepository<Service> _repository;
 
-        private readonly BaseImageServices<Service> imageServices;
+        private readonly IImageService _imageServices;
 
-        public ServicesController(BaseRepository<Service> repository, BaseImageServices<Service> imageServices)
+        private readonly IPaginator<Service> _paginator;
+
+        public ServicesController(BasePaginator<Service> paginator, BaseRepository<Service> repository, BaseImageServices<Service> imageServices)
         {
-            this.repository = repository;
-            this.imageServices = imageServices;
+            _repository = repository;
+            _imageServices = imageServices;
+            _paginator = paginator;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
-            ICollection<Service> services = await repository.GetAll();
-            return View(services);
+            ICollection<Service> services = await _repository.GetAll();
+            var paginatedModel = _paginator.Paginate(services, page);
+            return View(paginatedModel);
         }
 
         [HttpPost]
@@ -38,31 +42,32 @@ namespace Portofolio.Controllers
             {
                 return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
             }
-            var service = new Service{
+            var service = new Service
+            {
                 ServiceName = serviceVM.Name,
                 ServiceDescription = serviceVM.Description
             };
-            if(serviceVM.ServiceImage != null)
+            if (serviceVM.ServiceImage != null)
             {
-                service.ServiceImage = await imageServices.UploadImgAsync(serviceVM.ServiceImage);
+                service.ServiceImage = await _imageServices.UploadImgAsync(serviceVM.ServiceImage);
             }
-            await repository.Create(service);
+            await _repository.Create(service);
             return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
         }
 
         public async Task<IActionResult> Image(int id)
         {
-            var service = await repository.GetById(id);
-            var imageModel = await imageServices.GetImageAsync(service.ServiceImage);
+            var service = await _repository.GetById(id);
+            var imageModel = await _imageServices.GetImageAsync(service.ServiceImage);
             return File(imageModel.FileStream, imageModel.ContentType);
         }
 
         [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
-            var service = await repository.GetById(id);
-            imageServices.DeleteImg(service.ServiceImage);
-            await repository.Delete(service);
+            var service = await _repository.GetById(id);
+            _imageServices.DeleteImg(service.ServiceImage);
+            await _repository.Delete(service);
             return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
         }
 
@@ -82,15 +87,15 @@ namespace Portofolio.Controllers
                 ServiceName = model.Name,
                 ServiceDescription = model.Description
             };
-            service = await repository.Edit(service);
+            service = await _repository.Edit(service);
             if (model.ServiceImage != null)
             {
                 try
                 {
-                    imageServices.ValidateImgExtension(model.ServiceImage);
-                    imageServices.DeleteImg(service.ServiceImage);
-                    service.ServiceImage = await imageServices.UploadImgAsync(model.ServiceImage);
-                    await repository.Edit(service);
+                    _imageServices.ValidateImgExtension(model.ServiceImage);
+                    _imageServices.DeleteImg(service.ServiceImage);
+                    service.ServiceImage = await _imageServices.UploadImgAsync(model.ServiceImage);
+                    await _repository.Edit(service);
                 }
                 catch (CustomException ex)
                 {

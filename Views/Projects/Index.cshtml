@@ -4,8 +4,11 @@
     ViewData[BannerNavControllerKey] = "projects";
     ViewData[BannerNavTitleKey] = ViewData[TitleKey];
     ViewData[BannerTitleKey] = ViewData[TitleKey];
+    ViewData[PaginationCurrentPage] = Model.CurrentPage;
+    ViewData[PaginationMaxPageCount] = Model.MaxPageCount;
+    ViewData[PaginationDisplayCount] = Model.DisplayCount;
 }
-@model List<Project>
+@model PaginationViewModel<Project>
 <!-- Start popular-courses Area -->
 <section class="popular-courses-area section-gap courses-page">
     <div class="container">
@@ -17,9 +20,9 @@
             </div>
         </div>
         <div class="row">
-            @if (Model.Count != 0)
+            @if (Model.Collection.Count != 0)
             {
-                @foreach (Project project in Model)
+                @foreach(Project project in Model.Collection)
                 {
                     <div class="single-popular-carusel col-lg-3 col-md-6">
                         <div class="thumb-wrap relative">
@@ -28,24 +31,30 @@
                                 @if(project.Thumbnail.StartsWith("~"))
                                 {
                                     var imgSrc = @Url.Content(project.Thumbnail);
-                                    <img class="img-fluid" src="@imgSrc" alt="Project thumbnail">
+                                    <a asp-controller="projects" asp-action="details" asp-route-id="@project.Id">
+                                        <img class="img-fluid" src="@imgSrc" alt="Project thumbnail">
+                                    </a>
+                                    
                                 }else
                                 {
-                                    <img class="img-fluid" src="~/projects/image/@project.Id?isThumbnail=true" alt="Project thumbnail">
+                                    <a asp-controller="projects" asp-action="details" asp-route-id="@project.Id">
+                                        <img class="img-fluid" src="~/projects/image/@project.Id?isThumbnail=true" alt="Project thumbnail">
+                                    </a>
                                 }
                             </div>
                         </div>
                         <div class="details">
-                            <a asp-controller="projects" asp-action="details" asp-route-id=@project.Id>
                                 <h4>
                                     @project.Title
                                 </h4>
-                            </a>
                             <p>@project.Description</p>
                         </div>
                     </div>
                 }
             }
         </div>
-</section>
+    @{
+        await Html.RenderPartialAsync("_PaginationPartial");
+    }
+        </section>
 <!-- End popular-courses Area -->

@@ -8,7 +8,7 @@ namespace Portofolio.AppModels.Extensions
 {
     public static class UIPRepositoryExtension
     {
-        public async static Task CreateFromCollection(this BaseRepository<UsersInProject> uipRepository, int projectId, ICollection<string> usersNRolesIds, char delimiter)
+        public async static Task CreateFromCollection(this IRepository<UsersInProject> uipRepository, int projectId, ICollection<string> usersNRolesIds, char delimiter)
         {
             foreach (var str in usersNRolesIds)
             {
@@ -22,7 +22,7 @@ namespace Portofolio.AppModels.Extensions
             }
         }
 
-        public async static Task EditFromCollection(this BaseRepository<UsersInProject> uipRepository, ICollection<UsersInProject> usersInProjects, ICollection<string> usersNRolesIds, char delimiter)
+        public async static Task EditFromCollection(this IRepository<UsersInProject> uipRepository, ICollection<UsersInProject> usersInProjects, ICollection<string> usersNRolesIds, char delimiter)
         {
             for (int i = 0; i < usersNRolesIds.Count; i++)
             {

@@ -19,28 +19,28 @@ namespace Portofolio.AppModels.Repositories
         {
             entity.CreatedAt = DateTime.Now;
             entity.UpdatedAt = DateTime.Now;
-            await dbContext.Projects.AddAsync(entity);
+            await _dbContext.Projects.AddAsync(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<Project> Delete(Project entity)
         {
-            dbContext.Projects.Remove(entity);
+            _dbContext.Projects.Remove(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<ICollection<Project>> DeleteCollection(ICollection<Project> entities)
         {
-            dbContext.Projects.RemoveRange(entities);
+            _dbContext.Projects.RemoveRange(entities);
             await SaveChanges();
             return entities;
         }
 
         public async override Task<Project> Edit(Project entity)
         {
-            Project project = await dbContext.Projects.Include(project => project.Type)
+            Project project = await _dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks)
             .Include(project => project.ProjectLinks)
             .Include(project => project.ProjectImages)
@@ -58,7 +58,7 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<Project> FindByCondition(Expression<Func<Project, bool>> expression)
         {
-            return await dbContext.Projects.Include(project => project.Type)
+            return await _dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks)
             .Include(project => project.ProjectLinks)
             .Include(project => project.ProjectImages)
@@ -69,29 +69,29 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<ICollection<Project>> FindCollectionByCondition(Expression<Func<Project, bool>> expression)
         {
-            return await dbContext.Projects.Include(project => project.Type)
+            return await Task.Run(()=>_dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks)
             .Include(project => project.ProjectLinks)
             .Include(project => project.ProjectImages)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
-            .Where(expression).ToListAsync();
+            .Where(expression).ToHashSet());
         }
 
         public async override Task<ICollection<Project>> GetAll()
         {
-            return await dbContext.Projects.Include(project => project.Type)
+            return await Task.Run(()=>_dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks)
             .Include(project => project.ProjectLinks)
             .Include(project => project.ProjectImages)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
-            .ToListAsync();
+            .ToHashSet());
         }
 
         public async override Task<Project> GetById(int id)
         {
-            return await dbContext.Projects.Include(project => project.Type)
+            return await _dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks)
             .Include(project => project.ProjectLinks)
             .Include(project => project.ProjectImages)

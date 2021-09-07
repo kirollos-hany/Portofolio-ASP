@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 05, 2021 at 03:57 PM
+-- Generation Time: Sep 07, 2021 at 06:40 PM
 -- Server version: 8.0.26
 -- PHP Version: 7.4.2
 
@@ -167,9 +167,9 @@ INSERT INTO `aspnetusers` (`Id`, `ImagePath`, `CreatedAt`, `UpdatedAt`, `UserNam
 (48, 'Et perferendis ut quas est laborum qui repudiandae accusamus. Delectus excepturi qui dolorem.', '2021-08-23 19:15:22.000000', '2021-08-23 19:15:22.000000', 'Marian Mosciski', NULL, 'elvera_damore@volkmanjohnson.name', NULL, 0, '047-34-3743', NULL, '639c9fde-7ea3-4c8b-b4e9-b3d302b1b5bb', '+201206784139', 0, 0, NULL, 0, 0, 'Backend Developer'),
 (49, 'Optio ut nihil ut architecto excepturi vero est necessitatibus eos.', '2021-08-23 19:15:22.000000', '2021-08-23 19:15:22.000000', 'Dr. Alexandro Nicolas', NULL, 'isai@morissettekozey.us', NULL, 0, '110-89-1601', NULL, '899abbe8-c62c-4c0c-b3f7-0f2be73cc96a', '+201206784139', 0, 0, NULL, 0, 0, 'Backend Developer'),
 (50, 'Ut reprehenderit rerum a voluptatem inventore officia. Non enim sint sit et molestiae ducimus. Perferendis molestiae expedita architecto cum qui beatae voluptas voluptas. Quam sed tenetur dolorem facere earum ab.', '2021-08-23 19:15:22.000000', '2021-08-23 19:15:22.000000', 'Ms. Lelia Vandervort Jr.', NULL, 'hollie@gleichner.uk', NULL, 0, '252-29-4601', NULL, '5f9261d8-297d-4778-a79a-b9af9065faad', '+201206784139', 0, 0, NULL, 0, 0, 'Backend Developer'),
-(58, 'Images/Users\\2f6a365b-fcff-4b76-a0d6-a2583e5d3d8b.jpeg', '0001-01-01 00:00:00.000000', '2021-08-26 14:13:58.239175', 'Kirollos Hany', 'KIROLLOS HANY', 'kirolloshany9999@gmail.com', 'KIROLLOSHANY9999@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEH2smken8iztt7DljRfbkKTpeJni5Ctqekt8ljs95/0zEsKA9XoF81R4g3vfcok6bQ==', 'CKRCWI7Y5IFWFCPH6XYTGXHEFD2AG72F', 'b4c996d6-f7ca-4231-8ab7-47b0c0654979', '+201206784139', 0, 0, NULL, 1, 0, 'Back End Developer'),
+(58, 'Images/Users\\2f6a365b-fcff-4b76-a0d6-a2583e5d3d8b.jpeg', '2021-08-26 14:41:44.306244', '2021-08-26 14:13:58.239175', 'Kirollos Hany', 'KIROLLOS HANY', 'kirolloshany9999@gmail.com', 'KIROLLOSHANY9999@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEH2smken8iztt7DljRfbkKTpeJni5Ctqekt8ljs95/0zEsKA9XoF81R4g3vfcok6bQ==', 'CKRCWI7Y5IFWFCPH6XYTGXHEFD2AG72F', 'b4c996d6-f7ca-4231-8ab7-47b0c0654979', '+201206784139', 0, 0, NULL, 1, 0, 'Back End Developer'),
 (59, 'Images/Users\\497588c2-48c3-4fbf-abe3-a634c0a3507c.jpeg', '2021-08-25 09:43:57.410932', '2021-08-25 10:06:31.125981', 'Abanoub Rafaat', 'ABANOUB RAFAAT', 'bebo@gmail.com', 'BEBO@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEI0EOfH1O2tXFqQdVcimXqERyOWQ0PfFSw40x3UQVnuA46L1TTp25z/gD6yETHWmyg==', 'XH65JIPI74YRRFLH6YQYE5KYWODWCSNK', '224c4efd-85db-4531-9d5d-2dd7efe90e90', '+201282692682', 0, 0, NULL, 1, 0, 'Front End Developer'),
-(61, '~/img/avatar.png', '2021-08-26 14:41:44.306244', '2021-08-26 14:41:44.306239', 'Gergis Hanna', 'GERGIS HANNA', 'gergishanna@gmail.com', 'GERGISHANNA@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEL97ILlfTPgqFfqfp+Wnviei7mJ7pGe8qC/ikBpFxyz/3hcvX1A4D8ACE1Q5iz+rxw==', 'Q5USBUTN5ATNJ5U2U2IZYJMV2RUAP464', '01823e59-7159-4e70-a471-4901adbb9971', NULL, 0, 0, NULL, 1, 0, NULL);
+(61, '~/img/avatar.png', '2021-08-26 14:41:44.306244', '2021-08-26 14:41:44.306239', 'Gergis Hanna', 'GERGIS HANNA', 'gergishanna@gmail.com', 'GERGISHANNA@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEL97ILlfTPgqFfqfp+Wnviei7mJ7pGe8qC/ikBpFxyz/3hcvX1A4D8ACE1Q5iz+rxw==', 'Q5USBUTN5ATNJ5U2U2IZYJMV2RUAP464', '01823e59-7159-4e70-a471-4901adbb9971', NULL, 0, 0, NULL, 1, 0, 'Back End Developer');
 
 -- --------------------------------------------------------
 
@@ -301,18 +301,19 @@ CREATE TABLE `linktypes` (
   `Id` int NOT NULL,
   `LinkType` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `CreatedAt` datetime NOT NULL,
-  `UpdatedAt` datetime NOT NULL
+  `UpdatedAt` datetime NOT NULL,
+  `IconClass` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `linktypes`
 --
 
-INSERT INTO `linktypes` (`Id`, `LinkType`, `CreatedAt`, `UpdatedAt`) VALUES
-(1, 'Url', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
-(2, 'Github', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
-(3, 'LinkedIn', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
-(4, 'Facebook', '2021-08-23 19:15:22', '2021-08-23 19:15:22');
+INSERT INTO `linktypes` (`Id`, `LinkType`, `CreatedAt`, `UpdatedAt`, `IconClass`) VALUES
+(1, 'Url', '2021-08-23 19:15:22', '2021-08-23 19:15:22', 'mdi mdi-link\r\n'),
+(2, 'Github', '2021-08-23 19:15:22', '2021-08-23 19:15:22', 'mdi mdi-github-box'),
+(3, 'LinkedIn', '2021-08-23 19:15:22', '2021-08-23 19:15:22', 'mdi mdi-linkedin-box'),
+(4, 'Facebook', '2021-08-23 19:15:22', '2021-08-23 19:15:22', 'mdi mdi-facebook-box');
 
 -- --------------------------------------------------------
 
@@ -326,6 +327,13 @@ CREATE TABLE `projectfeedbacks` (
   `Feedback` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `CreatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `projectfeedbacks`
+--
+
+INSERT INTO `projectfeedbacks` (`Id`, `ProjectId`, `Feedback`, `CreatedAt`) VALUES
+(51, 60, 'Well done', '2021-09-05 17:30:00');
 
 -- --------------------------------------------------------
 
@@ -361,10 +369,23 @@ CREATE TABLE `projectlinks` (
 --
 
 INSERT INTO `projectlinks` (`Id`, `ProjectId`, `TypeId`, `Link`, `CreatedAt`, `UpdatedAt`) VALUES
-(75, 60, 1, '#', '2021-09-05 15:38:49', '2021-09-05 15:43:35'),
-(76, 60, 2, '#', '2021-09-05 15:38:49', '2021-09-05 15:43:35'),
-(77, 60, 3, '#', '2021-09-05 15:38:49', '2021-09-05 15:43:35'),
-(78, 60, 4, '#', '2021-09-05 15:38:49', '2021-09-05 15:43:35');
+(75, 60, 1, '#', '2021-09-05 15:38:49', '2021-09-06 15:43:04'),
+(76, 60, 2, '#', '2021-09-05 15:38:49', '2021-09-06 15:43:04'),
+(77, 60, 3, '#', '2021-09-05 15:38:49', '2021-09-06 15:43:04'),
+(78, 60, 4, '#', '2021-09-05 15:38:49', '2021-09-06 15:43:04'),
+(79, 61, 1, '#', '2021-09-05 15:38:49', '2021-09-06 15:43:04'),
+(80, 61, 2, '#', '2021-09-05 15:38:49', '2021-09-06 15:43:04'),
+(81, 61, 3, '#', '2021-09-05 15:38:49', '2021-09-06 15:43:04'),
+(82, 61, 4, '#', '2021-09-05 15:38:49', '2021-09-06 15:43:04'),
+(83, 62, 2, '#', '2021-09-05 15:38:49', '2021-09-06 15:43:04'),
+(84, 62, 3, '#', '2021-09-05 15:38:49', '2021-09-06 15:43:04'),
+(85, 62, 4, '#', '2021-09-05 15:38:49', '2021-09-06 15:43:04'),
+(86, 63, 2, '#', '2021-09-05 15:38:49', '2021-09-06 15:43:04'),
+(87, 63, 3, '#', '2021-09-05 15:38:49', '2021-09-06 15:43:04'),
+(88, 63, 4, '#', '2021-09-05 15:38:49', '2021-09-06 15:43:04'),
+(89, 64, 2, '#', '2021-09-05 15:38:49', '2021-09-06 15:43:04'),
+(90, 64, 3, '#', '2021-09-05 15:38:49', '2021-09-06 15:43:04'),
+(91, 64, 4, '#', '2021-09-05 15:38:49', '2021-09-06 15:43:04');
 
 -- --------------------------------------------------------
 
@@ -388,7 +409,11 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`Id`, `TypeId`, `Title`, `Description`, `CreatedAt`, `UpdatedAt`, `ToolsUsed`, `Thumbnail`) VALUES
-(60, 3, 'Portofolio', 'Our Startup Portofolio', '2021-09-05 15:38:49', '2021-09-05 15:43:35', 'CSharp-ASPNETCOREMVC-HTML-CSS-JS', 'Images/Projects\\3cb828c9-ec93-45cf-8edd-c82a60825153.JPG');
+(60, 3, 'Portofolio', 'Our Startup Portofolio', '2021-09-05 15:38:49', '2021-09-06 15:43:04', 'CSharp-ASPNETCOREMVC-HTML-CSS-JS', 'Images/Projects\\3cb828c9-ec93-45cf-8edd-c82a60825153.JPG'),
+(61, 3, 'Portofolio', 'Our Startup Portofolio', '2021-09-05 15:38:49', '2021-09-06 15:43:04', 'CSharp-ASPNETCOREMVC-HTML-CSS-JS', 'Images/Projects\\3cb828c9-ec93-45cf-8edd-c82a60825153.JPG'),
+(62, 3, 'Portofolio', 'Our Startup Portofolio', '2021-09-05 15:38:49', '2021-09-06 15:43:04', 'CSharp-ASPNETCOREMVC-HTML-CSS-JS', 'Images/Projects\\3cb828c9-ec93-45cf-8edd-c82a60825153.JPG'),
+(63, 3, 'Portofolio', 'Our Startup Portofolio', '2021-09-05 15:38:49', '2021-09-06 15:43:04', 'CSharp-ASPNETCOREMVC-HTML-CSS-JS', 'Images/Projects\\3cb828c9-ec93-45cf-8edd-c82a60825153.JPG'),
+(64, 3, 'Portofolio', 'Our Startup Portofolio', '2021-09-05 15:38:49', '2021-09-06 15:43:04', 'CSharp-ASPNETCOREMVC-HTML-CSS-JS', 'Images/Projects\\3cb828c9-ec93-45cf-8edd-c82a60825153.JPG');
 
 -- --------------------------------------------------------
 
@@ -605,9 +630,21 @@ CREATE TABLE `usersinprojects` (
 --
 
 INSERT INTO `usersinprojects` (`Id`, `UserId`, `ProjectId`, `RoleId`, `CreatedAt`, `UpdatedAt`) VALUES
-(71, 58, 60, 1, '2021-09-05 15:38:49.302671', '2021-09-05 15:43:35.096806'),
-(72, 61, 60, 1, '2021-09-05 15:38:49.320765', '2021-09-05 15:43:35.109768'),
-(73, 59, 60, 2, '2021-09-05 15:38:49.324432', '2021-09-05 15:43:35.113132');
+(71, 58, 60, 3, '2021-09-05 15:38:49.302671', '2021-09-06 15:43:03.668325'),
+(72, 61, 60, 1, '2021-09-05 15:38:49.320765', '2021-09-06 15:43:03.672419'),
+(73, 59, 60, 2, '2021-09-05 15:38:49.324432', '2021-09-06 15:43:03.676344'),
+(74, 58, 61, 3, '2021-09-05 15:38:49.302671', '2021-09-06 15:43:03.668325'),
+(75, 61, 61, 1, '2021-09-05 15:38:49.320765', '2021-09-06 15:43:03.672419'),
+(76, 59, 61, 2, '2021-09-05 15:38:49.324432', '2021-09-06 15:43:03.676344'),
+(77, 58, 62, 3, '2021-09-05 15:38:49.302671', '2021-09-06 15:43:03.668325'),
+(78, 61, 62, 1, '2021-09-05 15:38:49.320765', '2021-09-06 15:43:03.672419'),
+(79, 59, 62, 2, '2021-09-05 15:38:49.324432', '2021-09-06 15:43:03.676344'),
+(80, 58, 63, 3, '2021-09-05 15:38:49.302671', '2021-09-06 15:43:03.668325'),
+(81, 61, 63, 1, '2021-09-05 15:38:49.320765', '2021-09-06 15:43:03.672419'),
+(82, 59, 63, 2, '2021-09-05 15:38:49.324432', '2021-09-06 15:43:03.676344'),
+(83, 58, 64, 3, '2021-09-05 15:38:49.302671', '2021-09-06 15:43:03.668325'),
+(84, 61, 64, 1, '2021-09-05 15:38:49.320765', '2021-09-06 15:43:03.672419'),
+(85, 59, 64, 2, '2021-09-05 15:38:49.324432', '2021-09-06 15:43:03.676344');
 
 -- --------------------------------------------------------
 
@@ -629,7 +666,8 @@ INSERT INTO `__efmigrationshistory` (`MigrationId`, `ProductVersion`) VALUES
 ('20210823171523_AddedSpecializationToUser', '5.0.9'),
 ('20210831071228_AddedTimeStampsForSomeModels', '5.0.9'),
 ('20210831102314_EditedRelationProjectTools', '5.0.9'),
-('20210905125450_RemovedImageTypes', '5.0.9');
+('20210905125450_RemovedImageTypes', '5.0.9'),
+('20210905141130_AddedIconClassForLinks', '5.0.9');
 
 --
 -- Indexes for dumped tables
@@ -834,7 +872,7 @@ ALTER TABLE `linktypes`
 -- AUTO_INCREMENT for table `projectfeedbacks`
 --
 ALTER TABLE `projectfeedbacks`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `projectimages`
@@ -846,13 +884,13 @@ ALTER TABLE `projectimages`
 -- AUTO_INCREMENT for table `projectlinks`
 --
 ALTER TABLE `projectlinks`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `projecttypes`
@@ -888,7 +926,7 @@ ALTER TABLE `userrolesinproject`
 -- AUTO_INCREMENT for table `usersinprojects`
 --
 ALTER TABLE `usersinprojects`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- Constraints for dumped tables

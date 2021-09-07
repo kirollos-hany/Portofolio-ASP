@@ -6,10 +6,11 @@ namespace Portofolio.ViewModels
 {
     public class ServicesDashboardVM : DashboardViewModel
     {
-        public int Id;
-        public ICollection<Service> Services { get; set; }
-        [Required]
 
+        public PaginationViewModel<Service> PaginationModel { get; set; }
+        public int Id;
+
+        [Required]
         public string Name { get; set; }
 
         public IFormFile ServiceImage { get; set; }

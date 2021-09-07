@@ -19,28 +19,28 @@ namespace Portofolio.AppModels.Repositories
         {
             entity.CreatedAt = DateTime.Now;
             entity.UpdatedAt = DateTime.Now;
-            await dbContext.RequestedServices.AddAsync(entity);
+            await _dbContext.RequestedServices.AddAsync(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<RequestedService> Delete(RequestedService entity)
         {
-            dbContext.RequestedServices.Remove(entity);
+            _dbContext.RequestedServices.Remove(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<ICollection<RequestedService>> DeleteCollection(ICollection<RequestedService> entities)
         {
-           dbContext.RequestedServices.RemoveRange(entities);
+           _dbContext.RequestedServices.RemoveRange(entities);
            await SaveChanges();
            return entities;
         }
 
         public async override Task<RequestedService> Edit(RequestedService entity)
         {
-            RequestedService rs = await dbContext.RequestedServices.FindAsync(entity.Id);
+            RequestedService rs = await _dbContext.RequestedServices.FindAsync(entity.Id);
             rs.ServiceId = entity.ServiceId;
             rs.ContactId = entity.ContactId;
             rs.UpdatedAt = DateTime.Now;
@@ -49,22 +49,22 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<RequestedService> FindByCondition(Expression<Func<RequestedService, bool>> expression)
         {
-            return await dbContext.RequestedServices.Include(rs => rs.AssociatedContact).Include(rs => rs.AssociatedService).Where(expression).FirstOrDefaultAsync();
+            return await _dbContext.RequestedServices.Include(rs => rs.AssociatedContact).Include(rs => rs.AssociatedService).Where(expression).FirstOrDefaultAsync();
         }
 
         public async override Task<ICollection<RequestedService>> FindCollectionByCondition(Expression<Func<RequestedService, bool>> expression)
         {
-            return await dbContext.RequestedServices.Include(rs => rs.AssociatedContact).Include(rs => rs.AssociatedService).Where(expression).ToListAsync();
+            return await Task.Run(()=>_dbContext.RequestedServices.Include(rs => rs.AssociatedContact).Include(rs => rs.AssociatedService).Where(expression).ToHashSet());
         }
 
         public async override Task<ICollection<RequestedService>> GetAll()
         {
-            return await dbContext.RequestedServices.Include(rs => rs.AssociatedContact).Include(rs => rs.AssociatedService).ToListAsync();
+            return await Task.Run(()=>_dbContext.RequestedServices.Include(rs => rs.AssociatedContact).Include(rs => rs.AssociatedService).ToHashSet());
         }
 
         public async override Task<RequestedService> GetById(int id)
         {
-            return await dbContext.RequestedServices.Include(rs => rs.AssociatedContact).Include(rs => rs.AssociatedService).FirstOrDefaultAsync(rs => rs.Id == id);
+            return await _dbContext.RequestedServices.Include(rs => rs.AssociatedContact).Include(rs => rs.AssociatedService).FirstOrDefaultAsync(rs => rs.Id == id);
         }
     }
 }

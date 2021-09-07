@@ -19,21 +19,21 @@ namespace Portofolio.AppModels.Repositories
         {
             entity.CreatedAt = DateTime.Now;
             entity.UpdatedAt = DateTime.Now;
-            await dbContext.UserProjectRoles.AddAsync(entity);
+            await _dbContext.UserProjectRoles.AddAsync(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<UserRoleInProject> Delete(UserRoleInProject entity)
         {
-            dbContext.UserProjectRoles.Remove(entity);
+            _dbContext.UserProjectRoles.Remove(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<ICollection<UserRoleInProject>> DeleteCollection(ICollection<UserRoleInProject> entities)
         {
-            dbContext.UserProjectRoles.RemoveRange(entities);
+            _dbContext.UserProjectRoles.RemoveRange(entities);
             await SaveChanges();
             return entities;
         }
@@ -41,7 +41,7 @@ namespace Portofolio.AppModels.Repositories
         public async override Task<UserRoleInProject> Edit(UserRoleInProject entity)
         {
             entity.UpdatedAt = DateTime.Now;
-            var urip = await dbContext.UserProjectRoles.FindAsync(entity.Id);
+            var urip = await _dbContext.UserProjectRoles.FindAsync(entity.Id);
             urip = entity;
             await SaveChanges();
             return urip;
@@ -49,22 +49,22 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<UserRoleInProject> FindByCondition(Expression<Func<UserRoleInProject, bool>> expression)
         {
-            return await dbContext.UserProjectRoles.FirstOrDefaultAsync(expression);
+            return await _dbContext.UserProjectRoles.FirstOrDefaultAsync(expression);
         }
 
         public async override Task<ICollection<UserRoleInProject>> FindCollectionByCondition(Expression<Func<UserRoleInProject, bool>> expression)
         {
-            return await dbContext.UserProjectRoles.Where(expression).ToListAsync();
+            return await Task.Run(() => _dbContext.UserProjectRoles.Where(expression).ToHashSet());
         }
 
         public async override Task<ICollection<UserRoleInProject>> GetAll()
         {
-            return await dbContext.UserProjectRoles.ToListAsync();
+            return await Task.Run(() => _dbContext.UserProjectRoles.ToHashSet());
         }
 
         public async override Task<UserRoleInProject> GetById(int id)
         {
-            return await dbContext.UserProjectRoles.FindAsync(id);
+            return await _dbContext.UserProjectRoles.FindAsync(id);
         }
     }
 }

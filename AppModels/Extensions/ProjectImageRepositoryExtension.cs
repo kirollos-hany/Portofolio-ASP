@@ -8,7 +8,7 @@ namespace Portofolio.AppModels.Extensions
 {
     public static class ProjectImageRepositoryExtension
     {
-        public async static Task CreateFromCollection(this BaseRepository<ProjectImage> repository, int projectId, IFormFileCollection images,BaseImageServices<Project> imageService)
+        public async static Task CreateFromCollection(this IRepository<ProjectImage> repository, int projectId, IFormFileCollection images, IImageService imageService)
         {
             for(int i = 0; i < images.Count; i++)
             {

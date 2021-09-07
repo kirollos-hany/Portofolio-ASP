@@ -7,7 +7,7 @@ namespace Portofolio.AppModels.Extensions
 {
     public static class UserLinksRepositoryExtensions
     {
-        public async static Task EditUserLinks(this BaseRepository<UserLink> repository, ICollection<string> links, ICollection<int> ids)
+        public async static Task EditUserLinks(this IRepository<UserLink> repository, ICollection<string> links, ICollection<int> ids)
         {
             for (int i = 0; i < links.Count; i++)
             {
@@ -19,7 +19,7 @@ namespace Portofolio.AppModels.Extensions
                 await repository.Edit(newUserLink);
             }
         }
-        public async static Task CreateUserLinks(this BaseRepository<UserLink> repository, ICollection<string> links, ICollection<int> linkTypeIds, int userId)
+        public async static Task CreateUserLinks(this IRepository<UserLink> repository, ICollection<string> links, ICollection<int> linkTypeIds, int userId)
         {
             for (int i = 0; i < links.Count; i++)
             {

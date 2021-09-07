@@ -31,7 +31,8 @@ namespace Portofolio
                 options.EnableSensitiveDataLogging();
 
             });
-            services.AddServicesToContainer();
+            services.AddRepositories();
+            services.AddServices();
             services.ConfigureServices(Configuration);
         }
 

@@ -4,20 +4,31 @@
     ViewData[BannerNavActionKey] = "index";
     ViewData[BannerNavControllerKey] = "services";
     ViewData[BannerTitleKey] = ViewData[TitleKey];
+    ViewData[PaginationCurrentPage] = Model.CurrentPage;
+    ViewData[PaginationMaxPageCount] = Model.MaxPageCount;
+    ViewData[PaginationDisplayCount] = Model.DisplayCount;
 }
-@model ICollection<Service>
+@model PaginationViewModel<Service>
 <!-- Start events-list Area -->
 <section class="events-list-area section-gap event-page-lists" style="padding: 60px 0;">
     <div class="container">
         <div class="row align-items-center">
-    @if (Model.Count != 0)
+    @if (Model.Collection.Count != 0)
     {
-        @foreach (Service service in Model)
+        @foreach (Service service in Model.Collection)
         {
                     <div class="col-lg-6 pb-30">
                         <div class="single-carusel row align-items-center">
                             <div class="col-12 col-md-6 thumb">
-                                <img class="img-fluid" src="~/img/committees-temp.jpg" alt="">
+                                @if(service.ServiceImage.StartsWith("~"))
+                                {
+                                    var imgSrc = @Url.Content(service.ServiceImage);
+                                    <img class="img-fluid" src="@imgSrc" alt="service img">
+                                }
+                                else
+                                {
+                                    <img class="img-fluid" src="~/services/image/@service.Id" alt="service img">
+                                }
                             </div>
                             <div class="detials col-12 col-md-6">
                                 <h4>@service.ServiceName</h4>
@@ -29,5 +40,8 @@
     }
         </div>
     </div>
+    @{
+        await Html.RenderPartialAsync("_PaginationPartial");
+    }
 </section>
 <!-- End events-list Area -->

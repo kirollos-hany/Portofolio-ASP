@@ -18,21 +18,21 @@ namespace Portofolio.AppModels.Repositories
         public async override Task<ProjectFeedback> Create(ProjectFeedback entity)
         {
             entity.CreatedAt = DateTime.Now;
-            await dbContext.ProjectFeedbacks.AddAsync(entity);
+            await _dbContext.ProjectFeedbacks.AddAsync(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<ProjectFeedback> Delete(ProjectFeedback entity)
         {
-            dbContext.ProjectFeedbacks.Remove(entity);
+            _dbContext.ProjectFeedbacks.Remove(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<ICollection<ProjectFeedback>> DeleteCollection(ICollection<ProjectFeedback> entities)
         {
-            dbContext.ProjectFeedbacks.RemoveRange(entities);
+            _dbContext.ProjectFeedbacks.RemoveRange(entities);
             await SaveChanges();
             return entities;
         }
@@ -44,22 +44,22 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<ProjectFeedback> FindByCondition(Expression<Func<ProjectFeedback, bool>> expression)
         {
-            return await dbContext.ProjectFeedbacks.Where(expression).FirstOrDefaultAsync();
+            return await _dbContext.ProjectFeedbacks.Where(expression).FirstOrDefaultAsync();
         }
 
         public async override Task<ICollection<ProjectFeedback>> FindCollectionByCondition(Expression<Func<ProjectFeedback, bool>> expression)
         {
-            return await dbContext.ProjectFeedbacks.Where(expression).ToListAsync();
+            return await Task.Run(() => _dbContext.ProjectFeedbacks.Where(expression).ToHashSet());
         }
 
         public async override Task<ICollection<ProjectFeedback>> GetAll()
         {
-            return await dbContext.ProjectFeedbacks.ToListAsync();
+            return await Task.Run(() => _dbContext.ProjectFeedbacks.ToHashSet());
         }
 
         public async override Task<ProjectFeedback> GetById(int id)
         {
-            return await dbContext.ProjectFeedbacks.FindAsync(id);
+            return await _dbContext.ProjectFeedbacks.FindAsync(id);
         }
     }
 }

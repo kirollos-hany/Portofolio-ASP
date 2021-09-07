@@ -8,7 +8,7 @@ namespace Portofolio.AppModels.Extensions
 {
     public static class ProjectLinksRepositoryExtension
     {
-        public async static Task CreateFromCollection(this BaseRepository<ProjectLink> repository, int projectId, ICollection<int> linkTypesIds, ICollection<string> links)
+        public async static Task CreateFromCollection(this IRepository<ProjectLink> repository, int projectId, ICollection<int> linkTypesIds, ICollection<string> links)
         {
             for (int i = 0; i < links.Count; i++)
             {
@@ -24,7 +24,7 @@ namespace Portofolio.AppModels.Extensions
             }
         }
 
-        public async static Task EditFromCollection(this BaseRepository<ProjectLink> repository, ICollection<int> linksIds, ICollection<string> links)
+        public async static Task EditFromCollection(this IRepository<ProjectLink> repository, ICollection<int> linksIds, ICollection<string> links)
         {
             for(int i = 0; i < linksIds.Count; i++)
             {

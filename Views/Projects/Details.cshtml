@@ -1,9 +1,9 @@
 @{
 	ViewData[TitleKey] = "Details";
 	ViewData[BannerTitleKey] = "Project Details";
-	ViewData[BannerNavTitleKey] = ViewData[BannerTitleKey];
+	ViewData[BannerNavTitleKey] = "Projects";
 	ViewData[BannerNavRouteValueKey] = Model.Project.Id;
-	ViewData[BannerNavActionKey] = "details";
+	ViewData[BannerNavActionKey] = "index";
 	ViewData[BannerNavControllerKey] = "projects";
 }
 @model ProjectDetailsViewModel
@@ -52,22 +52,21 @@
 	</div>
    </div>
    <div class="col-lg-4 right-contents">
-	<a href="#" class="primary-btn text-uppercase">@Model.Project.Title</a>
+	<a class="primary-btn text-uppercase">@Model.Project.Title</a>
 	<ul>
 					@if (@Model.Project.UsersInProjects.Count != 0)
 					{
-						@foreach (UsersInProject userInProject in Model.Project.UsersInProjects)
-						{
+						var userInProject = Model.Project.UsersInProjects.Where((uip) => uip.Role.Role == "Team Leader").FirstOrDefault();
 							<li>
-								<a class="justify-content-between d-flex">
+								<a class="justify-content-between d-flex" asp-action="profile" asp-controller="home" style="text-decoration:none !important;" target = "_blank" asp-route-id="@userInProject.User.Id">
 									<h5 class="dark">@userInProject.Role.Role</h5>
 									<span class="or">@userInProject.User.UserName</span>
 								</a>
 							</li>
-						}
+						
 					}
 	 <li>
-	  <a class="justify-content-between d-flex" href="#go">
+	  <a class="justify-content-between d-flex">
 	   <h5 class="dark">Team Members</h5>
 	   <span class="or">@Model.Project.UsersInProjects.Count</span>
 	  </a>
@@ -86,23 +85,37 @@
 <!-- End course-details Area -->
 <!-- Start Featured Work -->
 <div id="go" class="featured-work text-center">
- <div class="container">
-  <h2>Gallery</h2>
- </div>
+		<div class="container">
+			<h2>Contributors</h2>
+			<ul class="list-unstyled row">
+				<li data-class="ALL" class="active col-md">ALL</li>
+				@foreach(var userInProject in Model.Project.UsersInProjects)
+				{
+					var processedRole = "." + userInProject.Role.Role.Replace(" ", "").ToUpper();
+					<li data-class="@processedRole" class="col-md">@userInProject.Role.Role</li>
+				}
+			</ul>
+</div>
  <div class="lol">
   <div class="row shuffle-images">
-	  	  @if(Model.Project.ProjectImages != null && Model.Project.ProjectImages.Count != 0)
+	  	  @if(Model.Project.UsersInProjects != null && Model.Project.UsersInProjects.Count != 0)
 	  {
-		  foreach(var image in Model.Project.ProjectImages)
+		  foreach(var userInProject in Model.Project.UsersInProjects)
 		  {
+			  	
+			var processedRole = userInProject.Role.Role.Replace(" ", "").ToUpper();
 			<div class="col-md">
-				@if(image.ImagePath.StartsWith("~"))
+				@if(userInProject.User.ImagePath.StartsWith("~"))
 				{
-					var imgSrc = @Url.Content(image.ImagePath);
-					<img class="img-195" src="@imgSrc" alt="Project img" />
+					var imgSrc = @Url.Content(userInProject.User.ImagePath);
+					<a target = "_blank" class="@processedRole" asp-action="profile" asp-route-id="@userInProject.User.Id" asp-controller="home">
+						<img class="img-fluid" src="@imgSrc" alt="contributor img" />
+					</a>
 				}else
 				{
-					<img class="img-195" src="~/projects/image/@image.Id" alt="Project img" />
+					<a asp-action="profile"  class="@processedRole" asp-controller="home" asp-route-id="@userInProject.User.Id">
+						<img class="img-fluid" src="~/user/profileimage/@userInProject.User.Id" alt="Contributor img" />
+					</a>
 				}
 			</div>
 		  }

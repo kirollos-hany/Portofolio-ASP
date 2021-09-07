@@ -1,5 +1,4 @@
 @{
-
   ViewData[TitleKey] = "Dashboard";
 }
 @model DashboardViewModel
@@ -33,6 +32,7 @@
   <link rel="stylesheet" href="~/css/project-details.css"/>
   <!-- End layout styles -->
   <link rel="shortcut icon" href="~/assets/images/favicon.png" />
+  <link rel="stylesheet" href="~/css/dashboard-custom.css"/>
 </head>
 
 <body>
@@ -135,11 +135,19 @@
           </a>
         </li>
         <li class="nav-item menu-items">
-          <a class="nav-link" asp-action="contacts" asp-controller="dashboard">
-            <span class="menu-icon">
-              <i class="mdi mdi-contact-mail"></i>
-            </span>
-            <span class="menu-title">Contacts</span>
+          <a class="nav-link d-flex justify-content-between" asp-action="contacts" asp-controller="dashboard">
+            <div class="d-inline-flex">
+                  <span class="menu-icon">
+                    <i class="mdi mdi-contact-mail"></i>
+                  </span>
+                  <span class="menu-title align-self-center">Contacts</span>
+            </div>
+            @if(Model.PendingContactsCount != 0)
+            {
+                <span>
+                    <i class="notification-circle bg-notification">@Model.PendingContactsCount</i>
+                </span>
+            }
           </a>
         </li>
         <li class="nav-item menu-items">
@@ -229,49 +237,6 @@
             <li class="nav-item dropdown d-none d-lg-block">
               <a class="nav-link btn btn-success create-new-button" asp-action="create" asp-controller="projects">+ Create New Project</a>
             </li>
-            <li class="nav-item dropdown border-left">
-              <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown"
-                aria-expanded="false">
-                <i class="mdi mdi-email"></i>
-                <span class="count bg-success"></span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-                aria-labelledby="messageDropdown">
-                <h6 class="p-3 mb-0">Contacts</h6>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">Kirollos Hany</div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1">
-                      Mark send you a message
-                    </p>
-                    <p class="text-muted mb-0">1 Minute ago</p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">Kirollos Hany</div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1">
-                      Cregh send you a message
-                    </p>
-                    <p class="text-muted mb-0">15 Minutes ago</p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">Kirollos Hany</div>
-                  <div class="preview-item-content">
-                    <p class="preview-subject ellipsis mb-1">
-                      Profile picture updated
-                    </p>
-                    <p class="text-muted mb-0">18 Minutes ago</p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-                <p class="p-3 mb-0 text-center">4 new contacts</p>
-              </div>
-            </li>
             <li class="nav-item dropdown">
               <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                 <div class="navbar-profile">
@@ -359,6 +324,15 @@
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
   }
+    <script src="~/js/easing.min.js"></script>
+    <script src="~/js/hoverIntent.js"></script>
+    <script src="~/js/superfish.min.js"></script>
+    <script src="~/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/js/jquery.tabs.min.js"></script>
+    <script src="~/js/jquery.nice-select.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/main.js"></script>
 
   <!-- End custom js for this page -->
 </body>

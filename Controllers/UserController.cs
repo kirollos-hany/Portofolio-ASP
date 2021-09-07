@@ -18,32 +18,32 @@ namespace Portofolio.Controllers
 {
     public class UserController : Controller
     {
-        private readonly SignInManager<User> signInManager;
+        private readonly SignInManager<User> _signInManager;
 
-        private readonly UserManager<User> userManager;
+        private readonly UserManager<User> _userManager;
 
-        private readonly BaseRepository<UsersInProject> uipRepository;
+        private readonly IRepository<UsersInProject> _uipRepository;
 
-        private readonly BaseImageServices<User> imageServices;
+        private readonly IImageService _imageServices;
 
-        private readonly BaseRepository<UserLink> userLinksRepository;
+        private readonly IRepository<UserLink> _userLinksRepository;
 
-        private readonly BaseRepository<LinkType> linkTypesRepository;
+        private readonly IRepository<LinkType> _linkTypesRepository;
 
-        private readonly IEmailParserFromModelAsync<HTMLModel> htmlEmailParser;
+        private readonly IEmailParserFromModelAsync<HTMLModel> _htmlEmailParser;
 
-        private readonly IMailService mailServices;
+        private readonly IMailService _mailServices;
 
         public UserController(SignInManager<User> signInManager, UserManager<User> userManager, BaseRepository<UsersInProject> uipRepository, BaseImageServices<User> imageServices, BaseRepository<UserLink> userLinksRepository, BaseRepository<LinkType> linkTypesRepository, IEmailParserFromModelAsync<HTMLModel> htmlEmailParser, IMailService mailServices)
         {
-            this.uipRepository = uipRepository;
-            this.signInManager = signInManager;
-            this.userManager = userManager;
-            this.imageServices = imageServices;
-            this.userLinksRepository = userLinksRepository;
-            this.linkTypesRepository = linkTypesRepository;
-            this.htmlEmailParser = htmlEmailParser;
-            this.mailServices = mailServices;
+            _uipRepository = uipRepository;
+            _signInManager = signInManager;
+            _userManager = userManager;
+            _imageServices = imageServices;
+            _userLinksRepository = userLinksRepository;
+            _linkTypesRepository = linkTypesRepository;
+            _htmlEmailParser = htmlEmailParser;
+            _mailServices = mailServices;
         }
         public IActionResult Login(string returnUrl = null)
         {
@@ -54,10 +54,10 @@ namespace Portofolio.Controllers
         [Authorize]
         public async Task<IActionResult> Profile()
         {
-            var user = await userManager.GetUserAsync(HttpContext.User);
-            user.UsersInProjects = await uipRepository.FindCollectionByCondition((uip) => uip.UserId == user.Id);
-            user.UserLinks = await userLinksRepository.FindCollectionByCondition(ul => ul.UserId == user.Id);
-            var linkTypes = await linkTypesRepository.GetAll();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            user.UsersInProjects = await _uipRepository.FindCollectionByCondition((uip) => uip.UserId == user.Id);
+            user.UserLinks = await _userLinksRepository.FindCollectionByCondition(ul => ul.UserId == user.Id);
+            var linkTypes = await _linkTypesRepository.GetAll();
             return View(new UserProfileViewModel
             {
                 User = user,
@@ -71,10 +71,10 @@ namespace Portofolio.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await userManager.FindByEmailAsync(loginData.Email);
+                var user = await _userManager.FindByEmailAsync(loginData.Email);
                 if (user != null)
                 {
-                    var result = await signInManager.PasswordSignInAsync(user.UserName, loginData.Password, true, false);
+                    var result = await _signInManager.PasswordSignInAsync(user.UserName, loginData.Password, true, false);
                     if (result.Succeeded)
                     {
                         if (loginData.ReturnUrl == null)
@@ -109,10 +109,10 @@ namespace Portofolio.Controllers
             {
                 try
                 {
-                    imageServices.ValidateImgExtension(userImageFile);
-                    imagePath = await imageServices.UploadImgAsync(userImageFile);
-                    await userManager.EditUserWithImageAsync(profileViewModel.User, imagePath, imageServices);
-                    await userLinksRepository.EditUserLinks(profileViewModel.Links, profileViewModel.LinksIds);
+                    _imageServices.ValidateImgExtension(userImageFile);
+                    imagePath = await _imageServices.UploadImgAsync(userImageFile);
+                    await _userManager.EditUserWithImageAsync(profileViewModel.User, imagePath, _imageServices);
+                    await _userLinksRepository.EditUserLinks(profileViewModel.Links, profileViewModel.LinksIds);
                 }
                 catch (CustomException ex)
                 {
@@ -125,23 +125,23 @@ namespace Portofolio.Controllers
             }
             else
             {
-                await userManager.EditUserAsync(profileViewModel.User);
-                await userLinksRepository.EditUserLinks(profileViewModel.Links, profileViewModel.LinksIds);
+                await _userManager.EditUserAsync(profileViewModel.User);
+                await _userLinksRepository.EditUserLinks(profileViewModel.Links, profileViewModel.LinksIds);
             }
             return RedirectToAction(nameof(Profile));
         }
 
         public async Task<IActionResult> ProfileImage(int id)
         {
-            var user = await userManager.Users.FirstOrDefaultAsync((user) => user.Id == id);
-            var imageModel = await imageServices.GetImageAsync(user.ImagePath);
+            var user = await _userManager.Users.FirstOrDefaultAsync((user) => user.Id == id);
+            var imageModel = await _imageServices.GetImageAsync(user.ImagePath);
             return File(imageModel.FileStream, imageModel.ContentType);
         }
 
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-            await signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
             return RedirectToAction(controllerName: "Home", actionName: nameof(HomeController.Index));
         }
 
@@ -149,8 +149,8 @@ namespace Portofolio.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var user = await userManager.GetUserAsync(HttpContext.User);
-            var linkTypes = await linkTypesRepository.GetAll();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var linkTypes = await _linkTypesRepository.GetAll();
             return View(new CreateProfileViewModel
             {
                 User = user,
@@ -170,13 +170,13 @@ namespace Portofolio.Controllers
             }
             try
             {
-                var newUser = await userManager.CreateUserAsync(createProfileViewModel);
-                await userLinksRepository.CreateUserLinks(createProfileViewModel.Links, createProfileViewModel.LinkTypeIds, newUser.Id);
+                var newUser = await _userManager.CreateUserAsync(createProfileViewModel);
+                await _userLinksRepository.CreateUserLinks(createProfileViewModel.Links, createProfileViewModel.LinkTypeIds, newUser.Id);
                 if (userImageFile != null)
                 {
-                    imageServices.ValidateImgExtension(userImageFile);
-                    newUser.ImagePath = await imageServices.UploadImgAsync(userImageFile);
-                    await userManager.UpdateAsync(newUser);
+                    _imageServices.ValidateImgExtension(userImageFile);
+                    newUser.ImagePath = await _imageServices.UploadImgAsync(userImageFile);
+                    await _userManager.UpdateAsync(newUser);
                 }
             }
             catch (CustomException ex)
@@ -199,7 +199,7 @@ namespace Portofolio.Controllers
         [HttpGet]
         public async Task<IActionResult> PasswordChange()
         {
-            var user = await userManager.GetUserAsync(HttpContext.User);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
             return View(new ChangePasswordViewModel
             {
                 User = user
@@ -216,8 +216,8 @@ namespace Portofolio.Controllers
                 ModelState.AssignTempDataWithErrors(TempData);
                 return RedirectToAction(nameof(PasswordChange));
             }
-            var user = await userManager.GetUserAsync(HttpContext.User);
-            var result = await userManager.ChangePasswordAsync(user, changePasswordViewModel.OldPassword, changePasswordViewModel.NewPassword);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var result = await _userManager.ChangePasswordAsync(user, changePasswordViewModel.OldPassword, changePasswordViewModel.NewPassword);
             if (!result.Succeeded)
             {
                 TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
@@ -243,7 +243,7 @@ namespace Portofolio.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel resetPasswordViewModel)
         {
-            var user = await userManager.FindByEmailAsync(resetPasswordViewModel.Email);
+            var user = await _userManager.FindByEmailAsync(resetPasswordViewModel.Email);
             if (!ModelState.IsValid)
             {
                 ModelState.AssignTempDataWithErrors(TempData);
@@ -258,16 +258,16 @@ namespace Portofolio.Controllers
                 });
                 return RedirectToAction(nameof(ForgotPassword));
             }
-            var resetToken = await userManager.GeneratePasswordResetTokenAsync(user);
+            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
             var callback = Url.ActionLink(nameof(ResetPassword), "User", new { token = resetToken, email = user.Email }, Request.Scheme);
-            var mailRequest = await htmlEmailParser.ParseAsync(new HTMLModel()
+            var mailRequest = await _htmlEmailParser.ParseAsync(new HTMLModel()
             {
                 Path = "templates/resetpassword.html",
                 PlaceHolders = new string[] { "[href]" },
                 PlaceHolderValues = new string[] { $" href={callback}" },
                 ToEmail = user.Email
             });
-            await mailServices.SendEmailAsync(mailRequest);
+            await _mailServices.SendEmailAsync(mailRequest);
             return View();
         }
 
@@ -290,11 +290,11 @@ namespace Portofolio.Controllers
                 ModelState.AssignTempDataWithErrors(TempData);
                 return RedirectToAction(nameof(ResetPassword), new { token = newPasswordViewModel.Token, email = newPasswordViewModel.Email });
             }
-            var user = await userManager.FindByEmailAsync(newPasswordViewModel.Email);
-            var result = await userManager.ResetPasswordAsync(user, newPasswordViewModel.Token, newPasswordViewModel.Password);
+            var user = await _userManager.FindByEmailAsync(newPasswordViewModel.Email);
+            var result = await _userManager.ResetPasswordAsync(user, newPasswordViewModel.Token, newPasswordViewModel.Password);
             if (result.Succeeded)
             {
-                var loginResult = await signInManager.PasswordSignInAsync(user.UserName, newPasswordViewModel.Password, true, false);
+                var loginResult = await _signInManager.PasswordSignInAsync(user.UserName, newPasswordViewModel.Password, true, false);
                 if (loginResult.Succeeded)
                 {
                     return RedirectToAction(actionName: nameof(DashboardController.Index), controllerName: "Dashboard");

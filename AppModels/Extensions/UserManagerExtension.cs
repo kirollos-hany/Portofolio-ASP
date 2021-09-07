@@ -2,8 +2,6 @@ using System.Threading.Tasks;
 using Portofolio.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
-using System.IO;
-using Portofolio.AppModels.Models;
 using Portofolio.AppModels.Services;
 using System;
 using Portofolio.ViewModels;
@@ -24,7 +22,7 @@ namespace Portofolio.AppModels.Extensions
             return user;
         }
 
-        public static async Task<User> EditUserWithImageAsync(this UserManager<User> userManager, User newUserData, string imagePath, BaseImageServices<User> imageServices)
+        public static async Task<User> EditUserWithImageAsync(this UserManager<User> userManager, User newUserData, string imagePath, IImageService imageServices)
         {
             var user = await Task.Run(() => userManager.Users.Where(user => user.Id == newUserData.Id).FirstOrDefault());
             user.UserName = newUserData.UserName;

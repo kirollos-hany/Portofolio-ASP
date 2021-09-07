@@ -19,28 +19,28 @@ namespace Portofolio.AppModels.Repositories
         {
             entity.CreatedAt = DateTime.Now;
             entity.UpdatedAt = DateTime.Now;
-            await dbContext.LinkTypes.AddAsync(entity);
+            await _dbContext.LinkTypes.AddAsync(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<LinkType> Delete(LinkType entity)
         {
-            dbContext.LinkTypes.Remove(entity);
+            _dbContext.LinkTypes.Remove(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<ICollection<LinkType>> DeleteCollection(ICollection<LinkType> entities)
         {
-            dbContext.LinkTypes.RemoveRange(entities);
+            _dbContext.LinkTypes.RemoveRange(entities);
             await SaveChanges();
             return entities;
         }
 
         public async override Task<LinkType> Edit(LinkType entity)
         {
-            var lt = await dbContext.LinkTypes.FindAsync(entity.Id);
+            var lt = await _dbContext.LinkTypes.FindAsync(entity.Id);
             lt = entity;
             lt.UpdatedAt = DateTime.Now;
             await SaveChanges();
@@ -49,22 +49,22 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<LinkType> FindByCondition(Expression<Func<LinkType, bool>> expression)
         {
-            return await dbContext.LinkTypes.Where(expression).FirstOrDefaultAsync();
+            return await _dbContext.LinkTypes.Where(expression).FirstOrDefaultAsync();
         }
 
         public async override Task<ICollection<LinkType>> FindCollectionByCondition(Expression<Func<LinkType, bool>> expression)
         {
-            return await dbContext.LinkTypes.Where(expression).ToListAsync();
+            return await Task.Run(()=>_dbContext.LinkTypes.Where(expression).ToHashSet());
         }
 
         public async override Task<ICollection<LinkType>> GetAll()
         {
-            return await dbContext.LinkTypes.ToListAsync();
+            return await Task.Run(()=>_dbContext.LinkTypes.ToHashSet());
         }
 
         public async override Task<LinkType> GetById(int id)
         {
-            return await dbContext.LinkTypes.FindAsync(id);
+            return await _dbContext.LinkTypes.FindAsync(id);
         }
     }
 }

@@ -35,7 +35,7 @@
       <h5 id="feedbackBtn">Feedback</h5>
     </div>
     <div id="displayDescription" class="white-bg col-12 dark border-dark-2 padding-vertical-10">
-      <p>@Model.ChosenProject.Description</p>
+      <p id="projectDescriptionP">@Model.ChosenProject.Description</p>
     </div>
     <div id="displayFeedback" class="white-bg col-12 dark border-dark-2 padding-vertical-10">
       @if(Model.ChosenProject.ProjectFeedbacks != null && Model.ChosenProject.ProjectFeedbacks.Count != 0)
@@ -51,23 +51,21 @@
   </div>
    </div>
    <div class="col-lg-4 right-contents">
-	<a href="#" class="primary-btn text-uppercase">@Model.ChosenProject.Title</a>
+	<a class="primary-btn text-uppercase">@Model.ChosenProject.Title</a>
 	<ul>
 					@if (@Model.ChosenProject.UsersInProjects.Count != 0)
 					{
-						@foreach (UsersInProject userInProject in Model.ChosenProject.UsersInProjects)
-						{
-							<li>
-								<a class="justify-content-between d-flex">
+            var userInProject = Model.ChosenProject.UsersInProjects.Where<UsersInProject>((uip)=>uip.Role.Role == "Team Leader").FirstOrDefault();
+							<li>	
+								<a class="justify-content-between d-flex clickable" target="_blank" asp-action="profile" asp-controller="home" asp-route-id="@userInProject.User.Id">
 									<h5 class="dark">@userInProject.Role.Role</h5>
-									<span class="or dark">@userInProject.User.UserName</span>
+                  <span class="or dark">@userInProject.User.UserName</span>
 								</a>
 							</li>
-						}
 					}
 	 <li>
-	  <a class="justify-content-between d-flex" href="#go">
-	   <h5>Team Members</h5>
+	  <a class="justify-content-between d-flex">
+	   <h5 class="dark">Team Members</h5>
 	   <span class="or">@Model.ChosenProject.UsersInProjects.Count</span>
 	  </a>
 	 </li>
@@ -85,29 +83,36 @@
 <!-- End course-details Area -->
 <!-- Start Featured Work -->
 <div id="go" class="featured-work text-center">
- <div class="container">
-  <h5 class="light h2 padding-vertical-10">Gallery</h5>
- </div>
+		<div class="container">
+			<h2>Contributors</h2>
+			<ul class="list-unstyled row">
+				<li data-class="ALL" class="active col-md">ALL</li>
+				@foreach(var userInProject in Model.ChosenProject.UsersInProjects)
+				{
+					var processedRole = "." + userInProject.Role.Role.Replace(" ", "").ToUpper();
+					<li data-class="@processedRole" class="col-md">@userInProject.Role.Role</li>
+				}
+			</ul>
+</div>
  <div class="lol">
   <div class="row shuffle-images">
-	  @if(Model.ChosenProject.ProjectImages != null && Model.ChosenProject.ProjectImages.Count != 0)
+	  @if(Model.ChosenProject.UsersInProjects != null && Model.ChosenProject.UsersInProjects.Count != 0)
 	  {
-		  foreach(var image in Model.ChosenProject.ProjectImages)
+		  foreach(var userInProject in Model.ChosenProject.UsersInProjects)
 		  {
+			var processedRole = userInProject.Role.Role.Replace(" ", "").ToUpper();
 			<div class="col-md">
-				@if(image.ImagePath.StartsWith("~"))
+				@if(userInProject.User.ImagePath.StartsWith("~"))
 				{
-					var imgSrc = @Url.Content(image.ImagePath);
-					<img class="img-195" src="@imgSrc" alt="Project img" />
-      <a asp-action="deleteimage" asp-controller="projects" asp-route-id="@image.Id">
-        <i class="mdi mdi-delete-forever clickable light"></i>
-      </a>
+					var imgSrc = @Url.Content(userInProject.User.ImagePath);
+					<a target = "_blank" class="@processedRole" asp-action="profile" asp-route-id="@userInProject.User.Id" asp-controller="home">
+						<img class="img-fluid" src="@imgSrc" alt="contributor img" />
+					</a>
 				}else
 				{
-					<img class="img-195" src="~/projects/image/@image.Id" alt="Project img" />
-      <a asp-action="deleteimage" asp-controller="projects" asp-route-id="@image.Id">
-        <i class="mdi mdi-delete-forever clickable light"></i>
-      </a>
+					<a asp-action="profile"  class="@processedRole" asp-controller="home" asp-route-id="@userInProject.User.Id">
+						<img class="img-fluid" src="~/user/profileimage/@userInProject.User.Id" alt="Contributor img" />
+					</a>
 				}
 			</div>
 		  }
@@ -155,7 +160,7 @@
         </div>
         <div class="form-group">
           <label>Description</label>
-          <textarea asp-for="Description" class="form-control">@Model.ChosenProject.Description</textarea>
+          <textarea asp-for="Description" class="form-control"></textarea>
           <span class="text-danger" asp-validation-for="Description"></span>
         </div>
         <div class="form-group">

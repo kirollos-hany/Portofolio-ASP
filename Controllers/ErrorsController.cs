@@ -6,14 +6,14 @@ namespace Portofolio.Controllers
 {
     public class ErrorsController : Controller
     {
-        private readonly SignInManager<User> signInManager;
+        private readonly SignInManager<User> _signInManager;
         public ErrorsController(SignInManager<User> signInManager)
         {
-            this.signInManager = signInManager;
+            _signInManager = signInManager;
         }
         public IActionResult Error404()
         {
-            if (signInManager.IsSignedIn(HttpContext.User))
+            if (_signInManager.IsSignedIn(HttpContext.User))
             {
                 return View(new CustomErrorViewModel
                 {

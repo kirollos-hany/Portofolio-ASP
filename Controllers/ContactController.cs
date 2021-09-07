@@ -15,33 +15,34 @@ namespace Portofolio.Controllers
 {
     public class ContactController : Controller
     {
-        private readonly BaseRepository<Contact> contactRepository;
-        private readonly BaseRepository<Service> serviceRepository;
+        private readonly IRepository<Contact> _contactRepository;
+        private readonly IRepository<Service> _serviceRepository;
 
-        private readonly IMailService mailService;
+        private readonly IMailService _mailService;
 
-        private readonly BaseRepository<RequestedService> requestedServicesRepository;
+        private readonly IRepository<RequestedService> _requestedServicesRepository;
 
-        private readonly IEmailParserFromModelAsync<HTMLWithModel<Contact>> contactEmailParser;
+        private readonly IEmailParserFromModelAsync<HTMLWithModel<Contact>> _contactEmailParser;
 
-        private readonly UserManager<User> userManager;
+        private readonly UserManager<User> _userManager;
 
-        private readonly BaseRepository<ContactStatus> contactStatusRepository;
+        private readonly IRepository<ContactStatus> _contactStatusRepository;
+
         public ContactController(BaseRepository<ContactStatus> contactStatusRepository, UserManager<User> userManager, BaseRepository<Contact> contactRepository, IEmailParserFromModelAsync<HTMLWithModel<Contact>> contactEmailParser, BaseRepository<Service> serviceRepository, BaseRepository<RequestedService> requestedServicesRepository, IMailService mailService)
         {
-            this.mailService = mailService;
-            this.contactRepository = contactRepository;
-            this.serviceRepository = serviceRepository;
-            this.requestedServicesRepository = requestedServicesRepository;
-            this.contactEmailParser = contactEmailParser;
-            this.userManager = userManager;
-            this.contactStatusRepository = contactStatusRepository;
+            _mailService = mailService;
+            _contactRepository = contactRepository;
+            _serviceRepository = serviceRepository;
+            _requestedServicesRepository = requestedServicesRepository;
+            _contactEmailParser = contactEmailParser;
+            _userManager = userManager;
+            _contactStatusRepository = contactStatusRepository;
         }
         public async Task<IActionResult> Index()
         {
             var viewModel = new ContactWithServicesViewModel
             {
-                Services = await serviceRepository.GetAll(),
+                Services = await _serviceRepository.GetAll(),
             };
             return View(viewModel);
         }
@@ -55,16 +56,18 @@ namespace Portofolio.Controllers
                 ModelState.AssignTempDataWithErrors(TempData);
                 return RedirectToAction(controllerName: "Contact", actionName: "Index");
             }
-            Contact savedContact = await contactRepository.Create(contactData.Contact);
-            await requestedServicesRepository.CreateFromIds(contactData.RequestedServicesIds, savedContact.Id);
-            var contact = await contactRepository.GetById(savedContact.Id);
-            var mailRequest = await contactEmailParser.ParseAsync(new HTMLWithModel<Contact>
+            ContactStatus cs = await _contactStatusRepository.FindByCondition(cs => cs.Status == "Pending");
+            contactData.Contact.StatusId = cs.Id;
+            Contact savedContact = await _contactRepository.Create(contactData.Contact);
+            await _requestedServicesRepository.CreateFromIds(contactData.RequestedServicesIds, savedContact.Id);
+            var contact = await _contactRepository.GetById(savedContact.Id);
+            var mailRequest = await _contactEmailParser.ParseAsync(new HTMLWithModel<Contact>
             {
                 Model = contactData.Contact,
                 Path = "templates/servicerequest.html",
                 HrefValue = $"href={Url.ActionLink(nameof(ContactController.ContactDetails), "Contact", new {id = contactData.Contact.Id}, Request.Scheme)}"
             });
-            await mailService.SendEmailAsync(mailRequest);
+            await _mailService.SendEmailAsync(mailRequest);
             TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
             {
                 Message = "Contact received successfuly, we will contact you asap!",
@@ -75,9 +78,9 @@ namespace Portofolio.Controllers
         [Authorize]
         public async Task<IActionResult> ContactDetails(int id)
         {
-            var contact = await contactRepository.GetById(id);
-            var user = await userManager.GetUserAsync(HttpContext.User);
-            var statuses = await contactStatusRepository.GetAll();
+            var contact = await _contactRepository.GetById(id);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var statuses = await _contactStatusRepository.GetAll();
             return View(new ContactDetailsViewModel
             {
                 Contact = contact,
@@ -101,9 +104,9 @@ namespace Portofolio.Controllers
             }
             else
             {
-                var contact = await contactRepository.GetById(editViewModel.Contact.Id);
+                var contact = await _contactRepository.GetById(editViewModel.Contact.Id);
                 contact.StatusId = editViewModel.StatusId;
-                await contactRepository.Edit(contact);
+                await _contactRepository.Edit(contact);
                 TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
                 {
                     Message = "Contact editted successfuly",

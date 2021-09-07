@@ -1,5 +1,8 @@
 @{
     Layout = "_DashboardLayout";
+    ViewData[PaginationCurrentPage] = Model.PaginationModel.CurrentPage;
+    ViewData[PaginationMaxPageCount] = Model.PaginationModel.MaxPageCount;
+    ViewData[PaginationDisplayCount] = Model.PaginationModel.DisplayCount;
 }
 @model ServicesDashboardVM
 <!-- Start events-list Area -->
@@ -7,9 +10,9 @@
     <div class="container">
         <i class="btn btn-primary mr-2 clickable mb-10" data-target="#createServiceModal" data-toggle="modal">+ Create New Service</i>
         <div class="row align-items-center">
-    @if (Model.Services.Count != 0)
+    @if (Model.PaginationModel.Collection.Count != 0)
     {
-        @foreach (Service service in Model.Services)
+        @foreach (Service service in Model.PaginationModel.Collection)
         {
                     <div class="col-lg-6 pb-30">
                         <div class="single-carusel row align-items-center">
@@ -122,5 +125,8 @@
 </div>
 <script src="~/js/servicecrud.js"></script>
 <!-- /.modal -->
+@{
+  await Html.RenderPartialAsync("_PaginationPartial");
+}
 </section>
 <!-- End events-list Area -->

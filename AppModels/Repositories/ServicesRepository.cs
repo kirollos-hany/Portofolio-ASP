@@ -19,28 +19,28 @@ namespace Portofolio.AppModels.Repositories
         {
             entity.CreatedAt = DateTime.Now;
             entity.UpdatedAt = DateTime.Now;
-            await dbContext.Services.AddAsync(entity);
+            await _dbContext.Services.AddAsync(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<Service> Delete(Service entity)
         {
-            dbContext.Services.Remove(entity);
+            _dbContext.Services.Remove(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<ICollection<Service>> DeleteCollection(ICollection<Service> entities)
         {
-            dbContext.Services.RemoveRange(entities);
+            _dbContext.Services.RemoveRange(entities);
             await SaveChanges();
             return entities;
         }
 
         public async override Task<Service> Edit(Service entity)
         {
-            Service service = await dbContext.Services.FirstOrDefaultAsync(service => entity.Id == service.Id);
+            Service service = await _dbContext.Services.FirstOrDefaultAsync(service => entity.Id == service.Id);
             service.ServiceDescription = entity.ServiceDescription;
             service.ServiceImage = entity.ServiceImage;
             service.ServiceName = entity.ServiceName;
@@ -51,22 +51,22 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<Service> FindByCondition(Expression<Func<Service, bool>> expression)
         {
-            return await dbContext.Services.Include(service => service.Requests).Where(expression).FirstOrDefaultAsync();
+            return await _dbContext.Services.Include(service => service.Requests).Where(expression).FirstOrDefaultAsync();
         }
 
         public async override Task<ICollection<Service>> FindCollectionByCondition(Expression<Func<Service, bool>> expression)
         {
-            return await dbContext.Services.Include(service => service.Requests).Where(expression).ToListAsync();
+            return await Task.Run(()=>_dbContext.Services.Include(service => service.Requests).Where(expression).ToHashSet());
         }
 
         public async override Task<ICollection<Service>> GetAll()
         {
-            return await dbContext.Services.Include(service => service.Requests).ToListAsync();
+            return await Task.Run(()=>_dbContext.Services.Include(service => service.Requests).ToHashSet());
         }
 
         public async override Task<Service> GetById(int id)
         {
-            return await dbContext.Services.Include(service => service.Requests).FirstOrDefaultAsync(service => service.Id == id);
+            return await _dbContext.Services.Include(service => service.Requests).FirstOrDefaultAsync(service => service.Id == id);
         }
 
     }

@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using Portofolio.Models;
 using System.Threading.Tasks;
-
-namespace Portofolio.AppModels.Repositories
+using Portofolio.AppModels.Repositories;
+namespace Portofolio.AppModels.Extensions
 {
     public static class RequestedServiceRepoExtensions
     {
-        public async static Task CreateFromIds(this BaseRepository<RequestedService> repository, ICollection<int> servicesIds, int contactId)
+        public async static Task CreateFromIds(this IRepository<RequestedService> repository, ICollection<int> servicesIds, int contactId)
         {
             foreach (int id in servicesIds)
             {

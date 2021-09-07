@@ -1,8 +1,5 @@
 @{
     Layout = "_DashboardLayout";
-    Model.Contacts = Model.Contacts.OrderByDescending((contact)=>{
-      return contact.UpdatedAt;
-    }).ToList();
 }
 @model ContactsDashboardViewModel
               <div class="col-lg-12 grid-margin stretch-card">

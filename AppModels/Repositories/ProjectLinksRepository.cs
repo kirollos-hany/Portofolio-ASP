@@ -19,28 +19,28 @@ namespace Portofolio.AppModels.Repositories
         {
             entity.CreatedAt = DateTime.Now;
             entity.UpdatedAt = DateTime.Now;
-            await dbContext.ProjectLinks.AddAsync(entity);
+            await _dbContext.ProjectLinks.AddAsync(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<ProjectLink> Delete(ProjectLink entity)
         {
-            dbContext.ProjectLinks.Remove(entity);
+            _dbContext.ProjectLinks.Remove(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<ICollection<ProjectLink>> DeleteCollection(ICollection<ProjectLink> entities)
         {
-            dbContext.ProjectLinks.RemoveRange(entities);
+            _dbContext.ProjectLinks.RemoveRange(entities);
             await SaveChanges();
             return entities;
         }
 
         public async override Task<ProjectLink> Edit(ProjectLink entity)
         {
-            var pl = await dbContext.ProjectLinks.FindAsync(entity.Id);
+            var pl = await _dbContext.ProjectLinks.FindAsync(entity.Id);
             pl.Link = entity.Link;
             pl.UpdatedAt = DateTime.Now;
             await SaveChanges();
@@ -49,22 +49,22 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<ProjectLink> FindByCondition(Expression<Func<ProjectLink, bool>> expression)
         {
-            return await dbContext.ProjectLinks.Include(pl => pl.Type).FirstOrDefaultAsync(expression);
+            return await _dbContext.ProjectLinks.Include(pl => pl.Type).FirstOrDefaultAsync(expression);
         }
 
         public async override Task<ICollection<ProjectLink>> FindCollectionByCondition(Expression<Func<ProjectLink, bool>> expression)
         {
-            return await dbContext.ProjectLinks.Include(pl => pl.Type).Where(expression).ToListAsync();
+            return await Task.Run(()=>_dbContext.ProjectLinks.Include(pl => pl.Type).Where(expression).ToHashSet());
         }
 
         public async override Task<ICollection<ProjectLink>> GetAll()
         {
-            return await dbContext.ProjectLinks.Include(pl => pl.Type).ToListAsync();
+            return await Task.Run(()=>_dbContext.ProjectLinks.Include(pl => pl.Type).ToHashSet());
         }
 
         public async override Task<ProjectLink> GetById(int id)
         {
-            return await dbContext.ProjectLinks.Include(pl => pl.Type).FirstOrDefaultAsync(pl => pl.Id == id);
+            return await _dbContext.ProjectLinks.Include(pl => pl.Type).FirstOrDefaultAsync(pl => pl.Id == id);
         }
     }
 }

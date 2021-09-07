@@ -11,7 +11,7 @@ namespace Portofolio.AppModels.Extensions
 {
     public static class ServiceCollectionExtension
     {
-        public static void AddServicesToContainer(this IServiceCollection services)
+        public static void AddRepositories(this IServiceCollection services)
         {
             services.AddScoped(typeof(BaseRepository<Contact>), typeof(ContactRepository));
             services.AddScoped(typeof(BaseRepository<ContactStatus>), typeof(ContactStatusRepository));
@@ -29,6 +29,12 @@ namespace Portofolio.AppModels.Extensions
             services.AddScoped(typeof(BaseRepository<ProjectLink>), typeof(ProjectLinksRepository));
             services.AddScoped(typeof(BaseRepository<ProjectType>), typeof(ProjectTypeRepository));
             services.AddScoped(typeof(BaseRepository<UserRoleInProject>), typeof(UserRoleInProjectRepository));
+        }
+        public static void AddServices(this IServiceCollection services)
+        {
+            services.AddScoped(typeof(BasePaginator<Project>), typeof(ProjectsPaginator));
+            services.AddScoped(typeof(BasePaginator<User>), typeof(MembersPaginator));
+            services.AddScoped(typeof(BasePaginator<Service>), typeof(ServicesPaginator));
             services.AddScoped(typeof(IMailService), typeof(MailService));
             services.AddScoped(typeof(IEmailParserFromModelAsync<HTMLWithModel<Contact>>), typeof(HTMLWithContactEmailParser));
             services.AddScoped(typeof(IEmailParserFromModelAsync<HTMLModel>), typeof(HTMLEmailParser));

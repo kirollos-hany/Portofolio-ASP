@@ -11,40 +11,36 @@ namespace Portofolio.AppModels.Repositories
 {
     class ContactRepository : BaseRepository<Contact>
     {
-        private readonly BaseRepository<ContactStatus> contactStatusRepository;
-        public ContactRepository(PortofolioDbContext dbContext, BaseRepository<ContactStatus> contactStatusRepository) : base(dbContext)
+        public ContactRepository(PortofolioDbContext dbContext) : base(dbContext)
         {
-            this.contactStatusRepository = contactStatusRepository;
         }
 
         public async override Task<Contact> Create(Contact entity)
         {
-            ContactStatus cs = await contactStatusRepository.FindByCondition(cs => cs.Status == "Pending");
             entity.CreatedAt = DateTime.Now;
             entity.UpdatedAt = DateTime.Now;
-            entity.StatusId = cs.Id;
-            await dbContext.Contacts.AddAsync(entity);
+            await _dbContext.Contacts.AddAsync(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<Contact> Delete(Contact entity)
         {
-            dbContext.Contacts.Remove(entity);
+            _dbContext.Contacts.Remove(entity);
             await SaveChanges();
             return entity;
         }
 
         public async override Task<ICollection<Contact>> DeleteCollection(ICollection<Contact> entities)
         {
-            dbContext.Contacts.RemoveRange(entities);
+            _dbContext.Contacts.RemoveRange(entities);
             await SaveChanges();
             return entities;
         }
 
         public async override Task<Contact> Edit(Contact entity)
         {
-            Contact contact = await dbContext.Contacts.Include(contact => contact.Status).FirstOrDefaultAsync(contact => contact.Id == entity.Id);
+            Contact contact = await _dbContext.Contacts.Include(contact => contact.Status).FirstOrDefaultAsync(contact => contact.Id == entity.Id);
             contact.StatusId = entity.StatusId;
             contact.UpdatedAt = DateTime.Now;
             await SaveChanges();
@@ -53,22 +49,22 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<Contact> FindByCondition(Expression<Func<Contact, bool>> expression)
         {
-            return await dbContext.Contacts.Include(Contact => Contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).FirstOrDefaultAsync(expression);
+            return await _dbContext.Contacts.Include(Contact => Contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).FirstOrDefaultAsync(expression);
         }
 
         public async override Task<ICollection<Contact>> FindCollectionByCondition(Expression<Func<Contact, bool>> expression)
         {
-            return await Task.Run(() => dbContext.Contacts.Include(contact => contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).Where(expression).ToList());
+            return await Task.Run(() => _dbContext.Contacts.Include(contact => contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).Where(expression).ToHashSet());
         }
 
         public async override Task<ICollection<Contact>> GetAll()
         {
-            return await Task.Run(() => dbContext.Contacts.Include(contact => contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).ToList<Contact>());
+            return await Task.Run(() => _dbContext.Contacts.Include(contact => contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).ToHashSet<Contact>());
         }
 
         public async override Task<Contact> GetById(int id)
         {
-            return await dbContext.Contacts.Include(contact => contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).FirstOrDefaultAsync(contact => contact.Id == id);
+            return await _dbContext.Contacts.Include(contact => contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).FirstOrDefaultAsync(contact => contact.Id == id);
         }
 
     }
