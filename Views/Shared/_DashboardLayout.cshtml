@@ -39,7 +39,7 @@
   <div class="container-scroller">
     <!-- partial:partials/_sidebar.html -->
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
-      <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+      <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top bg-transparent">
         <a class="sidebar-brand brand-logo" href="index.html"><img src="~/assets/images/logo.svg" alt="logo" /></a>
         <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="~/assets/images/logo-mini.svg"
             alt="logo" /></a>
@@ -65,7 +65,7 @@
             <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
             <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list"
               aria-labelledby="profile-dropdown">
-              <a class="dropdown-item preview-item" asp-controller="user" asp-action="profile">
+              <a class="dropdown-item preview-item bg-color dash-hover" asp-controller="user" asp-action="profile">
                 <div class="preview-thumbnail">
                   <div class="preview-icon bg-dark rounded-circle">
                     <i class="mdi mdi-auto-fix text-primary"></i>
@@ -78,7 +78,7 @@
                 </div>
               </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item preview-item" asp-action="PasswordChange" asp-controller="user">
+              <a class="dropdown-item preview-item bg-color dash-hover" asp-action="PasswordChange" asp-controller="user">
                 <div class="preview-thumbnail">
                   <div class="preview-icon bg-dark rounded-circle">
                     <i class="mdi mdi-onepassword text-info"></i>
@@ -103,28 +103,6 @@
             </span>
             <span class="menu-title">Projects</span>
           </a>
-        </li>
-        <li class="nav-item menu-items">
-          <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-            <span class="menu-icon">
-              <i class="mdi mdi-laptop"></i>
-            </span>
-            <span class="menu-title">Basic UI Elements</span>
-            <i class="menu-arrow"></i>
-          </a>
-          <div class="collapse" id="ui-basic">
-            <ul class="nav flex-column sub-menu">
-              <li class="nav-item">
-                <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="pages/ui-features/typography.html">Typography</a>
-              </li>
-            </ul>
-          </div>
         </li>
         <li class="nav-item menu-items">
           <a class="nav-link" asp-action="Create" asp-controller="User">
@@ -159,11 +137,11 @@
           </a>
         </li>
         <li class="nav-item menu-items">
-          <a class="nav-link" href="pages/icons/mdi.html">
+          <a class="nav-link" asp-action="rolesinproject" asp-controller="dashboard">
             <span class="menu-icon">
               <i class="mdi mdi-contacts"></i>
             </span>
-            <span class="menu-title">Icons</span>
+            <span class="menu-title">Project Roles</span>
           </a>
         </li>
         <li class="nav-item menu-items">
@@ -171,34 +149,24 @@
             <span class="menu-icon">
               <i class="mdi mdi-security"></i>
             </span>
-            <span class="menu-title">User Pages</span>
+            <span class="menu-title">Action Log</span>
             <i class="menu-arrow"></i>
           </a>
           <div class="collapse" id="auth">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item">
                 <a class="nav-link" href="pages/samples/blank-page.html">
-                  Blank Page
+                  Projects Log
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="pages/samples/error-404.html">
-                  404
+                  Contacts Log
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="pages/samples/error-500.html">
-                  500
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="pages/samples/login.html">
-                  Login
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="pages/samples/register.html">
-                  Register
+                  Services Log
                 </a>
               </li>
             </ul>
@@ -226,13 +194,6 @@
           <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="mdi mdi-menu"></span>
           </button>
-          <ul class="navbar-nav w-100">
-            <li class="nav-item w-100">
-              <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
-                <input type="text" class="form-control" placeholder="Search projects" />
-              </form>
-            </li>
-          </ul>
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item dropdown d-none d-lg-block">
               <a class="nav-link btn btn-success create-new-button" asp-action="create" asp-controller="projects">+ Create New Project</a>
@@ -256,7 +217,7 @@
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
                 aria-labelledby="profileDropdown">
-                <a class="dropdown-item preview-item" asp-controller="user" asp-action="profile">
+                <a class="dropdown-item preview-item bg-color dash-hover" asp-controller="user" asp-action="profile">
                   <div class="preview-thumbnail">
                     <div class="preview-icon bg-dark rounded-circle">
                       <i class="mdi mdi-auto-fix text-success"></i>
@@ -267,7 +228,7 @@
                   </div>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item" asp-action="logout" asp-controller="user">
+                <a class="dropdown-item preview-item bg-color dash-hover" asp-action="logout" asp-controller="user">
                   <div class="preview-thumbnail">
                     <div class="preview-icon bg-dark rounded-circle">
                       <i class="mdi mdi-logout text-danger"></i>

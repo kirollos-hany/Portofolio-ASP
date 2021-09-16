@@ -3419,7 +3419,7 @@ dl.toggle.time-line:before {
   border: none;
 }
 .page-link {
-  background: transparent;
+  background: white;
   font-weight: 400;
 }
 .blog-pagination .page-item.active .page-link {
@@ -4271,4 +4271,8 @@ dl.toggle.time-line:before {
 .img-195{
   width:195.8;
   height:195.8;
+}
+
+.light-important{
+  color: white !important;
 }

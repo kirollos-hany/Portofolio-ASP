@@ -50,23 +50,25 @@ namespace Portofolio.AppModels.Repositories
         public async override Task<UsersInProject> FindByCondition(Expression<Func<UsersInProject, bool>> expression)
         {
             return await _dbContext.UsersInProjects.Include(uip => uip.Role).Include(uip => uip.Project)
+            .Include(uip => uip.User)
             .Where(expression).FirstOrDefaultAsync();
         }
 
         public async override Task<ICollection<UsersInProject>> FindCollectionByCondition(Expression<Func<UsersInProject, bool>> expression)
         {
             return await Task.Run(()=>_dbContext.UsersInProjects.Include(uip => uip.Role).Include(uip => uip.Project)
+            .Include(uip => uip.User)
             .Where(expression).ToHashSet());
         }
 
         public async override Task<ICollection<UsersInProject>> GetAll()
         {
-            return await Task.Run(()=>_dbContext.UsersInProjects.Include(uip => uip.Role).Include(uip => uip.Project).ToHashSet());
+            return await Task.Run(()=>_dbContext.UsersInProjects.Include(uip => uip.Role).Include(uip => uip.Project).Include(uip => uip.User).ToHashSet());
         }
 
         public async override Task<UsersInProject> GetById(int id)
         {
-            return await _dbContext.UsersInProjects.Include(uip => uip.Role).Include(uip => uip.Project).FirstOrDefaultAsync();
+            return await _dbContext.UsersInProjects.Include(uip => uip.Role).Include(uip => uip.Project).Include(uip => uip.User).FirstOrDefaultAsync();
         }
     }
 }

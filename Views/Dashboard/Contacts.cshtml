@@ -4,20 +4,17 @@
 @model ContactsDashboardViewModel
               <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
-                  <div class="card-body">
+                  <div class="card-body bg">
                     <h4 class="card-title">Contacts</h4>
                     <div class="table-responsive">
-                      <table class="table">
+                      <table class="table bg">
                         <thead>
                           <tr>
-                            <th>Id</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>PhoneNumber</th>
                             <th>Requested Services</th>
                             <th>Status</th>
-                            <th>Updated At</th>
-                            <th>Created At</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -25,14 +22,13 @@
                             {
                               
                               <tr class="clickable-bg">
-                                    <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id">@contact.Id</a></td>
-                                    <td>@contact.ContactName</td>
-                                    <td>@contact.Email</td>
-                                    <td>@contact.Phone</td>
+                                    <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light">@contact.ContactName</a></td>
+                                    <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light">@contact.Email</a></td>
+                                    <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light">@contact.Phone</a></td>
                                     <td><ul>
                                         @foreach(var service in contact.RequestedServices)
                                         {
-                                            <li>@service.AssociatedService.ServiceName</li>
+                                            <li><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light">@service.AssociatedService.ServiceName</a></li>
                                         }
                                     </ul></td>
                                     @{
@@ -40,16 +36,14 @@
                                     }
                                     @if(status == "pending")
                                     {
-                                        <td><label class="badge badge-info">@contact.Status.Status</label></td>
+                                        <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light"><label class="badge badge-info">@contact.Status.Status</label></a></td>
                                     }else if(status == "in progress")
                                     {
-                                        <td><label class="badge badge-warning">@contact.Status.Status</label></td>
+                                        <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light"><label class="badge badge-warning">@contact.Status.Status</label></a></td>
                                     }else if(status == "completed")
                                     {
-                                        <td><label class="badge badge-success">@contact.Status.Status</label></td>
+                                        <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light"><label class="badge badge-success">@contact.Status.Status</label></a></td>
                                     }
-                                    <td>@contact.UpdatedAt</td>
-                                    <td>@contact.CreatedAt</td>
                               </tr>
                             }
                         </tbody>

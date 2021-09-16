@@ -116,6 +116,14 @@ namespace Portofolio.Controllers
             return RedirectToAction(nameof(ContactDetails), new {id = editViewModel.Contact.Id});
         }
 
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var contact = await _contactRepository.GetById(id);
+            await _contactRepository.Delete(contact);
+            return RedirectToAction(nameof(DashboardController.Contacts), "Dashboard");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -33,8 +33,7 @@
                                 <p>@service.ServiceDescription</p>
                                 <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16 clickable service-edit" data-toggle="modal"
                                         data-target="#editServiceModal" service-id="@service.Id" service-name="@service.ServiceName" service-description="@service.ServiceDescription"></i>
-                            <a asp-action="delete" asp-controller="services" asp-route-id="@service.Id">
-                                <i class="mdi mdi-delete-forever clickable light"></i>
+                            <a asp-action="delete" asp-controller="services" asp-route-id="@service.Id" class="mdi mdi-delete-forever clickable light" is-delete="1">
                             </a>
                             </div>
                         </div>
@@ -127,6 +126,7 @@
 <!-- /.modal -->
 @{
   await Html.RenderPartialAsync("_PaginationPartial");
+  await Html.RenderPartialAsync("_DeleteBtnPartial");
 }
 </section>
 <!-- End events-list Area -->

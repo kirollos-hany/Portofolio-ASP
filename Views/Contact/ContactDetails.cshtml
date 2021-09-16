@@ -16,6 +16,9 @@
                 <p>Updated At:@Model.Contact.UpdatedAt</p>
                 <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16 clickable" data-toggle="modal"
                   data-target="#editProfileModal"></i>
+                  <a class="mdi mdi-delete-forever clickable light" asp-action="delete" asp-controller="contact" asp-route-id="@Model.Contact.Id" is-delete="1">
+
+                  </a>
               </div>
             </div>
             <div class="col-sm-8">
@@ -107,4 +110,7 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
+@{
+  await Html.RenderPartialAsync("_DeleteBtnPartial");
+}
 <!-- /.modal -->

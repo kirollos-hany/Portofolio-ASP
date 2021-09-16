@@ -1,6 +1,7 @@
 //variables declaration start
 const nextPage = document.getElementById("nextPage");
 const prevPage = document.getElementById("previousPage");
+const pagesLinks = document.getElementById("pagesItemsList");
 //variables declaration end
 
 
@@ -11,11 +12,11 @@ function previousPageClicked()
     {
         return;
     }
-    for(let i = 0; i < pagesLinks.length; i++)
+    for(let i = 0; i < pagesLinks.children.length; i++)
     {
-        if(pagesLinks[i].classList.contains("active"))
+        if(pagesLinks.children[i].classList.contains("active"))
         {
-            let newHref = href + (parseInt(pagesLinks[i].firstChild.innerText) - 1);
+            let newHref = href + (parseInt(pagesLinks.children[i].firstChild.innerText) - 1);
             window.location.href = newHref
             break;
         }
@@ -28,12 +29,13 @@ function nextPageClicked()
     {
         return;
     }
-    for(let i = 0; i < pagesLinks.length - 1; i++)
+    for(let i = 0; i < pagesLinks.children.length - 1; i++)
     {
-        if(pagesLinks[i].classList.contains("active"))
+        if(pagesLinks.children[i].classList.contains("active"))
         {
-            let newHref = href + (parseInt(pagesLinks[i].firstChild.innerText) + 1);
+            let newHref = href +(parseInt(pagesLinks.children[i].firstChild.innerText) + 1);
             window.location.href = newHref;
+            console.log(newHref);
             break;
         }
     }
@@ -111,11 +113,11 @@ for(let i = 1; i <= iterations; i++)
     }
 }
 
-
 // disable previous page if first page is active
 if(currentPage === 1)
 {
     prevPage.classList.add("disabled");
+    console.log(prevPage.className);
 }
 else
 {
@@ -129,7 +131,7 @@ if(currentPage === maxPageCount)
 }
 else
 {
-    prevPage.classList.remove("disabled");
+    nextPage.classList.remove("disabled");
 }
 
 //attach event listeners to previous and next page btns

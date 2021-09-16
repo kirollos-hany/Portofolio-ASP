@@ -57,7 +57,6 @@ E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Contact\ContactDetail
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Contact\Index.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Contacts.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Index.cshtml.g.cs
-E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\ProjectDetails.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Services.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Errors\error404.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\Blog.cshtml.g.cs
@@ -66,12 +65,11 @@ E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.c
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\Members.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\Profile.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Projects\Create.cshtml.g.cs
-E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Projects\Details.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Projects\Index.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Services\Index.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Banner.cshtml.g.cs
-E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_DashboardLayout.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_DeleteBtnPartial.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Footer.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Header.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
@@ -93,3 +91,6 @@ E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.csproj.CopyComplete
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.dll
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.pdb
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.genruntimeconfig.cache
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_DashboardLayout.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\ProjectDetails.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Projects\Details.cshtml.g.cs
