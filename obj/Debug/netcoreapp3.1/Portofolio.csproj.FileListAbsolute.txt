@@ -31,6 +31,7 @@ E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\MimeKit.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\MySqlConnector.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Pomelo.EntityFrameworkCore.MySql.dll
@@ -38,7 +39,11 @@ E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\System.ComponentModel.Annotations.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
+E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\System.Drawing.Common.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\de-DE\Faker.Net.Core.3.1.resources.dll
+E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.csproj.AssemblyReference.cache
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.GeneratedMSBuildEditorConfig.editorconfig
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.AssemblyInfoInputs.cache
@@ -56,8 +61,12 @@ E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.RazorCoreGenerate.cach
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Contact\ContactDetails.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Contact\Index.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Contacts.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\ContactsLogs.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Index.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\ProjectDetails.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\ProjectsLogs.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Services.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\ServicesLogs.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Errors\error404.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\Blog.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\BlogSingle.cshtml.g.cs
@@ -65,10 +74,12 @@ E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.c
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\Members.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\Profile.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Projects\Create.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Projects\Details.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Projects\Index.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Services\Index.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Banner.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_DashboardLayout.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_DeleteBtnPartial.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Footer.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Header.cshtml.g.cs
@@ -91,6 +102,5 @@ E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.csproj.CopyComplete
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.dll
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.pdb
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Portofolio.genruntimeconfig.cache
-E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_DashboardLayout.cshtml.g.cs
-E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\ProjectDetails.cshtml.g.cs
-E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Projects\Details.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Members.cshtml.g.cs
+E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Errors\error401.cshtml.g.cs

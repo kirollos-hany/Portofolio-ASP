@@ -11,6 +11,12 @@
     //Active class can be hard coded directly in html file also as required
 
     function addActiveClass(element) {
+            //my code to fix multiple selections bug start
+            if(window.location.href.endsWith("dashboard")){
+              $('#projectsNavItem').addClass('active');
+              return;
+            }
+            //my code to fix multiple selections bug end
       if (current === "") {
         //for root url
         if (element.attr('href').indexOf("index.html") !== -1) {
@@ -108,3 +114,4 @@
     })
   });
 })(jQuery);
+

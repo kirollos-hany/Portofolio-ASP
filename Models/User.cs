@@ -14,7 +14,7 @@ namespace Portofolio.Models
             UsersInProjects = new HashSet<UsersInProject>();
             PhoneNumber = "N/A";
             Specialization = "N/A";
-            ImagePath = "~/img/avatar.png";
+            ImagePath = "img/avatar.png";
         }
 
         [Required(ErrorMessage = "Username is required")]
@@ -43,5 +43,14 @@ namespace Portofolio.Models
         public virtual ICollection<UserLink> UserLinks { get; set; }
         [InverseProperty(nameof(UsersInProject.User))]
         public virtual ICollection<UsersInProject> UsersInProjects { get; set; }
+
+        [InverseProperty(nameof(ProjectLog.User))]
+        public virtual ICollection<ProjectLog> ProjectLogs {get; set;}
+
+        [InverseProperty(nameof(ContactLog.User))]
+        public virtual ICollection<ContactLog> ContactLogs {get; set;}
+
+        [InverseProperty(nameof(ServicesLog.User))]
+        public virtual ICollection<ServicesLog> ServicesLogs {get; set;}
     }
 }

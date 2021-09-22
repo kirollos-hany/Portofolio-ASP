@@ -14437,6 +14437,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\Members.cshtml",
+      "TargetPath": "Views\\Dashboard\\Members.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Projects\\Details.cshtml",
       "TargetPath": "Views\\Projects\\Details.cshtml",
       "FileKind": "mvc"
@@ -14444,6 +14449,11 @@
     {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Projects\\Create.cshtml",
       "TargetPath": "Views\\Projects\\Create.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\ServicesLogs.cshtml",
+      "TargetPath": "Views\\Dashboard\\ServicesLogs.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -14477,6 +14487,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Errors\\error401.cshtml",
+      "TargetPath": "Views\\Errors\\error401.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\ProjectDetails.cshtml",
       "TargetPath": "Views\\Dashboard\\ProjectDetails.cshtml",
       "FileKind": "mvc"
@@ -14492,6 +14507,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\ProjectsLogs.cshtml",
+      "TargetPath": "Views\\Dashboard\\ProjectsLogs.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\User\\PasswordChange.cshtml",
       "TargetPath": "Views\\User\\PasswordChange.cshtml",
       "FileKind": "mvc"
@@ -14499,6 +14519,11 @@
     {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\Contacts.cshtml",
       "TargetPath": "Views\\Dashboard\\Contacts.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\ContactsLogs.cshtml",
+      "TargetPath": "Views\\Dashboard\\ContactsLogs.cshtml",
       "FileKind": "mvc"
     },
     {

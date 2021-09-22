@@ -5,7 +5,7 @@
 <!-- Start course-details Area -->
 <section class="course-details-area pt-120">
  <div class="container">
-<a class="btn btn-danger mr-2 clickable mb-10" is-delete="1" asp-action="delete" asp-controller="projects" asp-route-id="@Model.ChosenProject.Id">Delete</a>
+<a class="btn btn-danger mr-2 clickable mb-10 light" is-delete="1" asp-action="delete" asp-controller="projects" asp-route-id="@Model.ChosenProject.Id">Delete</a>
   <div class="row">
    <div class="col-lg-8 left-contents">
      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -18,39 +18,19 @@
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      @if(Model.ChosenProject.Thumbnail.StartsWith("~"))
-      {
-        var imgSrc = @Url.Content(Model.ChosenProject.Thumbnail);
-        <img class="d-block w-100" src="@imgSrc" alt="Project Thumbnail">
-      }else
-      {
-        <img class="d-block w-100" src="~/projects/image/@Model.ChosenProject.Id?isThumbnail=true" alt="Project Thumbnail">
-      }
+        <img class="d-block w-100" src="~/@Model.ChosenProject.Thumbnail" alt="Project Thumbnail">
       <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16 clickable" data-toggle="modal"
                   data-target="#editProjectModal"></i>
     </div>
     @foreach(var projectImage in Model.ChosenProject.ProjectImages)
     {
-      if(projectImage.ImagePath.StartsWith("~"))
-      {
-        var imgSrc = @Url.Content(projectImage.ImagePath);
-        <div class="carousel-item">
-        <img class="d-block w-100" src="@imgSrc" alt="Project Image">
-        <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16 clickable" data-toggle="modal"
-                  data-target="#editProjectModal"></i>
-      <a asp-action="deleteimage" asp-controller="projects" asp-route-id="@projectImage.Id" is-delete="1" class="mdi mdi-delete-forever clickable light">
-      </a>
-      </div>
-      }else
-      {
       <div class="carousel-item">
-        <img class="d-block w-100" src="~/projects/image/@projectImage.Id?isThumbnail=false" alt="Project Image">
+        <img class="d-block w-100" src="~/@projectImage.ImagePath" alt="Project Image">
         <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16 clickable" data-toggle="modal"
                   data-target="#editProjectModal"></i>
       <a asp-action="deleteimage" asp-controller="projects" asp-route-id="@projectImage.Id" is-delete="1" class="mdi mdi-delete-forever clickable light">
       </a>
       </div>
-      }
     }
       <a class="carousel-control-prev h-75" href="#carouselExampleIndicators" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -110,64 +90,86 @@
 	   <span style="margin-left: 20px;" class="or">@Model.ChosenProject.ToolsUsed</span>
 	  </a>
 	 </li>
+    <li>
+        <a class="justify-content-between d-flex">
+            <h5 class="dark">Project Type</h5>
+            <span style="margin-left: 20px" class="or">@Model.ChosenProject.Type.Type</span>
+        </a>
+    </li>
+    @{
+      var projectLinks = Model.ChosenProject.ProjectLinks.Where((projectLink) => projectLink.Link != "#").ToList();
+    }
+    @if (projectLinks.Count != 0)
+    {
+    <li>
+
+           <div class="justify-content-between d-flex">
+             <h5 class="dark">Links</h5>
+             <div>
+          @foreach (var pl in Model.ChosenProject.ProjectLinks)
+          {
+            if(pl.Link != null && pl.Link != "#")
+            {
+              <a href="@pl.Link" target="_blank" data-toggle="tooltip" data-placement="bottom" title=""
+                  data-original-title="facebook" data-abc="true">
+                  <i class="@pl.Type.IconClass" aria-hidden="true"></i>
+                  </a>
+            }
+          }
+          </div>
+          </div>
+    </li>
+    }
 	</ul>
    </div>
   </div>
  </div>
 </section>
 <!-- End course-details Area -->
-<!-- Start Featured Work -->
-<div id="go" class="featured-work text-center">
-		<div class="container">
-			<h2 class="light-important">Contributors</h2>
-			<ul class="list-unstyled row">
-				<li data-class="ALL" class="active col-md">ALL</li>
-				@foreach(var userInProject in Model.ChosenProject.UsersInProjects)
-				{
-					var processedRole = "." + userInProject.Role.Role.Replace(" ", "").ToUpper();
-					<li data-class="@processedRole" class="col-md">@userInProject.Role.Role</li>
-				}
-			</ul>
-</div>
- <div class="lol">
-  <div class="row shuffle-images">
-	  @if(Model.ChosenProject.UsersInProjects != null && Model.ChosenProject.UsersInProjects.Count != 0)
-	  {
-		  foreach(var userInProject in Model.ChosenProject.UsersInProjects)
-		  {
-			var processedRole = userInProject.Role.Role.Replace(" ", "").ToUpper();
-			<div class="col-md">
-				@if(userInProject.User.ImagePath.StartsWith("~"))
-				{
-					var imgSrc = @Url.Content(userInProject.User.ImagePath);
-					<a target = "_blank" class="@processedRole" asp-action="profile" asp-route-id="@userInProject.User.Id" asp-controller="home">
-						<img class="img-fluid" src="@imgSrc" alt="contributor img" />
-					</a>
-				}else
-				{
-					<a asp-action="profile"  class="@processedRole" asp-controller="home" asp-route-id="@userInProject.User.Id">
-						<img class="img-fluid" src="~/user/profileimage/@userInProject.User.Id" alt="Contributor img" />
-					</a>
-				}
-			</div>
-		  }
-	  }
+<!-- Start Contributors area -->
+<section class="featured-work">
+  <div class="container">
+  <ul class="row mx-auto shuffle-btn-container list-unstyled">
+      <li class="col-sm-12 col-md-2 img-shuffle-btn active-shuffle" shuffle-tag="ALL">ALL</li>
+      @{
+          var roles = Model.ChosenProject.UsersInProjects.Select((uip) => uip.Role.Role).Distinct();
+      }
+      @foreach(var role in roles)
+      {
+          var trimmedRole = role.Replace(" ", "");
+          <li class="col-sm-12 col-md-2 img-shuffle-btn" shuffle-tag="@trimmedRole">@trimmedRole</li>
+      }
+  </ul>
+  <div class="row mx-auto shuffle-container">
+      @foreach(var uip in Model.ChosenProject.UsersInProjects)
+      {
+            var role = uip.Role.Role.Replace(" ", "");
+            <div class="card col-sm-2 m-1 p-0" shuffle-tag="@role">
+                <div class="card-body">
+                    <a target="_blank" asp-action="profile" asp-controller="home" asp-route-id="@uip.User.Id">
+                        <p class="card-text">@uip.User.UserName</p>
+                    </a>
+                    <a asp-action="deleteuip" asp-controller="projects" asp-route-id="@uip.Id" is-delete="1" class="mdi mdi-delete-forever clickable"></a>
+                </div>
+                <a target="_blank" asp-action="profile" asp-controller="home" asp-route-id="@uip.User.Id">
+                            <img class="card-img-bottom" src="~/@uip.User.ImagePath"/>
+                </a>
+            </div>
+      }
   </div>
- </div>
-</div>
-<!-- End Featured Work -->
-
+  </div>
+</section>
+<!-- End Contributors Area -->
 
 <!-- Start  -->
 <section class="popular-courses-area section-gap courses-page">
  <div class="container">
   <div class="row">
-   <a asp-controller="dashboard" asp-action="index" class="primary-btn text-uppercase mx-auto">View other
-	projects</a>
+   <a asp-controller="dashboard" asp-action="index" class="primary-btn text-uppercase mx-auto">View other projects</a>
   </div>
  </div>
 
-         <!-- Modal HTML Markup -->
+  <!-- Modal HTML Markup -->
 
 <!-- /.modal -->
 </section>

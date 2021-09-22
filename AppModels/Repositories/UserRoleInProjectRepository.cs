@@ -49,7 +49,7 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<UserRoleInProject> FindByCondition(Expression<Func<UserRoleInProject, bool>> expression)
         {
-            return await _dbContext.UserProjectRoles.FirstOrDefaultAsync(expression);
+            return await _dbContext.UserProjectRoles.Where(expression).FirstOrDefaultAsync();
         }
 
         public async override Task<ICollection<UserRoleInProject>> FindCollectionByCondition(Expression<Func<UserRoleInProject, bool>> expression)

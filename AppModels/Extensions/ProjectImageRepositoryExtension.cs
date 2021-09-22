@@ -4,11 +4,12 @@ using Portofolio.Models;
 using System.Linq;
 using Portofolio.AppModels.Services;
 using Microsoft.AspNetCore.Http;
+using static Portofolio.AppModels.Utils.Constants;
 namespace Portofolio.AppModels.Extensions
 {
     public static class ProjectImageRepositoryExtension
     {
-        public async static Task CreateFromCollection(this IRepository<ProjectImage> repository, int projectId, IFormFileCollection images, IImageService imageService)
+        public async static Task CreateFromCollection(this IRepository<ProjectImage> repository, int projectId, IFormFileCollection images, IImageServices imageService)
         {
             for(int i = 0; i < images.Count; i++)
             {
@@ -18,6 +19,7 @@ namespace Portofolio.AppModels.Extensions
                     ProjectId = projectId,
                     ImagePath = imagePath
                 });
+                await imageService.ResizeImg(imagePath, ProjectImageSize);
             }
         }
     }

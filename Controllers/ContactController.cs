@@ -7,10 +7,12 @@ using Portofolio.ViewModels;
 using Portofolio.AppModels.Services;
 using Json.Net;
 using static Portofolio.AppModels.Utils.KeyConstants;
+using static Portofolio.AppModels.Utils.Constants;
 using Portofolio.AppModels.Extensions;
 using Portofolio.AppModels.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Linq;
 namespace Portofolio.Controllers
 {
     public class ContactController : Controller
@@ -26,9 +28,13 @@ namespace Portofolio.Controllers
 
         private readonly UserManager<User> _userManager;
 
+        private readonly SignInManager<User> _signInManager;
+
         private readonly IRepository<ContactStatus> _contactStatusRepository;
 
-        public ContactController(BaseRepository<ContactStatus> contactStatusRepository, UserManager<User> userManager, BaseRepository<Contact> contactRepository, IEmailParserFromModelAsync<HTMLWithModel<Contact>> contactEmailParser, BaseRepository<Service> serviceRepository, BaseRepository<RequestedService> requestedServicesRepository, IMailService mailService)
+        private readonly IRepository<ContactLog> _contactLogsRepository;
+
+        public ContactController(SignInManager<User> signInManager, BaseRepository<ContactLog> contactLogsRepository, BaseRepository<ContactStatus> contactStatusRepository, UserManager<User> userManager, BaseRepository<Contact> contactRepository, IEmailParserFromModelAsync<HTMLWithModel<Contact>> contactEmailParser, BaseRepository<Service> serviceRepository, BaseRepository<RequestedService> requestedServicesRepository, IMailService mailService)
         {
             _mailService = mailService;
             _contactRepository = contactRepository;
@@ -37,6 +43,8 @@ namespace Portofolio.Controllers
             _contactEmailParser = contactEmailParser;
             _userManager = userManager;
             _contactStatusRepository = contactStatusRepository;
+            _contactLogsRepository = contactLogsRepository;
+            _signInManager = signInManager;
         }
         public async Task<IActionResult> Index()
         {
@@ -65,7 +73,7 @@ namespace Portofolio.Controllers
             {
                 Model = contactData.Contact,
                 Path = "templates/servicerequest.html",
-                HrefValue = $"href={Url.ActionLink(nameof(ContactController.ContactDetails), "Contact", new {id = contactData.Contact.Id}, Request.Scheme)}"
+                HrefValue = $"href={Url.ActionLink(nameof(ContactController.ContactDetails), "Contact", new { id = contactData.Contact.Id }, Request.Scheme)}"
             });
             await _mailService.SendEmailAsync(mailRequest);
             TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
@@ -81,8 +89,10 @@ namespace Portofolio.Controllers
             var contact = await _contactRepository.GetById(id);
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var statuses = await _contactStatusRepository.GetAll();
+            var pendingContactsCount = (await _contactRepository.GetAll()).Where((contact) => contact.Status.Status == "Pending").Count();
             return View(new ContactDetailsViewModel
             {
+                PendingContactsCount = pendingContactsCount,
                 Contact = contact,
                 User = user,
                 ContactStatuses = statuses
@@ -112,8 +122,17 @@ namespace Portofolio.Controllers
                     Message = "Contact editted successfuly",
                     CssClass = ResultMsgViewModel.CssClassSuccess
                 });
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+                await _contactLogsRepository.Create(new ContactLog
+                {
+                    ContactName = contact.ContactName,
+                    Action = ContactUpdateAction,
+                    UserId = user.Id,
+                    ContactId = contact.Id,
+                    UserName = user.UserName
+                });
             }
-            return RedirectToAction(nameof(ContactDetails), new {id = editViewModel.Contact.Id});
+            return RedirectToAction(nameof(ContactDetails), new { id = editViewModel.Contact.Id });
         }
 
         [Authorize]
@@ -121,6 +140,15 @@ namespace Portofolio.Controllers
         {
             var contact = await _contactRepository.GetById(id);
             await _contactRepository.Delete(contact);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            await _contactLogsRepository.Create(new ContactLog
+            {
+                ContactName = contact.ContactName,
+                Action = ContactDeleteAction,
+                UserId = user.Id,
+                ContactId = contact.Id,
+                UserName = user.UserName
+            });
             return RedirectToAction(nameof(DashboardController.Contacts), "Dashboard");
         }
 

@@ -13,32 +13,33 @@ namespace Portofolio.AppModels.Extensions
     {
         public static void AddRepositories(this IServiceCollection services)
         {
-            services.AddScoped(typeof(BaseRepository<Contact>), typeof(ContactRepository));
-            services.AddScoped(typeof(BaseRepository<ContactStatus>), typeof(ContactStatusRepository));
-            services.AddScoped(typeof(BaseRepository<Service>), typeof(ServicesRepository));
-            services.AddScoped(typeof(BaseRepository<Project>), typeof(ProjectsRepository));
-            services.AddScoped(typeof(BaseImageServices<User>), typeof(UserImageServices));
-            services.AddScoped(typeof(BaseImageServices<Project>), typeof(ProjectImageServices));
-            services.AddScoped(typeof(BaseImageServices<Service>), typeof(ServiceImageServices));
-            services.AddScoped(typeof(BaseRepository<RequestedService>), typeof(RequestedServicesRepository));
-            services.AddScoped(typeof(BaseRepository<UsersInProject>), typeof(UIPRepository));
-            services.AddScoped(typeof(BaseRepository<UserLink>), typeof(UserLinksRepository));
-            services.AddScoped(typeof(BaseRepository<LinkType>), typeof(LinkTypesRepository));
-            services.AddScoped(typeof(BaseRepository<ProjectFeedback>), typeof(ProjectFeedbacksRepository));
-            services.AddScoped(typeof(BaseRepository<ProjectImage>), typeof(ProjectImagesRepository));
-            services.AddScoped(typeof(BaseRepository<ProjectLink>), typeof(ProjectLinksRepository));
-            services.AddScoped(typeof(BaseRepository<ProjectType>), typeof(ProjectTypeRepository));
-            services.AddScoped(typeof(BaseRepository<UserRoleInProject>), typeof(UserRoleInProjectRepository));
+            services.AddTransient(typeof(BaseRepository<Contact>), typeof(ContactRepository));
+            services.AddTransient(typeof(BaseRepository<ContactStatus>), typeof(ContactStatusRepository));
+            services.AddTransient(typeof(BaseRepository<Service>), typeof(ServicesRepository));
+            services.AddTransient(typeof(BaseRepository<Project>), typeof(ProjectsRepository));
+            services.AddTransient(typeof(BaseRepository<RequestedService>), typeof(RequestedServicesRepository));
+            services.AddTransient(typeof(BaseRepository<UsersInProject>), typeof(UIPRepository));
+            services.AddTransient(typeof(BaseRepository<UserLink>), typeof(UserLinksRepository));
+            services.AddTransient(typeof(BaseRepository<LinkType>), typeof(LinkTypesRepository));
+            services.AddTransient(typeof(BaseRepository<ProjectFeedback>), typeof(ProjectFeedbacksRepository));
+            services.AddTransient(typeof(BaseRepository<ProjectImage>), typeof(ProjectImagesRepository));
+            services.AddTransient(typeof(BaseRepository<ProjectLink>), typeof(ProjectLinksRepository));
+            services.AddTransient(typeof(BaseRepository<ProjectType>), typeof(ProjectTypeRepository));
+            services.AddTransient(typeof(BaseRepository<UserRoleInProject>), typeof(UserRoleInProjectRepository));
+            services.AddTransient(typeof(BaseRepository<ProjectLog>), typeof(ProjectLogsRepository));
+            services.AddTransient(typeof(BaseRepository<ContactLog>), typeof(ContactLogsRepository));
+            services.AddTransient(typeof(BaseRepository<ServicesLog>), typeof(ServicesLogsRepository));
         }
         public static void AddServices(this IServiceCollection services)
         {
-            services.AddScoped(typeof(BasePaginator<Project>), typeof(ProjectsPaginator));
-            services.AddScoped(typeof(BasePaginator<User>), typeof(MembersPaginator));
-            services.AddScoped(typeof(BasePaginator<Service>), typeof(ServicesPaginator));
-            services.AddScoped(typeof(IMailService), typeof(MailService));
-            services.AddScoped(typeof(IEmailParserFromModelAsync<HTMLWithModel<Contact>>), typeof(HTMLWithContactEmailParser));
-            services.AddScoped(typeof(IEmailParserFromModelAsync<HTMLModel>), typeof(HTMLEmailParser));
-            services.AddIdentity<User, UserRole>().AddEntityFrameworkStores<PortofolioDbContext>().AddDefaultTokenProviders();
+            services.AddTransient(typeof(BasePaginator<Project>), typeof(ProjectsPaginator));
+            services.AddTransient(typeof(BasePaginator<User>), typeof(MembersPaginator));
+            services.AddTransient(typeof(BasePaginator<Service>), typeof(ServicesPaginator));
+            services.AddTransient(typeof(IMailService), typeof(MailService));
+            services.AddTransient(typeof(IEmailParserFromModelAsync<HTMLWithModel<Contact>>), typeof(HTMLWithContactEmailParser));
+            services.AddTransient(typeof(IEmailParserFromModelAsync<HTMLModel>), typeof(HTMLEmailParser));
+            services.AddTransient(typeof(IImageServices), typeof(ImageServices));
+            services.AddIdentity<User, UserRole>().AddEntityFrameworkStores<PortofolioDbContext>().AddRoles<UserRole>().AddDefaultTokenProviders();
         }
 
         public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)

@@ -28,6 +28,11 @@ namespace Portofolio.Database
         public virtual DbSet<UsersInProject> UsersInProjects { get; set; }
         public virtual DbSet<Service> Services { get; set; }
 
+        public virtual DbSet<ContactLog> ContactLogs { get; set; }
+        public virtual DbSet<ProjectLog> ProjectLogs { get; set; }
+
+        public virtual DbSet<ServicesLog> ServicesLogs { get; set; }
+
         public virtual DbSet<RequestedService> RequestedServices { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

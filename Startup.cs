@@ -56,8 +56,13 @@ namespace Portofolio
                 {
                     cxt.Request.Path = "/errors/error404";
                     await next();
+                }else if(cxt.Response.StatusCode == 401)
+                {
+                    cxt.Request.Path = "errors/error401";
+                    await next();
                 }
             });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

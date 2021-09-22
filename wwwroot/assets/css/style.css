@@ -21148,3 +21148,8 @@ div.tagsinput {
 .dash-hover:hover{
   background-color:#0f1015 !important;
 }
+
+a{
+  color:#212529;
+  text-decoration:none;
+}

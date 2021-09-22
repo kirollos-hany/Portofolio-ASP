@@ -4,7 +4,6 @@
 @model DashboardViewModel
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8" />
@@ -33,6 +32,7 @@
   <!-- End layout styles -->
   <link rel="shortcut icon" href="~/assets/images/favicon.png" />
   <link rel="stylesheet" href="~/css/dashboard-custom.css"/>
+  <link rel="stylesheet" href="~/css/shuffler.css"/>
 </head>
 
 <body>
@@ -49,14 +49,7 @@
           <div class="profile-desc">
             <div class="profile-pic">
               <div class="count-indicator">
-                @if(Model.User.ImagePath.StartsWith('~'))
-                {
-                  var imgSrc = @Url.Content(Model.User.ImagePath);
-                  <img class="img-xs rounded-circle" src="@imgSrc" alt="Profile Img" />
-                }else
-                {
-                  <img class="img-xs rounded-circle" src="~/user/profileimage/@Model.User.Id" alt="Profile Img" />
-                }
+                  <img class="img-xs rounded-circle" src="~/@Model.User.ImagePath" alt="Profile Img" />
               </div>
               <div class="profile-name">
                 <h5 class="mb-0 font-weight-normal">@Model.User.UserName</h5>
@@ -65,27 +58,27 @@
             <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
             <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list"
               aria-labelledby="profile-dropdown">
-              <a class="dropdown-item preview-item bg-color dash-hover" asp-controller="user" asp-action="profile">
+              <a class="dropdown-item preview-item bg-color dash-hover light" asp-controller="user" asp-action="profile">
                 <div class="preview-thumbnail">
                   <div class="preview-icon bg-dark rounded-circle">
                     <i class="mdi mdi-auto-fix text-primary"></i>
                   </div>
                 </div>
                 <div class="preview-item-content">
-                  <p class="preview-subject ellipsis mb-1 text-small">
+                  <p class="preview-subject ellipsis mb-1 text-small" style="color:white !important;">
                     Account
                   </p>
                 </div>
               </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item preview-item bg-color dash-hover" asp-action="PasswordChange" asp-controller="user">
+              <a class="dropdown-item preview-item bg-color dash-hover light" asp-action="PasswordChange" asp-controller="user">
                 <div class="preview-thumbnail">
                   <div class="preview-icon bg-dark rounded-circle">
                     <i class="mdi mdi-onepassword text-info"></i>
                   </div>
                 </div>
                 <div class="preview-item-content">
-                  <p class="preview-subject ellipsis mb-1 text-small">
+                  <p class="preview-subject ellipsis mb-1 text-small" style="color:white !important;">
                     Change Password
                   </p>
                 </div>
@@ -96,12 +89,20 @@
         <li class="nav-item nav-category">
           <span class="nav-link">Navigation</span>
         </li>
-        <li class="nav-item menu-items">
+        <li class="nav-item menu-items" id="projectsNavItem">
           <a class="nav-link" asp-action="index" asp-controller="dashboard">
             <span class="menu-icon">
               <i class="mdi mdi-speedometer"></i>
             </span>
             <span class="menu-title">Projects</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items" id="projectsNavItem">
+          <a class="nav-link" asp-action="members" asp-controller="dashboard">
+            <span class="menu-icon">
+              <i class="mdi mdi-speedometer"></i>
+            </span>
+            <span class="menu-title">Members</span>
           </a>
         </li>
         <li class="nav-item menu-items">
@@ -137,14 +138,6 @@
           </a>
         </li>
         <li class="nav-item menu-items">
-          <a class="nav-link" asp-action="rolesinproject" asp-controller="dashboard">
-            <span class="menu-icon">
-              <i class="mdi mdi-contacts"></i>
-            </span>
-            <span class="menu-title">Project Roles</span>
-          </a>
-        </li>
-        <li class="nav-item menu-items">
           <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
             <span class="menu-icon">
               <i class="mdi mdi-security"></i>
@@ -155,17 +148,17 @@
           <div class="collapse" id="auth">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item">
-                <a class="nav-link" href="pages/samples/blank-page.html">
-                  Projects Log
+                <a class="nav-link" asp-action="ProjectsLogs" asp-controller="Dashboard">
+                  Projects Logs
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="pages/samples/error-404.html">
+                <a class="nav-link" asp-action="ContactsLogs" asp-controller="Dashboard">
                   Contacts Log
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="pages/samples/error-500.html">
+                <a class="nav-link" asp-action="ServicesLogs" asp-controller="Dashboard">
                   Services Log
                 </a>
               </li>
@@ -199,43 +192,36 @@
               <a class="nav-link btn btn-success create-new-button" asp-action="create" asp-controller="projects">+ Create New Project</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
+              <div class="nav-link clickable" id="profileDropdown" href="#" data-toggle="dropdown">
                 <div class="navbar-profile">
-                @if(Model.User.ImagePath.StartsWith('~'))
-                {
-                  var imgSrc = @Url.Content(Model.User.ImagePath);
-                  <img class="img-xs rounded-circle" src="@imgSrc" alt="Profile Img" />
-                }else
-                {
-                  <img class="img-xs rounded-circle" src="~/user/profileimage/@Model.User.Id" alt="Profile Img" />
-                }
+                  <img class="img-xs rounded-circle" src="~/@Model.User.ImagePath" alt="Profile Img" />
                   <p class="mb-0 d-none d-sm-block navbar-profile-name">
                     @Model.User.UserName
                   </p>
                   <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                 </div>
-              </a>
+              </div>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
                 aria-labelledby="profileDropdown">
-                <a class="dropdown-item preview-item bg-color dash-hover" asp-controller="user" asp-action="profile">
+                <a class="dropdown-item preview-item bg-color dash-hover light" asp-controller="user" asp-action="profile">
                   <div class="preview-thumbnail">
                     <div class="preview-icon bg-dark rounded-circle">
                       <i class="mdi mdi-auto-fix text-success"></i>
                     </div>
                   </div>
                   <div class="preview-item-content">
-                    <p class="preview-subject mb-1">Account</p>
+                    <p class="preview-subject mb-1" style="color:white !important;">Account</p>
                   </div>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item preview-item bg-color dash-hover" asp-action="logout" asp-controller="user">
+                <a class="dropdown-item preview-item bg-color dash-hover light" asp-action="logout" asp-controller="user">
                   <div class="preview-thumbnail">
                     <div class="preview-icon bg-dark rounded-circle">
                       <i class="mdi mdi-logout text-danger"></i>
                     </div>
                   </div>
                   <div class="preview-item-content">
-                    <p class="preview-subject mb-1">Log out</p>
+                    <p class="preview-subject mb-1" style="color:white !important;">Log out</p>
                   </div>
                 </a>
               </div>
@@ -265,19 +251,19 @@
   <!-- container-scroller -->
   <!-- plugins:js -->
   <script src="~/assets/vendors/js/vendor.bundle.base.js"></script>
+  <script src="~/assets/js/misc.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->
-  <script src="~/assets/vendors/chart.js/Chart.min.js"></script>
-  <script src="~/assets/vendors/progressbar.js/progressbar.min.js"></script>
-  <script src="~/assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
+  @* <script src="~/assets/vendors/chart.js/Chart.min.js"></script> *@
+  @* <script src="~/assets/vendors/progressbar.js/progressbar.min.js"></script> *@
+  @* <script src="~/assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
   <script src="~/assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-  <script src="~/assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+  <script src="~/assets/vendors/owl-carousel-2/owl.carousel.min.js"></script> *@
   <!-- End plugin js for this page -->
   <!-- inject:js -->
   <script src="~/assets/js/off-canvas.js"></script>
-  <script src="~/assets/js/hoverable-collapse.js"></script>
-  <script src="~/assets/js/misc.js"></script>
-  <script src="~/assets/js/settings.js"></script>
+  <script src="~/assets/js/hoverable-collapse.js"></script> 
+  <script src="~/assets/js/settings.js"></script> 
   <script src="~/assets/js/todolist.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page -->
@@ -294,6 +280,7 @@
     <script src="~/js/jquery.nice-select.min.js"></script>
     <script src="~/js/owl.carousel.min.js"></script>
     <script src="~/js/main.js"></script>
+    <script src="~/js/shuffler.js"></script> 
 
   <!-- End custom js for this page -->
 </body>

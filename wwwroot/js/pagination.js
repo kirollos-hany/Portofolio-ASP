@@ -117,7 +117,6 @@ for(let i = 1; i <= iterations; i++)
 if(currentPage === 1)
 {
     prevPage.classList.add("disabled");
-    console.log(prevPage.className);
 }
 else
 {

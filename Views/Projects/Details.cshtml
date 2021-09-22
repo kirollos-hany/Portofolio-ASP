@@ -1,191 +1,185 @@
 @{
-	ViewData[TitleKey] = "Details";
-	ViewData[BannerTitleKey] = "Project Details";
-	ViewData[BannerNavTitleKey] = "Projects";
-	ViewData[BannerNavRouteValueKey] = Model.Project.Id;
-	ViewData[BannerNavActionKey] = "index";
-	ViewData[BannerNavControllerKey] = "projects";
+
+    ViewData[TitleKey] = "Details"; 
+    ViewData[BannerTitleKey] = "Project Details";
+    ViewData[BannerNavTitleKey] ="Projects";
+    ViewData[BannerNavRouteValueKey] = Model.Project.Id;
+    ViewData[BannerNavActionKey] = "index";
+    ViewData[BannerNavControllerKey] = "projects";
 }
 @model ProjectDetailsViewModel
 
 <!-- Start course-details Area -->
 <section class="course-details-area pt-120">
- <div class="container">
-  <div class="row">
-   <div class="col-lg-8 left-contents">
-	   
-     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active clickable"></li>
-    @for(int i = 1; i <= Model.Project.ProjectImages.Count; i++)
-    {
-        <li data-target="#carouselExampleIndicators" data-slide-to="@i" class="clickable"></li>
-    }
-  </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      @if(Model.Project.Thumbnail.StartsWith("~"))
-      {
-        var imgSrc = @Url.Content(Model.Project.Thumbnail);
-        <img class="d-block w-100" src="@imgSrc" alt="Project Thumbnail">
-      }else
-      {
-        <img class="d-block w-100" src="~/projects/image/@Model.Project.Id?isThumbnail=true" alt="Project Thumbnail">
-      }
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 left-contents">
+
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active clickable"></li>
+                        @for (int i = 1; i <= Model.Project.ProjectImages.Count; i++)
+                        {
+                            <li data-target="#carouselExampleIndicators" data-slide-to="@i" class="clickable"></li>
+                        }
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                                <img class="d-block w-100" src="~/@Model.Project.Thumbnail"alt="Project Thumbnail">
+                        </div>
+                        @foreach (var projectImage in Model.Project.ProjectImages)
+
+                        {
+                                <div class="carousel-item">
+                                    <img class="d-block w-100" src="~/@projectImage.ImagePath" alt="Project Image">
+                                </div>
+                        }
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                            data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                            data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="jq-tab-wrapper" id="horizontalTab">
+                    <div class="jq-tab-menu">
+                        <div class="jq-tab-title active" data-tab="1">Description</div>
+                        <div class="jq-tab-title" data-tab="5">Feedback</div>
+                    </div>
+                    <div class="jq-tab-content-wrapper">
+                        <div class="jq-tab-content active" data-tab="1">@Model.Project.Description</div>
+                        <div class="jq-tab-content" data-tab="5">
+                            <div class="feedeback">
+                                @if (TempData[ResultMessageKey] != null)
+
+                                {
+
+                                    ResultMsgViewModel resultVM = JsonNet.Deserialize<ResultMsgViewModel>(TempData[ResultMessageKey].ToString());
+                                    <div class="modal-header">
+                                        <div class="@resultVM.CssClass">@resultVM.Message</div>
+                                    </div>
+                                }
+                                <form asp-action="feedback" asp-controller="projects" method="post"
+                                    enctype="multipart/form-data">
+                                    <h4 class="pb-20">We'd love to know your feedback!</h4>
+                                    <input type="hidden" value="@Model.Project.Id" asp-for="ProjectId">
+                                    <textarea class="form-control" cols="10" rows="10" asp-for="Feedback"></textarea>
+                                    <span class="text-danger" asp-validation-for="Feedback"></span>
+                                    <button type="submit"
+                                        class="mt-20 primary-btn text-right text-uppercase">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 right-contents">
+                <a class="primary-btn text-uppercase light-important">@Model.Project.Title</a>
+                <ul>
+                    @if (@Model.Project.UsersInProjects.Count != 0)
+
+                    {
+                        var userInProject = Model.Project.UsersInProjects.Where((uip) => uip.Role.Role == "Team Leader").FirstOrDefault();
+                        <li>
+                            <a class="justify-content-between d-flex" asp-action="profile" asp-controller="home"
+                            style="text-decoration:none !important;" target="_blank"
+                            asp-route-id="@userInProject.User.Id">
+                                <h5 class="dark">@userInProject.Role.Role</h5>
+                                <span class="or">@userInProject.User.UserName</span>
+                            </a>
+                        </li>
+                    }
+                    <li>
+                        <a class="justify-content-between d-flex">
+                            <h5 class="dark">Team Members</h5>
+                            <span class="or">@Model.Project.UsersInProjects.Count</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="justify-content-between d-flex">
+                            <h5 class="dark">Technologies & Tools</h5>
+                            <span style="margin-left: 20px" class="or">@Model.Project.ToolsUsed</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="justify-content-between d-flex">
+                            <h5 class="dark">Project Type</h5>
+                            <span style="margin-left: 20px" class="or">@Model.Project.Type.Type</span>
+                        </a>
+                    </li>
+                    @{
+                        var projectLinks = Model.Project.ProjectLinks.Where((projectLink) => projectLink.Link != "#").ToList();
+                    }
+                    @if (projectLinks.Count != 0)
+                    {
+                    <li>
+                        <div class="justify-content-between d-flex">
+                            <h5 class="dark">Links</h5>
+                            <div>
+                        @foreach (var pl in Model.Project.ProjectLinks)
+                        {
+                            if(pl.Link != null && pl.Link != "#")
+                            {
+                            <a href="@pl.Link" target="_blank" data-toggle="tooltip" data-placement="bottom" title=""
+                                data-original-title="facebook" data-abc="true">
+                                <i class="@pl.Type.IconClass" aria-hidden="true"></i>
+                                </a>
+                            }
+                        }
+                        </div>
+                        </div>
+                    </li>
+                    }
+                </ul>
+            </div>
+        </div>
     </div>
-    @foreach(var projectImage in Model.Project.ProjectImages)
-    {
-      if(projectImage.ImagePath.StartsWith("~"))
-      {
-        var imgSrc = @Url.Content(projectImage.ImagePath);
-        <div class="carousel-item">
-        <img class="d-block w-100" src="@imgSrc" alt="Project Image">
-      </div>
-      }else
-      {
-      <div class="carousel-item">
-        <img class="d-block w-100" src="~/projects/image/@projectImage.Id?isThumbnail=false" alt="Project Image">
-      </div>
-      }
-    }
-	  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-  </div>
-</div>
-	<div class="jq-tab-wrapper" id="horizontalTab">
-	 <div class="jq-tab-menu">
-	  <div class="jq-tab-title active" data-tab="1">Description</div>
-	  <div class="jq-tab-title" data-tab="5">Feedback</div>
-	 </div>
-	 <div class="jq-tab-content-wrapper">
-	  <div class="jq-tab-content active" data-tab="1">@Model.Project.Description</div>
-	  <div class="jq-tab-content" data-tab="5">
-	   <div class="feedeback">
-		@if (TempData[ResultMessageKey] != null)
-		{
-			ResultMsgViewModel resultVM = JsonNet.Deserialize<ResultMsgViewModel>(TempData[ResultMessageKey].ToString());
-			<div class="modal-header">
-			<div class="@resultVM.CssClass">@resultVM.Message</div>
-			</div>
-		}
-		<form asp-action="feedback" asp-controller="projects" method="post" enctype="multipart/form-data">
-			<h4 class="pb-20">We'd love to know your feedback!</h4>
-			<input type="hidden" value="@Model.Project.Id" asp-for="ProjectId">
-			<textarea class="form-control" cols="10" rows="10" asp-for="Feedback"></textarea>
-			<span class="text-danger" asp-validation-for="Feedback"></span>
-			<button type="submit" class="mt-20 primary-btn text-right text-uppercase">Submit</button>
-		</form>
-	   </div>
-	  </div>
-	 </div>
-	</div>
-   </div>
-   <div class="col-lg-4 right-contents">
-	<a class="primary-btn text-uppercase light-important">@Model.Project.Title</a>
-	<ul>
-					@if (@Model.Project.UsersInProjects.Count != 0)
-					{
-						var userInProject = Model.Project.UsersInProjects.Where((uip) => uip.Role.Role == "Team Leader").FirstOrDefault();
-							<li>
-								<a class="justify-content-between d-flex" asp-action="profile" asp-controller="home" style="text-decoration:none !important;" target = "_blank" asp-route-id="@userInProject.User.Id">
-									<h5 class="dark">@userInProject.Role.Role</h5>
-									<span class="or">@userInProject.User.UserName</span>
-								</a>
-							</li>
-						
-					}
-	 <li>
-	  <a class="justify-content-between d-flex">
-	   <h5 class="dark">Team Members</h5>
-	   <span class="or">@Model.Project.UsersInProjects.Count</span>
-	  </a>
-	 </li>
-	 <li>
-	  <a class="justify-content-between d-flex">
-	   <h5 class="dark">Technologies & Tools</h5>
-	   <span style="margin-left: 20px" class="or">@Model.Project.ToolsUsed</span>
-	  </a>
-	 </li>
-	</ul>
-   </div>
-  </div>
- </div>
 </section>
 <!-- End course-details Area -->
-<!-- Start Featured Work -->
-<div id="go" class="featured-work text-center">
-		<div class="container">
-			<h2>Contributors</h2>
-			<ul class="list-unstyled row">
-				<li data-class="ALL" class="active col-md">ALL</li>
-				@{
-					var roles = Model.Project.UsersInProjects.Select((uip) => uip.Role.Role).Distinct();
-				}	
-				@foreach(var role in roles)
-				{
-					var processedRole = "." + role.Replace(" ", "").ToUpper();
-					<li data-class="@processedRole" class="col-md">@role</li>
-				}
-			</ul>
-</div>
- <div class="lol">
-	 <div class="container-fluid">
-		 <div class="row">
-			 @if(Model.Project.UsersInProjects != null && Model.Project.UsersInProjects.Count != 0)
-			 {
-				for(int i = 0; i < Model.Project.UsersInProjects.Count; i += 4)
-				{
-						int iters = 0;
-							<div class="shuffle-images">
-							@for(int j = i; iters < 4 && j < Model.Project.UsersInProjects.Count; j++)
-							{
-								iters++;
-								var userInProject = Model.Project.UsersInProjects.ElementAt(j);
-								var processedRole = userInProject.Role.Role.Replace(" ", "").ToUpper();
-						<div class="card col-md" style="margin-right:12px;">
-									@if(userInProject.User.ImagePath.StartsWith("~"))
-									{
-										var imgSrc = @Url.Content(userInProject.User.ImagePath);
-										<a target = "_blank" class="@processedRole" asp-action="profile" asp-route-id="@userInProject.User.Id" asp-controller="home">
-											<img src="@imgSrc" class="card-img-top" alt="contributor img" />
-										</a>
-									}else
-									{
-										<a asp-action="profile"  class="@processedRole card-img-top" asp-controller="home" asp-route-id="@userInProject.User.Id">
-											<img src="~/user/profileimage/@userInProject.User.Id" class="card-img-top" alt="Contributor img" />
-										</a>
-									}
-								
-						<div class="card-body">
-							<p class="card-text">@userInProject.User.UserName</p>
-						</div>
-						</div>
-					}
-					</div>
-				}
-			 }
-		 </div>
-	 </div>
-  </div>
- </div>
-</div>
-
-<!-- End Featured Work -->
-
-
-<!-- Start  -->
-<section class="popular-courses-area section-gap courses-page">
- <div class="container">
-  <div class="row">
-   <a asp-controller="projects" asp-action="index" class="primary-btn text-uppercase mx-auto">View other
-	projects</a>
-  </div>
- </div>
+<!-- Contributors Section Start-->
+<section class="featured-work">
+    <div class="container">
+    <ul class="row mx-auto shuffle-btn-container list-unstyled">
+        <li class="col-sm-12 col-md-2 img-shuffle-btn active-shuffle" shuffle-tag="ALL">ALL</li>
+        @{
+            var roles = Model.Project.UsersInProjects.Select((uip) => uip.Role.Role).Distinct();
+        }
+        @foreach(var role in roles)
+        {
+            var trimmedRole = role.Replace(" ", "");
+            <li class="col-sm-12 col-md-2 img-shuffle-btn" shuffle-tag="@trimmedRole">@trimmedRole</li>
+        }
+    </ul>
+    <div class="row mx-auto shuffle-container">
+        @foreach(var uip in Model.Project.UsersInProjects)
+        {
+            var role = uip.Role.Role.Replace(" ", "");
+            <div class="card col-sm-2 m-1 p-0" shuffle-tag="@role">
+                <div class="card-body">
+                    <a target="_blank" asp-action="profile" asp-controller="home" asp-route-id="@uip.User.Id">
+                        <p class="card-text">@uip.User.UserName</p>
+                    </a>
+                </div>
+                <a target="_blank" asp-action="profile" asp-controller="home" asp-route-id="@uip.User.Id">
+                    <img class="card-img-bottom" src="~/@uip.User.ImagePath"/>
+                </a>
+            </div>
+        }
+    </div>
+    </div>
 </section>
-<!-- End  -->
+    <!-- Contributors Section End-->
+    <!-- Start  -->
+    <section class="popular-courses-area section-gap courses-page">
+        <div class="container">
+            <div class="row">
+                <a asp-controller="projects" asp-action="index" class="primary-btn text-uppercase mx-auto">View other projects</a>
+            </div>
+        </div>
+    </section>
+    <!-- End  -->

@@ -49,6 +49,10 @@ namespace Portofolio.Controllers
         public async Task<IActionResult> Profile(int id)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync((user) => user.Id == id);
+            if(user == null)
+            {
+                return RedirectToAction(nameof(ErrorsController.Error404), "Error");
+            }
             user.UsersInProjects = await _uipRepository.FindCollectionByCondition((uip) => uip.UserId == user.Id);
             user.UserLinks = await _userLinksRepository.FindCollectionByCondition((link) => link.UserId == user.Id);
             return View(user);

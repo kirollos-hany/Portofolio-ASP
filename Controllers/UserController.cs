@@ -13,7 +13,8 @@ using Portofolio.AppModels.Exceptions;
 using static Portofolio.AppModels.Utils.KeyConstants;
 using Json.Net;
 using Portofolio.AppModels.Models;
-using Microsoft.EntityFrameworkCore;
+using static Portofolio.AppModels.Utils.Constants;
+using System.Linq;
 namespace Portofolio.Controllers
 {
     public class UserController : Controller
@@ -24,7 +25,7 @@ namespace Portofolio.Controllers
 
         private readonly IRepository<UsersInProject> _uipRepository;
 
-        private readonly IImageService _imageServices;
+        private readonly IImageServices _imageServices;
 
         private readonly IRepository<UserLink> _userLinksRepository;
 
@@ -34,7 +35,9 @@ namespace Portofolio.Controllers
 
         private readonly IMailService _mailServices;
 
-        public UserController(SignInManager<User> signInManager, UserManager<User> userManager, BaseRepository<UsersInProject> uipRepository, BaseImageServices<User> imageServices, BaseRepository<UserLink> userLinksRepository, BaseRepository<LinkType> linkTypesRepository, IEmailParserFromModelAsync<HTMLModel> htmlEmailParser, IMailService mailServices)
+        private readonly IRepository<Contact> _contactsRepository;
+
+        public UserController(BaseRepository<Contact> contactsRepository, SignInManager<User> signInManager, UserManager<User> userManager, BaseRepository<UsersInProject> uipRepository, IImageServices imageServices, BaseRepository<UserLink> userLinksRepository, BaseRepository<LinkType> linkTypesRepository, IEmailParserFromModelAsync<HTMLModel> htmlEmailParser, IMailService mailServices)
         {
             _uipRepository = uipRepository;
             _signInManager = signInManager;
@@ -44,6 +47,7 @@ namespace Portofolio.Controllers
             _linkTypesRepository = linkTypesRepository;
             _htmlEmailParser = htmlEmailParser;
             _mailServices = mailServices;
+            _contactsRepository = contactsRepository;
         }
         public IActionResult Login(string returnUrl = null)
         {
@@ -58,8 +62,10 @@ namespace Portofolio.Controllers
             user.UsersInProjects = await _uipRepository.FindCollectionByCondition((uip) => uip.UserId == user.Id);
             user.UserLinks = await _userLinksRepository.FindCollectionByCondition(ul => ul.UserId == user.Id);
             var linkTypes = await _linkTypesRepository.GetAll();
+            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == "Pending").Count();
             return View(new UserProfileViewModel
             {
+                PendingContactsCount = pendingContactsCount,
                 User = user,
                 LinkTypes = linkTypes
             });
@@ -113,6 +119,7 @@ namespace Portofolio.Controllers
                     imagePath = await _imageServices.UploadImgAsync(userImageFile);
                     await _userManager.EditUserWithImageAsync(profileViewModel.User, imagePath, _imageServices);
                     await _userLinksRepository.EditUserLinks(profileViewModel.Links, profileViewModel.LinksIds);
+                    await _imageServices.ResizeImg(imagePath, UserImageSize);
                 }
                 catch (CustomException ex)
                 {
@@ -131,13 +138,6 @@ namespace Portofolio.Controllers
             return RedirectToAction(nameof(Profile));
         }
 
-        public async Task<IActionResult> ProfileImage(int id)
-        {
-            var user = await _userManager.Users.FirstOrDefaultAsync((user) => user.Id == id);
-            var imageModel = await _imageServices.GetImageAsync(user.ImagePath);
-            return File(imageModel.FileStream, imageModel.ContentType);
-        }
-
         [Authorize]
         public async Task<IActionResult> Logout()
         {
@@ -151,8 +151,10 @@ namespace Portofolio.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var linkTypes = await _linkTypesRepository.GetAll();
+            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == "Pending").Count();
             return View(new CreateProfileViewModel
             {
+                PendingContactsCount = pendingContactsCount,
                 User = user,
                 LinkTypes = linkTypes
             });
@@ -177,6 +179,7 @@ namespace Portofolio.Controllers
                     _imageServices.ValidateImgExtension(userImageFile);
                     newUser.ImagePath = await _imageServices.UploadImgAsync(userImageFile);
                     await _userManager.UpdateAsync(newUser);
+                    await _imageServices.ResizeImg(newUser.ImagePath, UserImageSize);
                 }
             }
             catch (CustomException ex)
@@ -200,8 +203,10 @@ namespace Portofolio.Controllers
         public async Task<IActionResult> PasswordChange()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
+            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == "Pending").Count();
             return View(new ChangePasswordViewModel
             {
+                PendingContactsCount = pendingContactsCount,
                 User = user
             });
         }

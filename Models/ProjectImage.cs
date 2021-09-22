@@ -14,7 +14,7 @@ namespace Portofolio.Models
     {
         public ProjectImage()
         {
-            ImagePath = "~/img/committee/mm.jpg";
+            ImagePath = "img/committee/mm.jpg";
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

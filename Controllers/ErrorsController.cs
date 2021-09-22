@@ -27,5 +27,22 @@ namespace Portofolio.Controllers
                 ReturnController = "Home"
             });
         }
+
+        public IActionResult Error401()
+        {
+            if (_signInManager.IsSignedIn(HttpContext.User))
+            {
+                return View(new CustomErrorViewModel
+                {
+                    ReturnAction = nameof(DashboardController.Index),
+                    ReturnController = "Dashboard"
+                });
+            }
+            return View(new CustomErrorViewModel
+            {
+                ReturnAction = nameof(HomeController.Index),
+                ReturnController = "Home"
+            });
+        }
     }
 }

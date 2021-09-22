@@ -42,7 +42,7 @@ namespace Portofolio.AppModels.Repositories
         {
             Project project = await _dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks)
-            .Include(project => project.ProjectLinks)
+            .Include(project => project.ProjectLinks).ThenInclude(projectLink => projectLink.Type)
             .Include(project => project.ProjectImages)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
@@ -60,7 +60,7 @@ namespace Portofolio.AppModels.Repositories
         {
             return await _dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks)
-            .Include(project => project.ProjectLinks)
+            .Include(project => project.ProjectLinks).ThenInclude(projectLink => projectLink.Type)
             .Include(project => project.ProjectImages)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
@@ -71,7 +71,7 @@ namespace Portofolio.AppModels.Repositories
         {
             return await Task.Run(()=>_dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks)
-            .Include(project => project.ProjectLinks)
+            .Include(project => project.ProjectLinks).ThenInclude(projectLink => projectLink.Type)
             .Include(project => project.ProjectImages)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
@@ -82,7 +82,7 @@ namespace Portofolio.AppModels.Repositories
         {
             return await Task.Run(()=>_dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks)
-            .Include(project => project.ProjectLinks)
+            .Include(project => project.ProjectLinks).ThenInclude(projectLink => projectLink.Type)
             .Include(project => project.ProjectImages)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
@@ -93,7 +93,7 @@ namespace Portofolio.AppModels.Repositories
         {
             return await _dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks)
-            .Include(project => project.ProjectLinks)
+            .Include(project => project.ProjectLinks).ThenInclude(projectLink => projectLink.Type)
             .Include(project => project.ProjectImages)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)

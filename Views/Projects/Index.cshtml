@@ -27,20 +27,10 @@
                     <div class="single-popular-carusel col-lg-3 col-md-6">
                         <div class="thumb-wrap relative">
                             <div class="thumb relative">
-                                <div class="overlay overlay-bg"></div>
-                                @if(project.Thumbnail.StartsWith("~"))
-                                {
-                                    var imgSrc = @Url.Content(project.Thumbnail);
+                                <div class="overlay overlay-bg"></div>     
                                     <a asp-controller="projects" asp-action="details" asp-route-id="@project.Id">
-                                        <img class="img-fluid" src="@imgSrc" alt="Project thumbnail">
+                                        <img class="img-fluid" src="~/@project.Thumbnail" alt="Project thumbnail">
                                     </a>
-                                    
-                                }else
-                                {
-                                    <a asp-controller="projects" asp-action="details" asp-route-id="@project.Id">
-                                        <img class="img-fluid" src="~/projects/image/@project.Id?isThumbnail=true" alt="Project thumbnail">
-                                    </a>
-                                }
                             </div>
                         </div>
                         <div class="details">

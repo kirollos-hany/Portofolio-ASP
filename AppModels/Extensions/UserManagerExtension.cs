@@ -22,7 +22,7 @@ namespace Portofolio.AppModels.Extensions
             return user;
         }
 
-        public static async Task<User> EditUserWithImageAsync(this UserManager<User> userManager, User newUserData, string imagePath, IImageService imageServices)
+        public static async Task<User> EditUserWithImageAsync(this UserManager<User> userManager, User newUserData, string imagePath, IImageServices imageServices)
         {
             var user = await Task.Run(() => userManager.Users.Where(user => user.Id == newUserData.Id).FirstOrDefault());
             user.UserName = newUserData.UserName;

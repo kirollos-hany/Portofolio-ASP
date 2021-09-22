@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace Portofolio.Models
 {
@@ -33,6 +32,9 @@ namespace Portofolio.Models
 
         [InverseProperty(nameof(RequestedService.AssociatedService))]
         public virtual ICollection<RequestedService> Requests { get; set; }
+
+        [InverseProperty(nameof(ServicesLog.Service))]
+        public virtual ICollection<ServicesLog> Logs { get; set; }
 
     }
 }

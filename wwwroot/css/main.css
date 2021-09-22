@@ -2135,9 +2135,9 @@ body.mobile-nav-active #mobile-nav-toggle {
 .single-feature:hover .title {
   background: #0072ae;
 }
-.single-feature:hover .desc-wrap a {
+/* .single-feature:hover .desc-wrap a {
   color: #0072ae;
-}
+} */
 @media (max-width: 991px) {
   .single-feature {
     margin-bottom: 30px;
@@ -3010,9 +3010,9 @@ dl.toggle.time-line:before {
   -o-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s;
 }
-.left-contents .comments-area .desc h5:hover a {
+/* .left-contents .comments-area .desc h5:hover a {
   color: #0072ae !important;
-}
+} */
 .left-contents .comments-area .date {
   font-size: 13px;
   color: #cccccc;
@@ -4179,7 +4179,6 @@ dl.toggle.time-line:before {
 }
 
 .featured-work ul li {
-  color: #006f97;
   border: 1px solid #7ebcff;
   padding: 5px 10px;
   margin-left: 10px;
@@ -4189,11 +4188,11 @@ dl.toggle.time-line:before {
   transition: all 0.3s ease-in-out;
   font-size: 16px;
 }
-.featured-work ul li.active,
+/* .featured-work ul li.active,
 .featured-work ul li:hover {
   background-color: #3030e2;
   color: #fff;
-}
+} */
 .featured-work ul {
   margin-top: 40px;
   margin-bottom: 50px;
@@ -4276,3 +4275,12 @@ dl.toggle.time-line:before {
 .light-important{
   color: white !important;
 }
+
+a{
+  text-decoration:none !important;
+}
+
+a p{
+  color : #212529 !important;
+}
+

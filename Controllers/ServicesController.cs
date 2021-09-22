@@ -8,24 +8,32 @@ using Microsoft.AspNetCore.Authorization;
 using Portofolio.ViewModels;
 using Portofolio.AppModels.Extensions;
 using static Portofolio.AppModels.Utils.KeyConstants;
+using static Portofolio.AppModels.Utils.Constants;
 using Json.Net;
 using Portofolio.AppModels.Services;
 using Portofolio.AppModels.Exceptions;
+using Microsoft.AspNetCore.Identity;
 namespace Portofolio.Controllers
 {
     public class ServicesController : Controller
     {
         private readonly IRepository<Service> _repository;
 
-        private readonly IImageService _imageServices;
+        private readonly IImageServices _imageServices;
 
         private readonly IPaginator<Service> _paginator;
 
-        public ServicesController(BasePaginator<Service> paginator, BaseRepository<Service> repository, BaseImageServices<Service> imageServices)
+        private readonly UserManager<User> _userManager;
+
+        private readonly IRepository<ServicesLog> _servicesLogRepository;
+
+        public ServicesController(UserManager<User> userManager, BaseRepository<ServicesLog> servicesLogRepository, BasePaginator<Service> paginator, BaseRepository<Service> repository, IImageServices imageServices)
         {
             _repository = repository;
             _imageServices = imageServices;
             _paginator = paginator;
+            _userManager = userManager;
+            _servicesLogRepository = servicesLogRepository;
         }
         public async Task<IActionResult> Index(int page = 1)
         {
@@ -52,14 +60,16 @@ namespace Portofolio.Controllers
                 service.ServiceImage = await _imageServices.UploadImgAsync(serviceVM.ServiceImage);
             }
             await _repository.Create(service);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            await _servicesLogRepository.Create(new ServicesLog
+            {
+                ServiceId = service.Id,
+                UserId = user.Id,
+                ServiceName = service.ServiceName,
+                Action = ServiceCreateAction,
+                UserName = user.UserName
+            });
             return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
-        }
-
-        public async Task<IActionResult> Image(int id)
-        {
-            var service = await _repository.GetById(id);
-            var imageModel = await _imageServices.GetImageAsync(service.ServiceImage);
-            return File(imageModel.FileStream, imageModel.ContentType);
         }
 
         [Authorize]
@@ -67,6 +77,15 @@ namespace Portofolio.Controllers
         {
             var service = await _repository.GetById(id);
             _imageServices.DeleteImg(service.ServiceImage);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            await _servicesLogRepository.Create(new ServicesLog
+            {
+                ServiceId = service.Id,
+                UserId = user.Id,
+                ServiceName = service.ServiceName,
+                Action = ServiceDeleteAction,
+                UserName = user.UserName
+            });
             await _repository.Delete(service);
             return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
         }
@@ -81,17 +100,16 @@ namespace Portofolio.Controllers
                 ModelState.AssignTempDataWithErrors(TempData);
                 return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
             }
-            var service = new Service
-            {
-                Id = id,
-                ServiceName = model.Name,
-                ServiceDescription = model.Description
-            };
-            service = await _repository.Edit(service);
             if (model.ServiceImage != null)
             {
                 try
                 {
+                    var service = new Service
+                    {
+                        Id = id,
+                        ServiceName = model.Name,
+                        ServiceDescription = model.Description
+                    };
                     _imageServices.ValidateImgExtension(model.ServiceImage);
                     _imageServices.DeleteImg(service.ServiceImage);
                     service.ServiceImage = await _imageServices.UploadImgAsync(model.ServiceImage);
@@ -104,12 +122,32 @@ namespace Portofolio.Controllers
                         Message = ex.Message,
                         CssClass = ResultMsgViewModel.CssClassFailed
                     });
+                    return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
                 }
+            }else
+            {
+                var service = await _repository.GetById(id);
+                var newService = new Service{
+                    Id = id,
+                    ServiceName = model.Name,
+                    ServiceDescription = model.Description,
+                    ServiceImage = service.ServiceImage
+                };
+                await _repository.Edit(newService);
             }
             TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
             {
                 Message = "Service edit successful",
                 CssClass = ResultMsgViewModel.CssClassSuccess
+            });
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            await _servicesLogRepository.Create(new ServicesLog
+            {
+                ServiceId = id,
+                UserId = user.Id,
+                ServiceName = model.Name,
+                Action = ServiceUpdateAction,
+                UserName = user.UserName
             });
             return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
         }

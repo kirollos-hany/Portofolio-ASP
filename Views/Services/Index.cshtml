@@ -20,15 +20,7 @@
                     <div class="col-lg-6 pb-30">
                         <div class="single-carusel row align-items-center">
                             <div class="col-12 col-md-6 thumb">
-                                @if(service.ServiceImage.StartsWith("~"))
-                                {
-                                    var imgSrc = @Url.Content(service.ServiceImage);
-                                    <img class="img-fluid" src="@imgSrc" alt="service img">
-                                }
-                                else
-                                {
-                                    <img class="img-fluid" src="~/services/image/@service.Id" alt="service img">
-                                }
+                                    <img class="img-fluid" src="~/@service.ServiceImage" alt="service img">
                             </div>
                             <div class="detials col-12 col-md-6">
                                 <h4>@service.ServiceName</h4>

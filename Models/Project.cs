@@ -19,7 +19,7 @@ namespace Portofolio.Models
             ProjectLinks = new HashSet<ProjectLink>();
             UsersInProjects = new HashSet<UsersInProject>();
             ToolsUsed = "N/A";
-            Thumbnail = "~/img/committee/mm.jpg";
+            Thumbnail = "img/committee/mm.jpg";
         }
 
         [Key]
@@ -56,5 +56,8 @@ namespace Portofolio.Models
         public virtual ICollection<ProjectLink> ProjectLinks { get; set; }
         [InverseProperty(nameof(UsersInProject.Project))]
         public virtual ICollection<UsersInProject> UsersInProjects { get; set; }
+
+        [InverseProperty(nameof(ProjectLog.Project))]
+        public virtual ICollection<ProjectLog> Logs {get; set;}
     }
 }
