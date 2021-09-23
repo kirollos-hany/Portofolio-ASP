@@ -7,8 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Portofolio.AppModels.Repositories;
 using Portofolio.AppModels.Services;
-using Portofolio.ViewModels;
-using System;
 namespace Portofolio.Controllers
 {
     public class HomeController : Controller
@@ -35,8 +33,8 @@ namespace Portofolio.Controllers
 
         public async Task<IActionResult> Members(int page = 1)
         {
-            var users = await Task.Run(() => _userManager.Users.ToHashSet());
-            users = users.OrderByDescending((user) => user.CreatedAt).ToHashSet();
+            var users = await _userManager.Users.ToListAsync();
+            users = users.OrderByDescending((user) => user.CreatedAt).ToList();
             var paginationVM = _usersPaginator.Paginate(users, page);
             foreach(var user in paginationVM.Collection)
             {
@@ -49,24 +47,13 @@ namespace Portofolio.Controllers
         public async Task<IActionResult> Profile(int id)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync((user) => user.Id == id);
-            if(user == null)
+            if(user == default(User))
             {
                 return RedirectToAction(nameof(ErrorsController.Error404), "Error");
             }
             user.UsersInProjects = await _uipRepository.FindCollectionByCondition((uip) => uip.UserId == user.Id);
             user.UserLinks = await _userLinksRepository.FindCollectionByCondition((link) => link.UserId == user.Id);
             return View(user);
-        }
-
-        public IActionResult Blog()
-        {
-            return View();
-        }
-
-
-        public IActionResult BlogSingle()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

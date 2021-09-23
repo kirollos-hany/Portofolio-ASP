@@ -9,6 +9,7 @@ using Portofolio.ViewModels;
 using Portofolio.AppModels.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using static Portofolio.AppModels.Utils.Constants;
 namespace Portofolio.Controllers
 {
     [Authorize]
@@ -46,7 +47,7 @@ namespace Portofolio.Controllers
 
         private readonly IPaginator<User> _usersPaginator;
 
-        public DashboardController(RoleManager<UserRole> roleManager, BasePaginator<User> usersPaginator, BaseRepository<ServicesLog> servicesLogsRepo, BaseRepository<ContactLog> contactsLogsRepo, BaseRepository<ProjectLog> projectsLogsRepo, BasePaginator<Service> servicePaginator, BasePaginator<Project> projectsPaginator, BaseRepository<Service> servicesRepository, IImageServices imageServices, BaseRepository<ProjectImage> projectImagesRepository, BaseRepository<ProjectLink> projectLinksRepository, BaseRepository<UserRoleInProject> uripRepository, BaseRepository<LinkType> linkTypesRepository, BaseRepository<ProjectType> projectTypeRepository, BaseRepository<Contact> contactsRepository, BaseRepository<Project> projectsRepository, UserManager<User> userManager, BaseRepository<UsersInProject> uipRepository)
+        public DashboardController(BasePaginator<User> usersPaginator, BaseRepository<ServicesLog> servicesLogsRepo, BaseRepository<ContactLog> contactsLogsRepo, BaseRepository<ProjectLog> projectsLogsRepo, BasePaginator<Service> servicePaginator, BasePaginator<Project> projectsPaginator, BaseRepository<Service> servicesRepository, IImageServices imageServices, BaseRepository<ProjectImage> projectImagesRepository, BaseRepository<ProjectLink> projectLinksRepository, BaseRepository<UserRoleInProject> uripRepository, BaseRepository<LinkType> linkTypesRepository, BaseRepository<ProjectType> projectTypeRepository, BaseRepository<Contact> contactsRepository, BaseRepository<Project> projectsRepository, UserManager<User> userManager, BaseRepository<UsersInProject> uipRepository)
         {
             _projectsRepository = projectsRepository;
             _userManager = userManager;
@@ -70,7 +71,7 @@ namespace Portofolio.Controllers
         public async Task<IActionResult> Index(int page = 1)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var pendingContactsCount = (await _contactsRepository.FindCollectionByCondition((contact) => contact.Status.Status == "Pending")).Count;
+            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).Count();
             user.UsersInProjects = await _uipRepository.FindCollectionByCondition((uip) => uip.UserId == user.Id);
             var projects = await _projectsRepository.GetAll();
             var paginationModel = _projectsPaginator.Paginate(projects, page);
@@ -89,7 +90,7 @@ namespace Portofolio.Controllers
             {
                 return RedirectToAction(nameof(ErrorsController.Error404), "Error");
             }
-            var pendingContactsCount = (await _contactsRepository.FindCollectionByCondition((contact) => contact.Status.Status == "Pending")).Count;
+            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).Count();
             var user = await _userManager.GetUserAsync(HttpContext.User);
             user.UsersInProjects = await _uipRepository.FindCollectionByCondition((uip) => uip.UserId == user.Id);
             var users = await _userManager.Users.ToListAsync();
@@ -115,7 +116,7 @@ namespace Portofolio.Controllers
         {
             var contacts = await _contactsRepository.GetAll();
             contacts = contacts.OrderByDescending((contact) => contact.UpdatedAt).ToHashSet();
-            var pendingContactsCount = (contacts.Where((contact) => contact.Status.Status == "Pending").ToHashSet()).Count;
+            var pendingContactsCount = contacts.Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).Count();
             return View(new ContactsDashboardViewModel
             {
                 User = await _userManager.GetUserAsync(HttpContext.User),
@@ -126,7 +127,7 @@ namespace Portofolio.Controllers
 
         public async Task<IActionResult> Services(int page = 1)
         {
-            var pendingContactsCount = (await _contactsRepository.FindCollectionByCondition((contact) => contact.Status.Status == "Pending")).Count;
+            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).Count();
             var services = await _servicesRepository.GetAll();
             var paginationModel = _servicePaginator.Paginate(services, page);
             return View(new ServicesDashboardVM
@@ -141,7 +142,7 @@ namespace Portofolio.Controllers
         {
             var logs = await _projectsLogsRepo.GetAll();
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == "Pending").Count();
+            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).Count();
             return View(new ProjectsLogsVM
             {
                 Logs = logs,
@@ -154,7 +155,7 @@ namespace Portofolio.Controllers
         {
             var logs = await _contactsLogsRepo.GetAll();
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == "Pending").Count();
+            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).Count();
             return View(new ContactsLogsVM
             {
                 Logs = logs,
@@ -167,22 +168,22 @@ namespace Portofolio.Controllers
         {
             var logs = await _servicesLogsRepo.GetAll();
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == "Pending").Count();
+            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).Count();
             return View(new ServicesLogsVM
             {
                 Logs = logs,
                 PendingContactsCount = pendingContactsCount,
                 User = user
             });
-
         }
+        
         public async Task<IActionResult> Members(int page = 1)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var users = await _userManager.Users.OrderByDescending((user) => user.CreatedAt).ToListAsync();
             users.Remove(user);
             var paginationModel = _usersPaginator.Paginate(users, page);
-            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == "Pending").Count();
+            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).Count();
             return View(new MembersDashboardVM
             {
                 User = user,
@@ -191,11 +192,10 @@ namespace Portofolio.Controllers
             });
         }
 
-
         public async Task<IActionResult> DeleteMember(int id)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            if (await _userManager.IsInRoleAsync(user, "Admin"))
+            if (await _userManager.IsInRoleAsync(user, AdminRole))
             {
                 var users = await _userManager.Users.ToListAsync();
                 var userToDelete = users.Where((user) => user.Id == id).FirstOrDefault();

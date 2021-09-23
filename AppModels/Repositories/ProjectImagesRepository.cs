@@ -54,12 +54,12 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<ICollection<ProjectImage>> FindCollectionByCondition(Expression<Func<ProjectImage, bool>> expression)
         {
-            return await Task.Run(() => _dbContext.ProjectImages.Where(expression).ToHashSet());
+            return await _dbContext.ProjectImages.Where(expression).ToListAsync();
         }
 
         public async override Task<ICollection<ProjectImage>> GetAll()
         {
-            return await Task.Run(() => _dbContext.ProjectImages.ToHashSet());
+            return await _dbContext.ProjectImages.ToListAsync();
         }
 
         public async override Task<ProjectImage> GetById(int id)

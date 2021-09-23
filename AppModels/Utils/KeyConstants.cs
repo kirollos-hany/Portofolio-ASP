@@ -78,5 +78,13 @@ namespace Portofolio.AppModels.Utils
                 return "BannerNavTitle";
             }
         }
+
+        public static string ReturnUrlKey
+        {
+            get
+            {
+                return "ReturnUrl";
+            }
+        }
     }
 }

@@ -17,15 +17,18 @@
                           </tr>
                         </thead>
                         <tbody>
-                            @foreach(var log in Model.Logs)
+                          @if(Model.Logs != default(ICollection<ProjectLog>))
                             {
-                              
-                              <tr class="clickable-bg">
-                                    <td>@log.Title</td>
-                                    <td>@log.UserName</td>
-                                    <td>@log.Action</td>
-                                    <td>@log.CreatedAt</td>
-                              </tr>
+                                    @foreach(var log in Model.Logs)
+                                    {
+                                      
+                                      <tr class="clickable-bg">
+                                            <td>@log.Title</td>
+                                            <td>@log.UserName</td>
+                                            <td>@log.Action</td>
+                                            <td>@log.CreatedAt</td>
+                                      </tr>
+                                    }
                             }
                         </tbody>
                       </table>

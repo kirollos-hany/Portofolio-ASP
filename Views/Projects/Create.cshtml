@@ -7,9 +7,9 @@
   <div class="card">
     <div class="card-body" style="background-color:black;">
       <h4 class="card-title">Create Project</h4>
-      @if (TempData[ResultMessageKey] != null)
+      @if (ViewData[ResultMessageKey] != default(ViewDataDictionary))
       {
-        ResultMsgViewModel resultVM = JsonNet.Deserialize<ResultMsgViewModel>(TempData[ResultMessageKey].ToString());
+        ResultMsgViewModel resultVM = ViewData[ResultMessageKey] as ResultMsgViewModel;
         <div class="modal-header">
           <div class="@resultVM.CssClass">@resultVM.Message</div>
         </div>
@@ -33,7 +33,7 @@
         <div class="form-group">
           <label>Contributors & Roles</label>
           <select class="form-control" multiple asp-for="UsersNRolesIds">
-            @if (Model.UserRolesInProject.Count != 0 && Model.Users.Count != 0)
+            @if (Model.UserRolesInProject != default(ICollection<UserRoleInProject>) && Model.Users != default(ICollection<User>))
             {
               foreach (var user in Model.Users)
               {
@@ -60,7 +60,7 @@
         <div class="form-group">
           <label>Project Type</label>
           <select class="form-control" asp-for="ProjectTypeId">
-            @if (Model.ProjectTypes.Count != 0)
+            @if (Model.ProjectTypes != default(ICollection<ProjectType>))
             {
               foreach (var pt in Model.ProjectTypes)
               {
@@ -70,7 +70,7 @@
           </select>
           <span asp-validation-for="ProjectTypeId" class="text-danger"></span>
         </div>
-        @if (Model.LinkTypes.Count != 0)
+        @if (Model.LinkTypes != default(ICollection<LinkType>))
         {
           @foreach (var lt in Model.LinkTypes)
           {

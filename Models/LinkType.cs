@@ -16,7 +16,6 @@ namespace Portofolio.Models
         {
             ProjectLinks = new HashSet<ProjectLink>();
             UserLinks = new HashSet<UserLink>();
-            IconClass = "mdi mdi-link";
         }
 
         [Key]
@@ -26,9 +25,6 @@ namespace Portofolio.Models
         [Column("LinkType")]
         [StringLength(50)]
         public string Type { get; set; }
-
-        [StringLength(255)]
-        public string IconClass {get; set;}
 
         [Column(TypeName = "datetime")]
         public DateTime CreatedAt { get; set; }

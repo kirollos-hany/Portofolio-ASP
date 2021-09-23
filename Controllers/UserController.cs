@@ -10,10 +10,9 @@ using Microsoft.AspNetCore.Authorization;
 using Portofolio.AppModels.Repositories;
 using Portofolio.AppModels.Services;
 using Portofolio.AppModels.Exceptions;
-using static Portofolio.AppModels.Utils.KeyConstants;
-using Json.Net;
 using Portofolio.AppModels.Models;
 using static Portofolio.AppModels.Utils.Constants;
+using static Portofolio.AppModels.Utils.KeyConstants;
 using System.Linq;
 namespace Portofolio.Controllers
 {
@@ -37,7 +36,9 @@ namespace Portofolio.Controllers
 
         private readonly IRepository<Contact> _contactsRepository;
 
-        public UserController(BaseRepository<Contact> contactsRepository, SignInManager<User> signInManager, UserManager<User> userManager, BaseRepository<UsersInProject> uipRepository, IImageServices imageServices, BaseRepository<UserLink> userLinksRepository, BaseRepository<LinkType> linkTypesRepository, IEmailParserFromModelAsync<HTMLModel> htmlEmailParser, IMailService mailServices)
+        private readonly IDisplayOutput _outputDisplayer;
+
+        public UserController(IDisplayOutput outputDisplayer, BaseRepository<Contact> contactsRepository, SignInManager<User> signInManager, UserManager<User> userManager, BaseRepository<UsersInProject> uipRepository, IImageServices imageServices, BaseRepository<UserLink> userLinksRepository, BaseRepository<LinkType> linkTypesRepository, IEmailParserFromModelAsync<HTMLModel> htmlEmailParser, IMailService mailServices)
         {
             _uipRepository = uipRepository;
             _signInManager = signInManager;
@@ -48,10 +49,11 @@ namespace Portofolio.Controllers
             _htmlEmailParser = htmlEmailParser;
             _mailServices = mailServices;
             _contactsRepository = contactsRepository;
+            _outputDisplayer = outputDisplayer;
         }
         public IActionResult Login(string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
+            ViewData[ReturnUrlKey] = returnUrl;
             return View();
         }
 
@@ -62,7 +64,7 @@ namespace Portofolio.Controllers
             user.UsersInProjects = await _uipRepository.FindCollectionByCondition((uip) => uip.UserId == user.Id);
             user.UserLinks = await _userLinksRepository.FindCollectionByCondition(ul => ul.UserId == user.Id);
             var linkTypes = await _linkTypesRepository.GetAll();
-            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == "Pending").Count();
+            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).Count();
             return View(new UserProfileViewModel
             {
                 PendingContactsCount = pendingContactsCount,
@@ -94,15 +96,11 @@ namespace Portofolio.Controllers
                     }
                     else
                     {
-                        TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                        {
-                            Message = "Please make sure email and password are correct",
-                            CssClass = ResultMsgViewModel.CssClassFailed
-                        });
+                        _outputDisplayer.DisplayOutput(ViewData, false, "Email or password is invalid");
                     }
                 }
             }
-            ModelState.AssignTempDataWithErrors(TempData);
+            ModelState.AssignViewDataWithErrors(ViewData);
             return RedirectToAction(nameof(Login));
         }
         [HttpPost]
@@ -111,7 +109,7 @@ namespace Portofolio.Controllers
         public async Task<IActionResult> EditProfile(UserProfileViewModel profileViewModel, IFormFile userImageFile)
         {
             string imagePath = string.Empty;
-            if (userImageFile != null)
+            if (userImageFile != default(IFormFile))
             {
                 try
                 {
@@ -123,11 +121,7 @@ namespace Portofolio.Controllers
                 }
                 catch (CustomException ex)
                 {
-                    TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                    {
-                        Message = ex.Message,
-                        CssClass = ResultMsgViewModel.CssClassFailed
-                    });
+                    _outputDisplayer.DisplayOutput(ViewData, false, ex.Message);
                 }
             }
             else
@@ -151,7 +145,7 @@ namespace Portofolio.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var linkTypes = await _linkTypesRepository.GetAll();
-            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == "Pending").Count();
+            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).Count();
             return View(new CreateProfileViewModel
             {
                 PendingContactsCount = pendingContactsCount,
@@ -167,14 +161,14 @@ namespace Portofolio.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AssignTempDataWithErrors(TempData);
+                ModelState.AssignViewDataWithErrors(ViewData);
                 return RedirectToAction(nameof(Create));
             }
             try
             {
                 var newUser = await _userManager.CreateUserAsync(createProfileViewModel);
                 await _userLinksRepository.CreateUserLinks(createProfileViewModel.Links, createProfileViewModel.LinkTypeIds, newUser.Id);
-                if (userImageFile != null)
+                if (userImageFile != default(IFormFile))
                 {
                     _imageServices.ValidateImgExtension(userImageFile);
                     newUser.ImagePath = await _imageServices.UploadImgAsync(userImageFile);
@@ -184,17 +178,9 @@ namespace Portofolio.Controllers
             }
             catch (CustomException ex)
             {
-                TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                {
-                    Message = ex.Message,
-                    CssClass = ResultMsgViewModel.CssClassFailed
-                });
+                _outputDisplayer.DisplayOutput(ViewData, false, ex.Message);
             }
-            TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-            {
-                Message = "User Created Successfuly!",
-                CssClass = ResultMsgViewModel.CssClassSuccess
-            });
+            _outputDisplayer.DisplayOutput(ViewData, true, "User created successfuly");
             return RedirectToAction(nameof(Create));
         }
 
@@ -203,7 +189,7 @@ namespace Portofolio.Controllers
         public async Task<IActionResult> PasswordChange()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == "Pending").Count();
+            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).Count();
             return View(new ChangePasswordViewModel
             {
                 PendingContactsCount = pendingContactsCount,
@@ -218,24 +204,16 @@ namespace Portofolio.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AssignTempDataWithErrors(TempData);
+                ModelState.AssignViewDataWithErrors(ViewData);
                 return RedirectToAction(nameof(PasswordChange));
             }
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var result = await _userManager.ChangePasswordAsync(user, changePasswordViewModel.OldPassword, changePasswordViewModel.NewPassword);
             if (!result.Succeeded)
             {
-                TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                {
-                    Message = result.ToString(),
-                    CssClass = ResultMsgViewModel.CssClassFailed
-                });
+                _outputDisplayer.DisplayOutput(ViewData, false, result.ToString());
             }
-            TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-            {
-                Message = "Password Changed Successfuly!",
-                CssClass = ResultMsgViewModel.CssClassSuccess
-            });
+            _outputDisplayer.DisplayOutput(ViewData, true, "Password change is successful");
             return RedirectToAction(nameof(PasswordChange));
         }
 
@@ -251,23 +229,19 @@ namespace Portofolio.Controllers
             var user = await _userManager.FindByEmailAsync(resetPasswordViewModel.Email);
             if (!ModelState.IsValid)
             {
-                ModelState.AssignTempDataWithErrors(TempData);
+                ModelState.AssignViewDataWithErrors(ViewData);
                 return RedirectToAction(nameof(ForgotPassword));
             }
-            else if (user == null)
+            else if (user == default(User))
             {
-                TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                {
-                    Message = "Please make sure you entered a valid email",
-                    CssClass = ResultMsgViewModel.CssClassFailed
-                });
+                _outputDisplayer.DisplayOutput(ViewData, false, "Email invalid");
                 return RedirectToAction(nameof(ForgotPassword));
             }
             var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
             var callback = Url.ActionLink(nameof(ResetPassword), "User", new { token = resetToken, email = user.Email }, Request.Scheme);
             var mailRequest = await _htmlEmailParser.ParseAsync(new HTMLModel()
             {
-                Path = "templates/resetpassword.html",
+                Path = PasswordResetHtmlTemplatePath,
                 PlaceHolders = new string[] { "[href]" },
                 PlaceHolderValues = new string[] { $" href={callback}" },
                 ToEmail = user.Email
@@ -292,7 +266,7 @@ namespace Portofolio.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AssignTempDataWithErrors(TempData);
+                ModelState.AssignViewDataWithErrors(ViewData);
                 return RedirectToAction(nameof(ResetPassword), new { token = newPasswordViewModel.Token, email = newPasswordViewModel.Email });
             }
             var user = await _userManager.FindByEmailAsync(newPasswordViewModel.Email);
@@ -306,19 +280,11 @@ namespace Portofolio.Controllers
                 }
                 else
                 {
-                    TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                    {
-                        Message = "Login failed, please try again" + result.ToString(),
-                        CssClass = ResultMsgViewModel.CssClassFailed
-                    });
+                    _outputDisplayer.DisplayOutput(ViewData, false, "Login failed, " + result.ToString());
                     return RedirectToAction(nameof(ResetPassword), new { token = newPasswordViewModel.Token, email = newPasswordViewModel.Email });
                 }
             }
-            TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-            {
-                Message = "Password change failed, please try again" + result.ToString(),
-                CssClass = ResultMsgViewModel.CssClassFailed
-            });
+            _outputDisplayer.DisplayOutput(ViewData, false, "Password change failed, " + result.ToString());
             return RedirectToAction(nameof(ResetPassword), new { token = newPasswordViewModel.Token, email = newPasswordViewModel.Email });
         }
 

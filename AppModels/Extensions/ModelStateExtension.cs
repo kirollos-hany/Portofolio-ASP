@@ -1,7 +1,6 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Json.Net;
 using Portofolio.ViewModels;
 using static Portofolio.AppModels.Utils.KeyConstants;
 namespace Portofolio.AppModels.Extensions
@@ -19,13 +18,13 @@ namespace Portofolio.AppModels.Extensions
             return errors;
         }
 
-        public static void AssignTempDataWithErrors(this ModelStateDictionary modelState, ITempDataDictionary tempData)
+        public static void AssignViewDataWithErrors(this ModelStateDictionary modelState, ViewDataDictionary viewData)
         {
-            tempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
+            viewData[ResultMessageKey] = new ResultMsgViewModel
             {
                 Message = modelState.GetErrors(),
                 CssClass = ResultMsgViewModel.CssClassFailed
-            });
+            };
         }
     }
 }

@@ -9,9 +9,9 @@
       <div class="modal-header">
         <h4 class="modal-title text-xs-center">Edit Profile</h4>
       </div>
-        @if(TempData[ResultMessageKey] != null)
+        @if(ViewData[ResultMessageKey] != default(ViewDataDictionary))
         {
-          ResultMsgViewModel resultVM = JsonNet.Deserialize<ResultMsgViewModel>(TempData[ResultMessageKey].ToString());
+          ResultMsgViewModel resultVM = ViewData[ResultMessageKey] as ResultMsgViewModel;
           <div class="modal-header">
           <div class="@resultVM.CssClass">@resultVM.Message</div>
           </div>
@@ -64,7 +64,7 @@
               <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
             </div>
           </div>
-          @if(Model.LinkTypes.Count != 0)
+          @if(Model.LinkTypes != default(ICollection<LinkType>))
           {
             @foreach(var lt in Model.LinkTypes)
             {

@@ -44,9 +44,9 @@
             <div class="col-lg-8">
             <form class="form-area contact-form text-right" id="myForm" asp-controller="contact"
                     asp-action="create" enctype="multipart/form-data" method="post">
-                @if(TempData[ResultMessageKey] != null)
+                @if(ViewData[ResultMessageKey] != default(ViewDataDictionary))
                 {
-                ResultMsgViewModel resultVM = JsonNet.Deserialize<ResultMsgViewModel>(TempData[ResultMessageKey].ToString());
+                ResultMsgViewModel resultVM = ViewData[ResultMessageKey] as ResultMsgViewModel;
                 <div class="modal-header">
                 <div class="@resultVM.CssClass">@resultVM.Message</div>
                 </div>
@@ -75,7 +75,7 @@
                         </div>
                         <div class="col-lg-6 form-group">
                             <select multiple="multiple" asp-for="RequestedServicesIds">
-                                @if (Model.Services.Count != 0)
+                                @if (Model.Services != default(ICollection<Service>))
                                 {
                                     @foreach (Service service in Model.Services)
                                     {

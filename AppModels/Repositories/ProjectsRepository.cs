@@ -69,24 +69,24 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<ICollection<Project>> FindCollectionByCondition(Expression<Func<Project, bool>> expression)
         {
-            return await Task.Run(()=>_dbContext.Projects.Include(project => project.Type)
+            return await _dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks)
             .Include(project => project.ProjectLinks).ThenInclude(projectLink => projectLink.Type)
             .Include(project => project.ProjectImages)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
-            .Where(expression).ToHashSet());
+            .Where(expression).ToListAsync();
         }
 
         public async override Task<ICollection<Project>> GetAll()
         {
-            return await Task.Run(()=>_dbContext.Projects.Include(project => project.Type)
+            return await _dbContext.Projects.Include(project => project.Type)
             .Include(project => project.ProjectFeedbacks)
             .Include(project => project.ProjectLinks).ThenInclude(projectLink => projectLink.Type)
             .Include(project => project.ProjectImages)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
-            .ToHashSet());
+            .ToListAsync();
         }
 
         public async override Task<Project> GetById(int id)

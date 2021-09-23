@@ -46,7 +46,7 @@
                 </h6>
                 <div class="row">
                   <div class="col-sm-6">
-                    @if (Model.Contact.RequestedServices.Count != 0)
+                    @if (Model.Contact.RequestedServices != default(ICollection<RequestedService>))
                     {
                       foreach (var service in Model.Contact.RequestedServices)
                       {
@@ -75,9 +75,9 @@
       <div class="modal-body">
         <form role="form" asp-action="editcontactstatus" asp-controller="contact" enctype="multipart/form-data"
           method="post">
-          @if (TempData[ResultMessageKey] != null)
+          @if (ViewData[ResultMessageKey] != default(ViewDataDictionary))
           {
-            ResultMsgViewModel resultVM = JsonNet.Deserialize<ResultMsgViewModel>(TempData[ResultMessageKey].ToString());
+            ResultMsgViewModel resultVM = ViewData[ResultMessageKey] as ResultMsgViewModel;
             <div class="modal-header">
               <div class="@resultVM.CssClass">@resultVM.Message</div>
             </div>
@@ -93,10 +93,13 @@
             <label class="control-label">Statuses</label>
             <div>
               <select asp-for="StatusId">
-                @foreach (var status in Model.ContactStatuses)
-                {
-                  <option value="@status.Id" >@status.Status</option>
-                }
+                @if(Model.ContactStatuses != default(ICollection<ContactStatus>))
+                  {
+                    @foreach (var status in Model.ContactStatuses)
+                    {
+                      <option value="@status.Id" >@status.Status</option>
+                    }
+                  }
               </select>
               <span class="text-danger" asp-validation-for="StatusId"></span>
             </div>

@@ -9,7 +9,7 @@
 <section class="popular-courses-area section-gap courses-page">
     <div class="container">
         <div class="row">
-            @if (Model.PaginationModel.Collection.Count != 0)
+            @if (Model.PaginationModel.Collection != default(ICollection<Project>))
             {
                 @foreach (Project project in Model.PaginationModel.Collection)
                 {

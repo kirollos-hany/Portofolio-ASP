@@ -54,12 +54,12 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<ICollection<LinkType>> FindCollectionByCondition(Expression<Func<LinkType, bool>> expression)
         {
-            return await Task.Run(()=>_dbContext.LinkTypes.Where(expression).ToHashSet());
+            return await _dbContext.LinkTypes.Where(expression).ToListAsync();
         }
 
         public async override Task<ICollection<LinkType>> GetAll()
         {
-            return await Task.Run(()=>_dbContext.LinkTypes.ToHashSet());
+            return await _dbContext.LinkTypes.ToListAsync();
         }
 
         public async override Task<LinkType> GetById(int id)

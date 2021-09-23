@@ -39,6 +39,7 @@ namespace Portofolio.AppModels.Extensions
             services.AddTransient(typeof(IEmailParserFromModelAsync<HTMLWithModel<Contact>>), typeof(HTMLWithContactEmailParser));
             services.AddTransient(typeof(IEmailParserFromModelAsync<HTMLModel>), typeof(HTMLEmailParser));
             services.AddTransient(typeof(IImageServices), typeof(ImageServices));
+            services.AddTransient(typeof(IDisplayOutput), typeof(OutputDisplayer));
             services.AddIdentity<User, UserRole>().AddEntityFrameworkStores<PortofolioDbContext>().AddRoles<UserRole>().AddDefaultTokenProviders();
         }
 

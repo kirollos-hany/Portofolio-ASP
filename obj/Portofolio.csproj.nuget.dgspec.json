@@ -42,10 +42,6 @@
               "target": "Package",
               "version": "[1.5.138, )"
             },
-            "Json.Net": {
-              "target": "Package",
-              "version": "[1.0.33, )"
-            },
             "MailKit": {
               "target": "Package",
               "version": "[2.14.0, )"

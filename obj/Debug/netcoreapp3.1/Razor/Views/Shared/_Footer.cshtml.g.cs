@@ -42,13 +42,13 @@ using static Portofolio.AppModels.Utils.KeyConstants;
 #nullable disable
 #nullable restore
 #line 5 "E:\Personal\Portofolio\Views\_ViewImports.cshtml"
-using Json.Net;
+using static Portofolio.AppModels.Utils.Constants;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"28f5c4d11d34319e61aa2bf9875668065c363cc6", @"/Views/Shared/_Footer.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a889185462bfe6c12d923c7c3eff1ad55cc77043", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"251ca8320a309c39635f163f1c8fc8b7ede9cc43", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared__Footer : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-controller", "home", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -98,7 +98,7 @@ using Json.Net;
                         <li>
                             <span class=""arrow-right"" style=""color: #0072ae""><i class=""fa fa-angle-right""
                                     aria-hidden=""true""></i></span>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "28f5c4d11d34319e61aa2bf9875668065c363cc66269", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "28f5c4d11d34319e61aa2bf9875668065c363cc66304", async() => {
                 WriteLiteral("Learn more\r\n                                about\r\n                                IEEE");
             }
             );
@@ -166,7 +166,7 @@ using Json.Net;
             BeginWriteAttribute("class", " class=\"", 3037, "\"", 3045, 0);
             EndWriteAttribute();
             WriteLiteral(" id=\"mc_embed_signup\">\r\n                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "28f5c4d11d34319e61aa2bf9875668065c363cc610114", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "28f5c4d11d34319e61aa2bf9875668065c363cc610149", async() => {
                 WriteLiteral(@"
                             <div class=""input-group"">
                                 <input type=""text"" class=""form-control"" name=""EMAIL"" placeholder=""Enter Email Address""

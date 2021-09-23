@@ -40,7 +40,7 @@
                 </h6>
                 <div class="row">
                   <div class="col-sm-6">
-                    @if (Model.User.UsersInProjects.Count != 0)
+                    @if (Model.User.UsersInProjects != default(ICollection<UsersInProject>))
                     {
                       foreach (var userInProject in Model.User.UsersInProjects)
                       {
@@ -52,9 +52,13 @@
                   </div>
                 </div>
                 @{
-                  var userLinks = Model.User.UserLinks.Where((ul) => ul.Link != "#").ToList();
+                  ICollection<UserLink> userLinks = default(ICollection<UserLink>);
+                  if(Model.User.UserLinks != default(ICollection<UserLink>))
+                    {
+                       userLinks = Model.User.UserLinks.Where((ul) => ul.Link != LinksDefault).ToList();
+                    }
                 }
-                @if(userLinks.Count != 0)
+                @if(userLinks != default(ICollection<UserLink>))
                 {
                 <ul class="social-link list-unstyled m-t-40 m-b-10">
                   <li>
@@ -62,11 +66,11 @@
                     {
                       @foreach (var ul in Model.User.UserLinks)
                       {
-                        if(ul.Link != null && ul.Link != "#")
+                        if(ul.Link != default(string))
                         {
                         <a href="@ul.Link" target="_blank" data-toggle="tooltip" data-placement="bottom" title=""
                         data-original-title="facebook" data-abc="true"><i
-                          class="@ul.Type.IconClass" aria-hidden="true"></i></a>
+                          class="@LinkIconsDictionary[ul.Type.Type]" aria-hidden="true"></i></a>
                         }
                       }
                     }
@@ -92,9 +96,9 @@
       </div>
       <div class="modal-body">
         <form role="form" asp-action="editprofile" asp-controller="user" enctype="multipart/form-data" method="post">
-        @if(TempData[ResultMessageKey] != null)
+        @if(ViewData[ResultMessageKey] != default(ViewDataDictionary))
         {
-          ResultMsgViewModel resultVM = JsonNet.Deserialize<ResultMsgViewModel>(TempData[ResultMessageKey].ToString());
+          ResultMsgViewModel resultVM = ViewData[ResultMessageKey] as ResultMsgViewModel;
           <div class="modal-header">
           <div class="@resultVM.CssClass">@resultVM.Message</div>
           </div>
@@ -136,7 +140,7 @@
               <span class="text-danger" asp-validation-for="User.Email"></span>
             </div>
           </div>
-          @if(Model.LinkTypes.Count != 0)
+          @if(Model.LinkTypes != default(ICollection<LinkType>))
           {
             @foreach(var lt in Model.LinkTypes)
             {

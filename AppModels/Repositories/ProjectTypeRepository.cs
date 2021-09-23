@@ -53,12 +53,12 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<ICollection<ProjectType>> FindCollectionByCondition(Expression<Func<ProjectType, bool>> expression)
         {
-            return await Task.Run(() => _dbContext.ProjectTypes.Include(pt => pt.Projects).Where(expression).ToHashSet());
+            return await _dbContext.ProjectTypes.Include(pt => pt.Projects).Where(expression).ToListAsync();
         }
 
         public async override Task<ICollection<ProjectType>> GetAll()
         {
-            return await Task.Run(()=>_dbContext.ProjectTypes.ToHashSet());
+            return await _dbContext.ProjectTypes.ToListAsync();
         }
 
         public async override Task<ProjectType> GetById(int id)

@@ -9,9 +9,7 @@ using Portofolio.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Portofolio.AppModels.Services;
 using Portofolio.AppModels.Extensions;
-using static Portofolio.AppModels.Utils.KeyConstants;
 using Portofolio.AppModels.Exceptions;
-using Json.Net;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System;
@@ -45,7 +43,9 @@ namespace Portofolio.Controllers
 
         private readonly IRepository<Contact> _contactsRepository;
 
-        public ProjectsController(BaseRepository<Contact> contactsRepository, BaseRepository<ProjectLog> projectLogRepository, BasePaginator<Project> projectPaginator, BaseRepository<ProjectFeedback> feedbackRepository, BaseRepository<ProjectImage> projectImagesRepository, BaseRepository<ProjectLink> projectLinksRepository, BaseRepository<UsersInProject> uipRepository, IImageServices imageServices, BaseRepository<UserRoleInProject> uripRepository, BaseRepository<LinkType> linkTypesRepository, BaseRepository<Project> projectsRepository, UserManager<User> userManager, BaseRepository<ProjectType> projectTypeRepository)
+        private readonly IDisplayOutput _outputDisplayer;
+
+        public ProjectsController(IDisplayOutput outputDisplayer, BaseRepository<Contact> contactsRepository, BaseRepository<ProjectLog> projectLogRepository, BasePaginator<Project> projectPaginator, BaseRepository<ProjectFeedback> feedbackRepository, BaseRepository<ProjectImage> projectImagesRepository, BaseRepository<ProjectLink> projectLinksRepository, BaseRepository<UsersInProject> uipRepository, IImageServices imageServices, BaseRepository<UserRoleInProject> uripRepository, BaseRepository<LinkType> linkTypesRepository, BaseRepository<Project> projectsRepository, UserManager<User> userManager, BaseRepository<ProjectType> projectTypeRepository)
         {
             _userManager = userManager;
             _projectsRepository = projectsRepository;
@@ -60,6 +60,7 @@ namespace Portofolio.Controllers
             _projectPaginator = projectPaginator;
             _projectLogRepository = projectLogRepository;
             _contactsRepository = contactsRepository;
+            _outputDisplayer = outputDisplayer;
         }
 
         public async Task<IActionResult> Index(int page = 1)
@@ -72,7 +73,7 @@ namespace Portofolio.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var project = await _projectsRepository.GetById(id);
-            if(project == null)
+            if(project == default(Project))
             {
                 return RedirectToAction(nameof(ErrorsController.Error404), "Error");
             }
@@ -86,7 +87,7 @@ namespace Portofolio.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AssignTempDataWithErrors(TempData);
+                ModelState.AssignViewDataWithErrors(ViewData);
                 return RedirectToAction(nameof(Details), new { id = model.ProjectId });
             }
             await _feedbackRepository.Create(new ProjectFeedback
@@ -94,11 +95,7 @@ namespace Portofolio.Controllers
                 ProjectId = model.ProjectId,
                 Feedback = model.Feedback
             });
-            TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-            {
-                Message = "Feedback submitted successfully",
-                CssClass = ResultMsgViewModel.CssClassSuccess
-            });
+            _outputDisplayer.DisplayOutput(ViewData, true, "Feedback submitted successfully");
             return RedirectToAction(nameof(Details), new { id = model.ProjectId });
         }
 
@@ -110,7 +107,7 @@ namespace Portofolio.Controllers
             var projectTypes = await _projectTypeRepository.GetAll();
             var linkTypes = await _linkTypesRepository.GetAll();
             var urips = await _uripRepository.GetAll();
-            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == "Pending").Count();
+            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).Count();
             return View(new CreateProjectViewModel
             {
                 PendingContactsCount = pendingContactsCount,
@@ -129,18 +126,14 @@ namespace Portofolio.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AssignTempDataWithErrors(TempData);
+                ModelState.AssignViewDataWithErrors(ViewData);
                 return RedirectToAction(nameof(Create));
             }
-            var teamLeaderRole = await _uripRepository.FindByCondition((urip) => urip.Role == "Team Leader");
+            var teamLeaderRole = await _uripRepository.FindByCondition((urip) => urip.Role == TeamLeaderRole);
             var teamLeader = projectViewModel.UsersNRolesIds.Where((usersNRoleId) => Convert.ToInt32(usersNRoleId.Split('-')[0]) == teamLeaderRole.Id).FirstOrDefault();
             if(teamLeader == default(string))
             {
-                TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                {
-                    Message = "Please select a team leader for the project",
-                    CssClass = ResultMsgViewModel.CssClassFailed
-                });
+                _outputDisplayer.DisplayOutput(ViewData, false, "Please select a team leader for the project");
                 return RedirectToAction(nameof(Create));
             }
             var project = await _projectsRepository.Create(new Project
@@ -161,11 +154,7 @@ namespace Portofolio.Controllers
             }
             catch (CustomException ex)
             {
-                TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                {
-                    Message = ex.Message,
-                    CssClass = ResultMsgViewModel.CssClassFailed
-                });
+                _outputDisplayer.DisplayOutput(ViewData, false, ex.Message);
                 return RedirectToAction(nameof(Create));
             }
             if (projectViewModel.ProjectImages != null)
@@ -176,26 +165,17 @@ namespace Portofolio.Controllers
                 }
                 catch (CustomException ex)
                 {
-                    TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                    {
-                        Message = ex.Message,
-                        CssClass = ResultMsgViewModel.CssClassFailed
-                    });
+                    _outputDisplayer.DisplayOutput(ViewData, false, ex.Message);
                     return RedirectToAction(nameof(Create));
                 }
-
             }
-            TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-            {
-                Message = "Project created successfully",
-                CssClass = ResultMsgViewModel.CssClassSuccess
-            });
+            _outputDisplayer.DisplayOutput(ViewData, true, "Project created successfully");
             var user = await _userManager.GetUserAsync(HttpContext.User);
             await _projectLogRepository.Create(new ProjectLog{
                 ProjectId = project.Id,
                 UserId = user.Id,
                 Title = project.Title,
-                Action = ProjectCreateAction,
+                Action = LogActions.Create.ToString(),
                 UserName = user.UserName
             });
             return RedirectToAction(nameof(DashboardController.Index), "Dashboard");
@@ -208,7 +188,7 @@ namespace Portofolio.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AssignTempDataWithErrors(TempData);
+                ModelState.AssignViewDataWithErrors(ViewData);
                 return RedirectToAction(nameof(DashboardController.ProjectDetails), new {id = editViewModel.ProjectId});
             }
             var edittedProject = await _projectsRepository.Edit(new Project
@@ -238,15 +218,11 @@ namespace Portofolio.Controllers
                 }
                 catch (CustomException ex)
                 {
-                    TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                    {
-                        Message = ex.Message,
-                        CssClass = ResultMsgViewModel.CssClassFailed
-                    });
+                    _outputDisplayer.DisplayOutput(ViewData, false, ex.Message);
                     return RedirectToAction(nameof(DashboardController.ProjectDetails), new {id = editViewModel.ProjectId});
                 }
             }
-            if (editViewModel.ProjectImages != null && editViewModel.ProjectImages.Count != 0)
+            if (editViewModel.ProjectImages != default(IFormFileCollection) && editViewModel.ProjectImages.Count != 0)
             {
                 try
                 {
@@ -254,25 +230,17 @@ namespace Portofolio.Controllers
                 }
                 catch (CustomException ex)
                 {
-                    TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                    {
-                        Message = ex.Message,
-                        CssClass = ResultMsgViewModel.CssClassFailed
-                    });
+                    _outputDisplayer.DisplayOutput(ViewData, false, ex.Message);
                     return RedirectToAction(nameof(DashboardController.ProjectDetails), new {id = editViewModel.ProjectId});
                 }
             }
-            TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-            {
-                Message = "Project editted successfully",
-                CssClass = ResultMsgViewModel.CssClassSuccess
-            });
+            _outputDisplayer.DisplayOutput(ViewData, true, "Project edit is successful");
             var user = await _userManager.GetUserAsync(HttpContext.User);
             await _projectLogRepository.Create(new ProjectLog{
                 ProjectId = edittedProject.Id,
                 UserId = user.Id,
                 Title = edittedProject.Title,
-                Action = ProjectUpdateAction,
+                Action = LogActions.Update.ToString(),
                 UserName = user.UserName
             });
             return RedirectToAction(nameof(DashboardController.ProjectDetails), "Dashboard", new { id = editViewModel.ProjectId });
@@ -282,7 +250,7 @@ namespace Portofolio.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var project = await _projectsRepository.GetById(id);
-            if (project.ProjectFeedbacks != null && project.ProjectFeedbacks.Count != 0)
+            if (project.ProjectFeedbacks != default(ICollection<ProjectFeedback>) && project.ProjectFeedbacks.Count != 0)
             {
                 await _feedbackRepository.DeleteCollection(project.ProjectFeedbacks);
             }
@@ -299,7 +267,7 @@ namespace Portofolio.Controllers
                 ProjectId = id,
                 UserId = user.Id,
                 Title = project.Title,
-                Action = ProjectDeleteAction,
+                Action = LogActions.Delete.ToString(),
                 UserName = user.UserName
             });
             return RedirectToAction(nameof(DashboardController.Index), "Dashboard");

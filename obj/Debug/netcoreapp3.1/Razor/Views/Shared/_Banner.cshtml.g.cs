@@ -42,13 +42,13 @@ using static Portofolio.AppModels.Utils.KeyConstants;
 #nullable disable
 #nullable restore
 #line 5 "E:\Personal\Portofolio\Views\_ViewImports.cshtml"
-using Json.Net;
+using static Portofolio.AppModels.Utils.Constants;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"3358c85e4ceca534b01c1f6fd70199daeb64e375", @"/Views/Shared/_Banner.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a889185462bfe6c12d923c7c3eff1ad55cc77043", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"251ca8320a309c39635f163f1c8fc8b7ede9cc43", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared__Banner : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "index", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -92,7 +92,7 @@ using Json.Net;
 #line hidden
 #nullable disable
             WriteLiteral("\r\n                </h1>\r\n                <p class=\"text-white link-nav\">");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3358c85e4ceca534b01c1f6fd70199daeb64e3754704", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3358c85e4ceca534b01c1f6fd70199daeb64e3754739", async() => {
                 WriteLiteral("Home ");
             }
             );
@@ -119,7 +119,7 @@ using Json.Net;
 #line hidden
 #nullable disable
             WriteLiteral("                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3358c85e4ceca534b01c1f6fd70199daeb64e3756425", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3358c85e4ceca534b01c1f6fd70199daeb64e3756460", async() => {
                 WriteLiteral(" ");
 #nullable restore
 #line 13 "E:\Personal\Portofolio\Views\Shared\_Banner.cshtml"
@@ -185,7 +185,7 @@ using Json.Net;
 #line hidden
 #nullable disable
             WriteLiteral("                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3358c85e4ceca534b01c1f6fd70199daeb64e37510375", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3358c85e4ceca534b01c1f6fd70199daeb64e37510410", async() => {
                 WriteLiteral(" ");
 #nullable restore
 #line 15 "E:\Personal\Portofolio\Views\Shared\_Banner.cshtml"

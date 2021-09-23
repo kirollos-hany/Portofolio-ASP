@@ -10,7 +10,7 @@
     <div class="container">
         <i class="btn btn-primary mr-2 clickable mb-10" data-target="#createServiceModal" data-toggle="modal">+ Create New Service</i>
         <div class="row align-items-center">
-    @if (Model.PaginationModel.Collection.Count != 0)
+    @if (Model.PaginationModel.Collection != default(ICollection<Service>))
     {
         @foreach (Service service in Model.PaginationModel.Collection)
         {
@@ -40,9 +40,9 @@
       <div class="modal-header">
         <h4 class="modal-title text-xs-center">Edit Service</h4>
       </div>
-    @if (TempData[ResultMessageKey] != null)
+    @if (ViewData[ResultMessageKey] != default(ViewDataDictionary))
       {
-        ResultMsgViewModel resultVM = JsonNet.Deserialize<ResultMsgViewModel>(TempData[ResultMessageKey].ToString());
+        ResultMsgViewModel resultVM = ViewData[ResultMessageKey] as ResultMsgViewModel;
         <div class="modal-header">
           <div class="@resultVM.CssClass">@resultVM.Message</div>
         </div>
@@ -81,9 +81,9 @@
       <div class="modal-header">
         <h4 class="modal-title text-xs-center">Create Service</h4>
       </div>
-    @if (TempData[ResultMessageKey] != null)
+    @if (ViewData[ResultMessageKey] != default(ViewDataDictionary))
       {
-        ResultMsgViewModel resultVM = JsonNet.Deserialize<ResultMsgViewModel>(TempData[ResultMessageKey].ToString());
+        ResultMsgViewModel resultVM = ViewData[ResultMessageKey] as ResultMsgViewModel;
         <div class="modal-header">
           <div class="@resultVM.CssClass">@resultVM.Message</div>
         </div>

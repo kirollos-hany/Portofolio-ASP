@@ -18,33 +18,39 @@
                           </tr>
                         </thead>
                         <tbody>
-                            @foreach(var contact in Model.Contacts)
+                          @if(Model.Contacts != default(ICollection<Contact>))
                             {
+                              @foreach(var contact in Model.Contacts)
+                              {
                               
                               <tr class="clickable-bg">
                                     <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light">@contact.ContactName</a></td>
                                     <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light">@contact.Email</a></td>
                                     <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light">@contact.Phone</a></td>
                                     <td><ul>
-                                        @foreach(var service in contact.RequestedServices)
+                                      @if(contact.RequestedServices != default(ICollection<RequestedService>))
                                         {
-                                            <li><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light">@service.AssociatedService.ServiceName</a></li>
+                                          @foreach(var service in contact.RequestedServices)
+                                          {
+                                              <li><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light">@service.AssociatedService.ServiceName</a></li>
+                                          }
                                         }
                                     </ul></td>
                                     @{
-                                        var status = contact.Status.Status.ToLower();
+                                        var status = contact.Status.Status;
                                     }
-                                    @if(status == "pending")
+                                    @if(status == ContactStatuses.Pending.ToString())
                                     {
                                         <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light"><label class="badge badge-info">@contact.Status.Status</label></a></td>
-                                    }else if(status == "in progress")
+                                    }else if(status == ContactStatuses.InProgress.ToString())
                                     {
                                         <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light"><label class="badge badge-warning">@contact.Status.Status</label></a></td>
-                                    }else if(status == "completed")
+                                    }else if(status == ContactStatuses.Completed.ToString())
                                     {
                                         <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light"><label class="badge badge-success">@contact.Status.Status</label></a></td>
                                     }
                               </tr>
+                              }
                             }
                         </tbody>
                       </table>

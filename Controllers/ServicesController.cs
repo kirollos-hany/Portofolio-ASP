@@ -7,9 +7,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Portofolio.ViewModels;
 using Portofolio.AppModels.Extensions;
-using static Portofolio.AppModels.Utils.KeyConstants;
 using static Portofolio.AppModels.Utils.Constants;
-using Json.Net;
 using Portofolio.AppModels.Services;
 using Portofolio.AppModels.Exceptions;
 using Microsoft.AspNetCore.Identity;
@@ -27,13 +25,16 @@ namespace Portofolio.Controllers
 
         private readonly IRepository<ServicesLog> _servicesLogRepository;
 
-        public ServicesController(UserManager<User> userManager, BaseRepository<ServicesLog> servicesLogRepository, BasePaginator<Service> paginator, BaseRepository<Service> repository, IImageServices imageServices)
+        private readonly IDisplayOutput _outputDisplayer;
+
+        public ServicesController(IDisplayOutput outputDisplayer, UserManager<User> userManager, BaseRepository<ServicesLog> servicesLogRepository, BasePaginator<Service> paginator, BaseRepository<Service> repository, IImageServices imageServices)
         {
             _repository = repository;
             _imageServices = imageServices;
             _paginator = paginator;
             _userManager = userManager;
             _servicesLogRepository = servicesLogRepository;
+            _outputDisplayer = outputDisplayer;
         }
         public async Task<IActionResult> Index(int page = 1)
         {
@@ -66,7 +67,7 @@ namespace Portofolio.Controllers
                 ServiceId = service.Id,
                 UserId = user.Id,
                 ServiceName = service.ServiceName,
-                Action = ServiceCreateAction,
+                Action = LogActions.Create.ToString(),
                 UserName = user.UserName
             });
             return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
@@ -83,7 +84,7 @@ namespace Portofolio.Controllers
                 ServiceId = service.Id,
                 UserId = user.Id,
                 ServiceName = service.ServiceName,
-                Action = ServiceDeleteAction,
+                Action = LogActions.Delete.ToString(),
                 UserName = user.UserName
             });
             await _repository.Delete(service);
@@ -97,7 +98,7 @@ namespace Portofolio.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AssignTempDataWithErrors(TempData);
+                ModelState.AssignViewDataWithErrors(ViewData);
                 return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
             }
             if (model.ServiceImage != null)
@@ -117,11 +118,7 @@ namespace Portofolio.Controllers
                 }
                 catch (CustomException ex)
                 {
-                    TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                    {
-                        Message = ex.Message,
-                        CssClass = ResultMsgViewModel.CssClassFailed
-                    });
+                    _outputDisplayer.DisplayOutput(ViewData, false, ex.Message);
                     return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
                 }
             }else
@@ -135,18 +132,14 @@ namespace Portofolio.Controllers
                 };
                 await _repository.Edit(newService);
             }
-            TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-            {
-                Message = "Service edit successful",
-                CssClass = ResultMsgViewModel.CssClassSuccess
-            });
+            _outputDisplayer.DisplayOutput(ViewData, true, "Service edit successful");
             var user = await _userManager.GetUserAsync(HttpContext.User);
             await _servicesLogRepository.Create(new ServicesLog
             {
                 ServiceId = id,
                 UserId = user.Id,
                 ServiceName = model.Name,
-                Action = ServiceUpdateAction,
+                Action = LogActions.Update.ToString(),
                 UserName = user.UserName
             });
             return RedirectToAction(nameof(DashboardController.Services), "Dashboard");

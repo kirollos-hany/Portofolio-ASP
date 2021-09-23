@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="row">
-            @if (Model.Collection.Count != 0)
+            @if (Model.Collection != default(ICollection<Project>))
             {
                 @foreach(Project project in Model.Collection)
                 {

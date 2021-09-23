@@ -1,12 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "g6sbRIBmHMP+FwA8zZtBMy1smW0EGjd2FEC2TY/ZSyoOWgXKYWb0gSh+LNngFVOPD38rmw+BeLAv/Ys2ek9SqA==",
+  "dgSpecHash": "j82RjW6Ag4DPBKhfWgQFvHYpJbdNXpVukJyb5wOi85CiwKYGIHuQMTGkPGfP9maKiP2N8iWx21jcgIvioSAjwg==",
   "success": true,
   "projectFilePath": "E:\\Personal\\Portofolio\\Portofolio.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dell\\.nuget\\packages\\faker.net\\1.5.138\\faker.net.1.5.138.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
-    "C:\\Users\\Dell\\.nuget\\packages\\json.net\\1.0.33\\json.net.1.0.33.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\mailkit\\2.14.0\\mailkit.2.14.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

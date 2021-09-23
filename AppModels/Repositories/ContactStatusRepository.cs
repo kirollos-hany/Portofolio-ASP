@@ -52,12 +52,12 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<ICollection<ContactStatus>> FindCollectionByCondition(Expression<Func<ContactStatus, bool>> expression)
         {
-            return await Task.Run(() => _dbContext.ContactStatuses.Include(cs => cs.Contacts).Where(expression).ToHashSet());
+            return await _dbContext.ContactStatuses.Include(cs => cs.Contacts).Where(expression).ToListAsync();
         }
 
         public async override Task<ICollection<ContactStatus>> GetAll()
         {
-            return await Task.Run(() => _dbContext.ContactStatuses.Include(cs => cs.Contacts).ToHashSet());
+            return await _dbContext.ContactStatuses.Include(cs => cs.Contacts).ToListAsync();
         }
 
         public async override Task<ContactStatus> GetById(int id)

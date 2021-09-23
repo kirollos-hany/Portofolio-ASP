@@ -5,8 +5,6 @@ using Portofolio.AppModels.Repositories;
 using System.Diagnostics;
 using Portofolio.ViewModels;
 using Portofolio.AppModels.Services;
-using Json.Net;
-using static Portofolio.AppModels.Utils.KeyConstants;
 using static Portofolio.AppModels.Utils.Constants;
 using Portofolio.AppModels.Extensions;
 using Portofolio.AppModels.Models;
@@ -34,7 +32,9 @@ namespace Portofolio.Controllers
 
         private readonly IRepository<ContactLog> _contactLogsRepository;
 
-        public ContactController(SignInManager<User> signInManager, BaseRepository<ContactLog> contactLogsRepository, BaseRepository<ContactStatus> contactStatusRepository, UserManager<User> userManager, BaseRepository<Contact> contactRepository, IEmailParserFromModelAsync<HTMLWithModel<Contact>> contactEmailParser, BaseRepository<Service> serviceRepository, BaseRepository<RequestedService> requestedServicesRepository, IMailService mailService)
+        private readonly IDisplayOutput _outputDisplayer;
+
+        public ContactController(IDisplayOutput outputDisplayer, SignInManager<User> signInManager, BaseRepository<ContactLog> contactLogsRepository, BaseRepository<ContactStatus> contactStatusRepository, UserManager<User> userManager, BaseRepository<Contact> contactRepository, IEmailParserFromModelAsync<HTMLWithModel<Contact>> contactEmailParser, BaseRepository<Service> serviceRepository, BaseRepository<RequestedService> requestedServicesRepository, IMailService mailService)
         {
             _mailService = mailService;
             _contactRepository = contactRepository;
@@ -45,6 +45,7 @@ namespace Portofolio.Controllers
             _contactStatusRepository = contactStatusRepository;
             _contactLogsRepository = contactLogsRepository;
             _signInManager = signInManager;
+            _outputDisplayer = outputDisplayer;
         }
         public async Task<IActionResult> Index()
         {
@@ -61,10 +62,10 @@ namespace Portofolio.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AssignTempDataWithErrors(TempData);
+                ModelState.AssignViewDataWithErrors(ViewData);
                 return RedirectToAction(controllerName: "Contact", actionName: "Index");
             }
-            ContactStatus cs = await _contactStatusRepository.FindByCondition(cs => cs.Status == "Pending");
+            ContactStatus cs = await _contactStatusRepository.FindByCondition(cs => cs.Status == ContactStatuses.Pending.ToString());
             contactData.Contact.StatusId = cs.Id;
             Contact savedContact = await _contactRepository.Create(contactData.Contact);
             await _requestedServicesRepository.CreateFromIds(contactData.RequestedServicesIds, savedContact.Id);
@@ -72,15 +73,11 @@ namespace Portofolio.Controllers
             var mailRequest = await _contactEmailParser.ParseAsync(new HTMLWithModel<Contact>
             {
                 Model = contactData.Contact,
-                Path = "templates/servicerequest.html",
+                Path = ContactHtmlTemplatePath,
                 HrefValue = $"href={Url.ActionLink(nameof(ContactController.ContactDetails), "Contact", new { id = contactData.Contact.Id }, Request.Scheme)}"
             });
             await _mailService.SendEmailAsync(mailRequest);
-            TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-            {
-                Message = "Contact received successfuly, we will contact you asap!",
-                CssClass = ResultMsgViewModel.CssClassSuccess
-            });
+            _outputDisplayer.DisplayOutput(ViewData, true, "Contact received successfuly, we will contact you asap!");
             return RedirectToAction(controllerName: "Contact", actionName: "Index");
         }
         [Authorize]
@@ -89,7 +86,7 @@ namespace Portofolio.Controllers
             var contact = await _contactRepository.GetById(id);
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var statuses = await _contactStatusRepository.GetAll();
-            var pendingContactsCount = (await _contactRepository.GetAll()).Where((contact) => contact.Status.Status == "Pending").Count();
+            var pendingContactsCount = (await _contactRepository.GetAll()).Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).Count();
             return View(new ContactDetailsViewModel
             {
                 PendingContactsCount = pendingContactsCount,
@@ -104,29 +101,22 @@ namespace Portofolio.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditContactStatus(ContactDetailsViewModel editViewModel)
         {
+            
             if (editViewModel.StatusId == default(int))
             {
-                TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                {
-                    Message = "Please select a new status for the contact",
-                    CssClass = ResultMsgViewModel.CssClassFailed
-                });
+                _outputDisplayer.DisplayOutput(ViewData, false, "Please select a new status for the contact");
             }
             else
             {
                 var contact = await _contactRepository.GetById(editViewModel.Contact.Id);
                 contact.StatusId = editViewModel.StatusId;
                 await _contactRepository.Edit(contact);
-                TempData[ResultMessageKey] = JsonNet.Serialize(new ResultMsgViewModel
-                {
-                    Message = "Contact editted successfuly",
-                    CssClass = ResultMsgViewModel.CssClassSuccess
-                });
+                _outputDisplayer.DisplayOutput(ViewData, true, "Contact editted successfuly");
                 var user = await _userManager.GetUserAsync(HttpContext.User);
                 await _contactLogsRepository.Create(new ContactLog
                 {
                     ContactName = contact.ContactName,
-                    Action = ContactUpdateAction,
+                    Action = LogActions.Update.ToString(),
                     UserId = user.Id,
                     ContactId = contact.Id,
                     UserName = user.UserName
@@ -144,7 +134,7 @@ namespace Portofolio.Controllers
             await _contactLogsRepository.Create(new ContactLog
             {
                 ContactName = contact.ContactName,
-                Action = ContactDeleteAction,
+                Action = LogActions.Delete.ToString(),
                 UserId = user.Id,
                 ContactId = contact.Id,
                 UserName = user.UserName

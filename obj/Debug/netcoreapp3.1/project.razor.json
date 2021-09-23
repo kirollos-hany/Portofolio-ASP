@@ -14557,16 +14557,6 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "e:\\Personal\\Portofolio\\Views\\Home\\BlogSingle.cshtml",
-      "TargetPath": "Views\\Home\\BlogSingle.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "e:\\Personal\\Portofolio\\Views\\Home\\Blog.cshtml",
-      "TargetPath": "Views\\Home\\Blog.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\User\\Profile.cshtml",
       "TargetPath": "Views\\User\\Profile.cshtml",
       "FileKind": "mvc"

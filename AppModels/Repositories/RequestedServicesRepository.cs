@@ -54,12 +54,12 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<ICollection<RequestedService>> FindCollectionByCondition(Expression<Func<RequestedService, bool>> expression)
         {
-            return await Task.Run(()=>_dbContext.RequestedServices.Include(rs => rs.AssociatedContact).Include(rs => rs.AssociatedService).Where(expression).ToHashSet());
+            return await _dbContext.RequestedServices.Include(rs => rs.AssociatedContact).Include(rs => rs.AssociatedService).Where(expression).ToListAsync();
         }
 
         public async override Task<ICollection<RequestedService>> GetAll()
         {
-            return await Task.Run(()=>_dbContext.RequestedServices.Include(rs => rs.AssociatedContact).Include(rs => rs.AssociatedService).ToHashSet());
+            return await _dbContext.RequestedServices.Include(rs => rs.AssociatedContact).Include(rs => rs.AssociatedService).ToListAsync();
         }
 
         public async override Task<RequestedService> GetById(int id)

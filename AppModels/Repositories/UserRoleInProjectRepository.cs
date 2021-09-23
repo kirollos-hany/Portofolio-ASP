@@ -54,12 +54,12 @@ namespace Portofolio.AppModels.Repositories
 
         public async override Task<ICollection<UserRoleInProject>> FindCollectionByCondition(Expression<Func<UserRoleInProject, bool>> expression)
         {
-            return await Task.Run(() => _dbContext.UserProjectRoles.Where(expression).ToHashSet());
+            return await  _dbContext.UserProjectRoles.Where(expression).ToListAsync();
         }
 
         public async override Task<ICollection<UserRoleInProject>> GetAll()
         {
-            return await Task.Run(() => _dbContext.UserProjectRoles.ToHashSet());
+            return await _dbContext.UserProjectRoles.ToListAsync();
         }
 
         public async override Task<UserRoleInProject> GetById(int id)

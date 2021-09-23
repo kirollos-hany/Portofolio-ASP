@@ -11,7 +11,6 @@ E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Portofolio.Views.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Portofolio.Views.pdb
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Faker.Net.Core.3.1.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Humanizer.dll
-E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Json.Net.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\MailKit.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
 E:\Personal\Portofolio\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
@@ -68,8 +67,6 @@ E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\ProjectsLog
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\Services.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Dashboard\ServicesLogs.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Errors\error404.cshtml.g.cs
-E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\Blog.cshtml.g.cs
-E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\BlogSingle.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\Members.cshtml.g.cs
 E:\Personal\Portofolio\obj\Debug\netcoreapp3.1\Razor\Views\Home\Profile.cshtml.g.cs
