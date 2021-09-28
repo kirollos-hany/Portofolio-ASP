@@ -1,435 +1,350 @@
-﻿@{
-    ViewData[TitleKey] = "Home";
-    ViewData[BannerTitleKey] = "Portofolio";
-    ViewData[BannerNavTitleKey] = ViewData["Title"];
-    ViewData[BannerNavActionKey] = "index";
-    ViewData[BannerNavControllerKey] = "home";
-}
-<!-- Start feature Area -->
-<section class="feature-area">
-    <div class="container">
+﻿    @{
+      ViewData[TitleKey] = "Home";
+    }
+    @model HomeViewModel
+    <!-- Start feature Area -->
+    <section class="feature-area">
+      <div class="container">
         <div class="row">
-            <div class="col-lg-4">
-                <div class="single-feature">
-                    <div class="title">
-                        <h4>Events</h4>
-                    </div>
-                    <div class="desc-wrap">
-                        <p>Check events page</p>
-                        <a asp-controller="home" asp-action="events">View</a>
-                    </div>
-                </div>
+          <div class="col-lg-4">
+            <div class="single-feature">
+              <div class="title">
+                <h4>Dashboard</h4>
+              </div>
+              <div class="desc-wrap">
+                <p>view and customize your own portfolio</p>
+                <a asp-action="login" asp-controller="user" target="_blank">Log In</a>
+              </div>
             </div>
-            <div class="col-lg-4">
-                <div class="single-feature">
-                    <div class="title">
-                        <h4>Mission&Vision</h4>
-                    </div>
-                    <div class="desc-wrap">
-                        <p>
-                            What do we do?<br />
-                            Who and what are we inspiring to change?
-                        </p>
-                        <a href="#">View</a>
-                    </div>
-                </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="single-feature">
+              <div class="title">
+                <h4>Services</h4>
+              </div>
+              <div class="desc-wrap">
+                <p>
+                We offer multiple services ensuring that is made from a highly technical and experienced developers
+                </p>
+                <a asp-action="index" asp-controller="services" target="_blank">Details</a>
+              </div>
             </div>
-            <div class="col-lg-4">
-                <div class="single-feature">
-                    <div class="title">
-                        <h4>Location</h4>
-                    </div>
-                    <div class="desc-wrap">
-                        <p>Follow the map</p>
-                        <a asp-controller="home" asp-action="contact" target="_blank">View</a>
-                    </div>
-                </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="single-feature">
+              <div class="title">
+                <h4>Developers</h4>
+              </div>
+              <div class="desc-wrap">
+                <p>Check out our developers</p>
+                <a asp-action="developers" asp-controller="home" target="_blank">View</a>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-</section>
-<!-- End feature Area -->
+      </div>
+    </section>
+    <!-- End feature Area -->
 
-<!-- Start info Area -->
-<section class="info-area pb-120">
-    <div id="container1">
-        <a id="o1"><img src="~/img/logo3.png" width="150px" height="40px" alt="" title="" /></a>
+    <!-- Start info Area -->
+    <section class="info-area pb-120">
+      <div id="container1">
+      
+        <a id="o1"
+          ><img
+            src="~/img/logoCross.png"
+            width="150px"
+            height="40px"
+            alt=""
+            title=""
+        /></a>
         <br />
         <br />
         <div id="content" font-family: Georgia, Times New Roman, Times,serif;>
-            <strong id="o2">
-                <dd>OUR STORY</dd>
-            </strong>
-            <dd id="o3">
-                IEEE FCIH was founded on November 2006.Under the supervision of Dr.
-                Aliaa Youssif Vice Dean for Graduate Studies at the faculty of
-                Computers and Information - Helwan University and Esraa Ali who was
-                one of the SB founders and its current mentor, Introduced to the
-                rest of founders to what IEEE.
-            </dd>
-            <br />
-            <dd id="o3">
-                IEEE FCIH SB is One of Region 8 branches among hundreds of IEEE
-                student branches around the world that was created to help students
-                and develop their skills in college, and make students up to date
-                with new technologies and labor market, It’s such a real example
-                that represents the efforts of IEEE helping to spread the
-                technological innovation.
-            </dd>
-            <br />
+          <strong id="o2"><dd>OUR STORY</dd></strong>
+          <dd id="o3">
+            IEEE FCIH was founded on November 2006.Under the supervision of Dr.
+            Aliaa Youssif Vice Dean for Graduate Studies at the faculty of
+            Computers and Information - Helwan University and Esraa Ali who was
+            one of the SB founders and its current mentor, Introduced to the
+            rest of founders to what IEEE.
+          </dd>
+          <br />
+          <dd id="o3">
+            IEEE FCIH SB is One of Region 8 branches among hundreds of IEEE
+            student branches around the world that was created to help students
+            and develop their skills in college, and make students up to date
+            with new technologies and labor market, It’s such a real example
+            that represents the efforts of IEEE helping to spread the
+            technological innovation.
+          </dd>
+          <br />
         </div>
-    </div>
-</section>
-<!-- End info Area -->
+      </div>
+    </section>
+    <!-- End info Area -->
 
-<!-- Start course-mission Area -->
-<section class="course-mission-area pb-120">
-    <div class="container">
+    <!-- Start course-mission Area -->
+    <section class="course-mission-area pb-120">
+      <div class="container">
         <div class="row d-flex justify-content-center">
-            <div class="menu-content pb-70 col-lg-8">
-                <div class="title text-center">
-                    <h1 class="mb-10">WHO ARE WE</h1>
-                </div>
+          <div class="menu-content pb-70 col-lg-8">
+            <div class="title text-center">
+              <h1 class="mb-10">WHO ARE WE</h1>
             </div>
+          </div>
         </div>
         <div class="row">
-            <div class="col-md-6 accordion-left">
-                <!-- accordion 2 start-->
-                <dl class="accordion">
-                    <dt>
-                        <a href="">Our Mission</a>
-                    </dt>
-                    <dd id="m">
-                        Developing students technical and non-technical skills filling
-                        the gap between the educational and practical lives through
-                        events, workshops and conferences to guide the students in the
-                        name of Volunteerism which is the main motivation.
-                    </dd>
-                    <dt>
-                        <a href="">Why choose us</a>
-                    </dt>
-                    <dd>
-                        We are The Only Branch in Faculty of Computer and Information in
-                        Egypt, Help Student to Improve Their Skills To Enter The Job
-                        Market
-                    </dd>
-                    <dt>
-                        <a href="">IEEE ?</a>
-                    </dt>
-                    <dd>
-                        IEEE Stands for "Institute of Electrical and Electronics
-                        Engineers" <br />IEEE is the world's largest technical
-                        professional organization dedicated to advancing technology for
-                        the benefit of humanity.
-                        <a href="https://www.ieee.org/">view</a>
-                    </dd>
-                    <!--sponsors
-                                <dt>
-                                    <a href="">Sponsors</a>
-                                </dt>
-                                <dd>--------------------------
-        </dd
-        -->
-                </dl>
-                <!-- accordion 2 end-->
-            </div>
-            <div class="col-md-6 IEEE justify-content-center align-items-center d-flex relative">
-                <div class="overlay overlay-bg"></div>
-                <video class="play-btn" width="500px" height="375px" controls>
-                    <source src="~/img/My Movie.mp4" />
-                </video>
-            </div>
+          <div class="col-md-6 accordion-left">
+            <!-- accordion 2 start-->
+            <dl class="accordion">
+              <dt>
+                <a href="">Our Mission</a>
+              </dt>
+              <dd id="m">
+                Developing students technical and non-technical skills filling
+                the gap between the educational and practical lives through
+                events, workshops and conferences to guide the students in the
+                name of Volunteerism which is the main motivation.
+              </dd>
+              <dt>
+                <a href="">Why choose us</a>
+              </dt>
+              <dd>
+                We are The Only Branch in Faculty of Computer and Information in
+                Egypt, Help Student to Improve Their Skills To Enter The Job
+                Market
+              </dd>
+              <dt>
+                <a href="">Links</a>
+              </dt>
+              <dd>
+                Website : http://ieee-fcihsb.org/ <br />
+                Facebook : https://www.facebook.com/IEEE.FCIH <br />
+                Twitter : https://twitter.com/IEEE_FCIHSB<br />
+                YouTube : https://www.youtube.com/user/IEEEFCIHSB <br />
+                Instagram : http://instagram.com/ieeefcihsb
+              </dd>
+              <dt>
+                <a href="">Sponsors</a>
+              </dt>
+              <dd>--------------------------</dd>
+            </dl>
+            <!-- accordion 2 end-->
+          </div>
+          <div
+            class="
+              col-md-6
+              IEEE
+              justify-content-center
+              align-items-center
+              d-flex
+              relative
+            "
+          >
+            <div class="overlay overlay-bg"></div>
+            <video
+              class="play-btn"
+              id="info-video"
+              width="480px"
+              height="300px"
+              controls
+            >
+              <source src="~/img/My Movie.mp4" />
+            </video>
+          </div>
         </div>
-    </div>
-</section>
-<!-- End course-mission Area -->
-<!-- Start Latest Post -->
-<div class="latest-leaders">
-    <div class="container">
-        <h2 class="text-center">LEADERS</h2>
+      </div>
+    </section>
+    <!-- End course-mission Area -->
+    <!-- Start Latest Post -->
+    <div class="latest-leaders">
+      <div class="container">
+        <h2 class="text-center">Founders</h2>
         <p class="section-box text-center">
-            High expectations, new challenges, hard obstacles and great
-            achievements are coming<br />
-            But whatever how hard it is, we're all here to support and help you.
+          High expectations, new challenges, hard obstacles and great
+          achievements are coming<br />
+          But whatever how hard it is, we're all here to support and help you.
         </p>
         <div class="row">
-            <div class="col-md-6 col-lg-4">
-                <div class="card">
-                    <img src="~/img/vc.jpg" class="card-img-top" alt="..." />
+          @foreach(var founder in Model.Founders)
+          {
+                <div class="col-md-6 col-lg-4">
+                  <div class="card">
+                    <img src="~/@founder.ImagePath" class="card-img-top" alt="Founder image" />
                     <div class="card-body">
-                        <h4 class="card-title">VICE CHAIRMAN</h4>
-                        <a href="https://www.facebook.com/AlHassanARaof" target="_blank">
-                            <h5 class="card-subtitle mb-2 text-muted">
-                                Al-Hassan Abdel-Raof
-                            </h5>
-                        </a>
+                      <a
+                        asp-action="profile"
+                        asp-controller="home"
+                        asp-route-id="@founder.Id"
+                        target="_blank"
+                      >
+                        <h5 class="card-subtitle mb-2 text-muted">
+                          @founder.UserName
+                        </h5></a>
                     </div>
+                  </div>
                 </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="card">
-                    <img src="~/img/c.jpg" class="card-img-top" alt="..." />
-                    <div class="card-body">
-                        <h4 class="card-title">CHAIRMAN</h4>
-                        <a href="https://www.facebook.com/3abdel3aal" target="_blank">
-                            <h5 class="card-subtitle mb-2 text-muted">
-                                Ahmed Abd El-Aal
-                            </h5>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="card">
-                    <img src="~/img/sc.jpg" class="card-img-top" alt="..." />
-                    <div class="card-body">
-                        <h4 class="card-title">SECRETARY</h4>
-                        <a href="https://www.facebook.com/radwa.aboelyazid" target="_blank">
-                            <h5 class="card-subtitle mb-2 text-muted">Radwa Maher</h5>
-                        </a>
-                    </div>
-                </div>
-            </div>
+          }
         </div>
+      </div>
     </div>
-</div>
-<!-- End Latest Post -->
+    <!-- End Latest Post -->
 
-<!--Start Features-->
-<div class="features text-center">
-    <div class="container">
+    <!--Start Features-->
+    <div class="features text-center">
+      <div class="container">
         <div class="row">
-            <div class="col-sm-6 col-lg-3">
-                <i class="fas fa-users fa-3x rounded-circle"></i>
-                <h2>SHINING</h2>
-                <h3>COMMITTEES</h3>
-                <p>
-                    We have 8 disparate Committes each one include a well educated
-                    team to perform a specific task in the activity.
-                </p>
-            </div>
-            <div class="col-sm-6 col-lg-3">
-                <i class="fas fa-calendar-alt fa-3x rounded-circle"></i>
-                <h2>PLANNED</h2>
-                <h3>EVENTS</h3>
-                <p>
-                    We create and oragnize Events&Workshops to developing students
-                    technical and non-technical skills beside spending a happy time
-                    with the family !
-                </p>
-            </div>
-            <div class="col-sm-6 col-lg-3">
-                <i class="fas fa-graduation-cap fa-3x rounded-circle"></i>
-                <h2>EXPERT</h2>
-                <h3>INSTRUCTORS</h3>
-                <p>
-                    We rigorously screen and train our instructors to ensure that they
-                    meet our high standards for academic knowledge, teaching
-                    experience, and interpersonal skill.
-                </p>
-            </div>
-            <div class="col-sm-6 col-lg-3">
-                <i class="fas fa-trophy fa-3x rounded-circle"></i>
-                <h2>IEEE</h2>
-                <h3>AWARDS</h3>
-                <p>
-                    - The Most Creative Photo - IEEE Day 2013 <br />
-                    - IEEE Regional Exemplary Student Branch award 2013/2014
-                </p>
-            </div>
+          <div class="col-sm-6 col-lg-3">
+            <i class="fas fa-users fa-2x rounded-circle"></i>
+            <h2>SHINING</h2>
+            <h3>COMMITTEES</h3>
+            <p>
+              We have 8 disparate Committes each one include a well educated
+              team to perform a specific task in the activity.
+            </p>
+          </div>
+          <div class="col-sm-6 col-lg-3">
+            <i class="fas fa-calendar-alt fa-2x rounded-circle"></i>
+            <h2>PLANNED</h2>
+            <h3>EVENTS</h3>
+            <p>
+              We create and oragnize Events&Workshops to developing students
+              technical and non-technical skills beside spending a happy time
+              with the family !
+            </p>
+          </div>
+          <div class="col-sm-6 col-lg-3">
+            <i class="fas fa-graduation-cap fa-2x rounded-circle"></i>
+            <h2>EXPERT</h2>
+            <h3>INSTRUCTORS</h3>
+            <p>
+              We rigorously screen and train our instructors to ensure that they
+              meet our high standards for academic knowledge, teaching
+              experience, and interpersonal skill.
+            </p>
+          </div>
+          <div class="col-sm-6 col-lg-3">
+            <i class="fas fa-trophy fa-2x rounded-circle"></i>
+            <h2>IEEE</h2>
+            <h3>AWARDS</h3>
+            <p>
+              - The Most Creative Photo - IEEE Day 2013 <br />
+              - IEEE Regional Exemplary Student Branch award 2013/2014
+            </p>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-<!-- End Features -->
+    <!-- End Features -->
 
-<!-- Start upcoming-event Area -->
-<section class="upcoming-event-area section-gap">
-    <div class="container">
+    <!-- Start upcoming-event Area -->
+    <section class="upcoming-event-area section-gap">
+      <div class="container">
         <div class="row d-flex justify-content-center">
-            <div class="menu-content pb-70 col-lg-8">
-                <div class="title text-center">
-                    <h1 class="mb-10">Upcoming Events</h1>
-                    <p>Take a look on our upcoming events</p>
-                </div>
+          <div class="menu-content pb-70 col-lg-8">
+            <div class="title text-center">
+              <h1 class="mb-10">Our Latest Services</h1>
+              <p>Take a look at our latest services</p>
             </div>
+          </div>
         </div>
         <div class="row">
-            <div class="active-upcoming-event-carusel">
-                <div class="single-carusel row align-items-center">
-                    <div class="col-12 col-md-6 thumb">
-                        <img class="img-fluid" src="~/img/ue1.jpg" alt="" />
+            @if(Model.LatestServices != default(ICollection<Service>))
+              {
+                foreach(var service in Model.LatestServices)
+                {
+                          <div class="col-lg-3 col-md-6 single-blog">
+                              <div class="thumb">
+                                <img class="img-fluid" src="~/@service.ServiceImage" alt="service image" />
+                              </div>
+                              <h5 style="margin-top:8px;">@service.ServiceName</h5>
+                              <a
+                                asp-action="details"
+                                asp-controller="services"
+                                asp-route-id="@service.Id"
+                                target="_blank"
+                                class="
+                                  details-btn
+                                  d-flex
+                                  justify-content-center
+                                  align-items-center
+                                "
+                                ><span class="details">Details</span
+                                ><span class="lnr lnr-arrow-right"></span
+                              ></a>
                     </div>
-                    <div class="detials col-12 col-md-6">
-                        <p>7th August, 2019</p>
-                        <a href="http://www.reg.eed.eg/visitor" target="_blank">
-                            <h4>
-                                EED - Egyptian Engineering Day (يوم الهندسة المصري )
-                            </h4>
-                        </a>
-                        <p>EED 2019 Registration is now OPEN! Registration Link</p>
-                    </div>
-                </div>
-                <div class="single-carusel row align-items-center">
-                    <div class="col-12 col-md-6 thumb">
-                        <img class="img-fluid" src="~/img/ue1.jpg" alt="" />
-                    </div>
-                    <div class="detials col-12 col-md-6">
-                        <p>7th August, 2019</p>
-                        <a href="http://www.reg.eed.eg/visitor" target="_blank">
-                            <h4>
-                                EED - Egyptian Engineering Day (يوم الهندسة المصري )
-                            </h4>
-                        </a>
-                        <p>EED 2019 Registration is now OPEN! Registration Link</p>
-                    </div>
-                </div>
-                <div class="single-carusel row align-items-center">
-                    <div class="col-12 col-md-6 thumb">
-                        <img class="img-fluid" src="~/img/ue1.jpg" alt="" />
-                    </div>
-                    <div class="detials col-12 col-md-6">
-                        <p>7th August, 2019</p>
-                        <a href="http://www.reg.eed.eg/visitor" target="_blank">
-                            <h4>
-                                EED - Egyptian Engineering Day (يوم الهندسة المصري )
-                            </h4>
-                        </a>
-                        <p>EED 2019 Registration is now OPEN! Registration Link</p>
-                    </div>
-                </div>
-
-                <div class="single-carusel row align-items-center">
-                    <div class="col-12 col-md-6 thumb">
-                        <img class="img-fluid" src="~/img/ue1.jpg" alt="" />
-                    </div>
-                    <div class="detials col-12 col-md-6">
-                        <p>7th August, 2019</p>
-                        <a href="http://www.reg.eed.eg/visitor" target="_blank">
-                            <h4>
-                                EED - Egyptian Engineering Day (يوم الهندسة المصري )
-                            </h4>
-                        </a>
-                        <p>EED 2019 Registration is now OPEN! Registration Link</p>
-                    </div>
-                </div>
-                <!--
-        <div class="single-carusel row align-items-center">
-         <div class="col-12 col-md-6 thumb">
-          <img class="img-fluid" src="img/e2.jpg" alt="">
-         </div>
-         <div class="detials col-12 col-md-6">
-          <p>25th February, 2018</p>
-          <a href="#"><h4>The Universe Through
-          A Child S Eyes</h4></a>
-          <p>
-           For most of us, the idea of astronomy is something we directly connect to “stargazing”, telescopes and seeing magnificent displays in the heavens.
-          </p>
-         </div>
+                }
+              }
         </div>
-       -->
-                <!--
-        <div class="single-carusel row align-items-center">
-         <div class="col-12 col-md-6 thumb">
-          <img class="img-fluid" src="img/e1.jpg" alt="">
-         </div>
-         <div class="detials col-12 col-md-6">
-          <p>25th February, 2018</p>
-          <a href="#"><h4>The Universe Through
-          A Child S Eyes</h4></a>
-          <p>
-           For most of us, the idea of astronomy is something we directly connect to “stargazing”, telescopes and seeing magnificent displays in the heavens.
-          </p>
-         </div>
-        </div>	
-       -->
-            </div>
-        </div>
-    </div>
-</section>
-<!-- End upcoming-event Area -->
-
-<!-- Start cta-one Area -->
-<section class="cta-one-area relative section-gap">
-    <div class="container">
+      </div>
+    </section>
+    <!-- End upcoming-event Area -->>
+    <!-- Start cta-one Area -->
+    <section class="cta-one-area relative section-gap">
+      <div class="container">
         <div class="overlay overlay-bg"></div>
         <div class="row justify-content-center">
-            <div class="wrap">
-                <h1 class="text-white">Become a part of IEEE</h1>
-                <p>
-                    The Registration Form of patch 20 will be open soon stay tuned !
-                </p>
-                <a class="primary-btn wh" asp-controller="home" asp-action="committees">VIEW COMMITTEES</a>
-            </div>
+          <div class="wrap">
+            <h1 class="text-white">Become a part of IEEE</h1>
+            <p>
+              The Registration Form of patch 20 will be open soon stay tuned !
+            </p>
+            <a class="primary-btn wh" href="committees.html">VIEW COMMITTEES</a>
+          </div>
         </div>
-    </div>
-</section>
-<!-- End cta-one Area -->
-
-<!-- Start blog Area 
-   <section class="blog-area section-gap" id="blog">
-    <div class="container">
-     <div class="row d-flex justify-content-center">
-      <div class="menu-content pb-70 col-lg-8">
-       <div class="title text-center">
-        <h1 class="mb-10">Latest posts from our Blog</h1>
-        <p>In the history of modern astronomy there is.</p>
-       </div>
       </div>
-     </div>					
-     <div class="row">
-      <div class="col-lg-3 col-md-6 single-blog">
-       <div class="thumb">
-        <img class="img-fluid" src="img/b1.jpg" alt="">								
-       </div>
-       <p class="meta">25 April, 2018  |  By <a href="#">Mark Wiens</a></p>
-       <a href="blog-single.html">
-        <h5>Addiction When Gambling Becomes A Problem</h5>
-       </a>
-       <p>
-        Computers have become ubiquitous in almost every facet of our lives. At work, desk jockeys spend hours in front of their.
-       </p>
-       <a href="#" class="details-btn d-flex justify-content-center align-items-center"><span class="details">Details</span><span class="lnr lnr-arrow-right"></span></a>		
+    </section>
+    <!-- End cta-one Area -->
+    <section class="blog-area section-gap" id="blog">
+      <div class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="menu-content pb-70 col-lg-8">
+            <div class="title text-center">
+              <h1 class="mb-10">Latest projects from our developers</h1>
+              <p></p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          @if(Model.LatestProjects != default(ICollection<Project>))
+            {
+              foreach(var project in Model.LatestProjects)
+              {
+                      <div class="col-lg-3 col-md-6 single-blog">
+                              <div class="thumb">
+                                <img class="img-fluid" src="~/@project.Thumbnail" alt="Project Thumbnail" />
+                              </div>
+                              @{
+                                var teamLeader = project.UsersInProjects.Where((uip) => uip.Role.Role == TeamLeaderRole).Select((uip) => uip.User).FirstOrDefault();
+                              }
+                              @if(teamLeader != default(User))
+                              {
+                                <p class="meta">@project.CreatedAt.ToString(DateFormat) | Lead By <a target="_blank" asp-action="profile" asp-controller="home" asp-route-id="@teamLeader.Id">@teamLeader.UserName</a></p>
+                              }else{
+                                <p class="meta">@project.CreatedAt.ToString(DateFormat)</p>
+                              }
+                                <h5>@project.Title</h5>
+                              <p>
+                                @project.Description
+                              </p>
+                              <a
+                                asp-action="details"
+                                asp-controller="projects"
+                                asp-route-id="@project.Id"
+                                target="_blank"
+                                class="
+                                  details-btn
+                                  d-flex
+                                  justify-content-center
+                                  align-items-center
+                                "
+                                ><span class="details">Details</span
+                                ><span class="lnr lnr-arrow-right"></span
+                              ></a>
+                    </div>
+              }
+            }
+        </div>
       </div>
-      <div class="col-lg-3 col-md-6 single-blog">
-       <div class="thumb">
-        <img class="img-fluid" src="img/b2.jpg" alt="">								
-       </div>
-       <p class="meta">25 April, 2018  |  By <a href="#">Mark Wiens</a></p>
-       <a href="blog-single.html">
-        <h5>Computer Hardware Desktops And Notebooks</h5>
-       </a>
-       <p>
-        Ah, the technical interview. Nothing like it. Not only does it cause anxiety, but it causes anxiety for several different reasons. 
-       </p>
-       <a href="#" class="details-btn d-flex justify-content-center align-items-center"><span class="details">Details</span><span class="lnr lnr-arrow-right"></span></a>						
-      </div>
-      <div class="col-lg-3 col-md-6 single-blog">
-       <div class="thumb">
-        <img class="img-fluid" src="img/b3.jpg" alt="">								
-       </div>
-       <p class="meta">25 April, 2018  |  By <a href="#">Mark Wiens</a></p>
-       <a href="blog-single.html">
-        <h5>Make Myspace Your Best Designed Space</h5>
-       </a>
-       <p>
-        Plantronics with its GN Netcom wireless headset creates the next generation of wireless headset and other products such as wireless.
-       </p>
-       <a href="#" class="details-btn d-flex justify-content-center align-items-center"><span class="details">Details</span><span class="lnr lnr-arrow-right"></span></a>									
-      </div>
-      <div class="col-lg-3 col-md-6 single-blog">
-       <div class="thumb">
-        <img class="img-fluid" src="img/b4.jpg" alt="">								
-       </div>
-       <p class="meta">25 April, 2018  |  By <a href="#">Mark Wiens</a></p>
-       <a href="blog-single.html">
-        <h5>Video Games Playing With Imagination</h5>
-       </a>
-       <p>
-        About 64% of all on-line teens say that do things online that they wouldn’t want their parents to know about.   11% of all adult internet 
-       </p>
-       <a href="#" class="details-btn d-flex justify-content-center align-items-center"><span class="details">Details</span><span class="lnr lnr-arrow-right"></span></a>							
-      </div>							
-     </div>
-    </div>	
-   </section>
-   End blog Area -->
+    </section>

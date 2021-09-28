@@ -2,7 +2,7 @@ using Portofolio.Models;
 using System.ComponentModel.DataAnnotations;
 namespace Portofolio.ViewModels
 {
-    public class ProjectDetailsViewModel
+    public class ProjectDetailsViewModel : ParentHomeViewModel
     {
         public Project Project {get; set;}
 

@@ -24,13 +24,6 @@ namespace Portofolio.AppModels.Utils
                 return "CurrentPage";
             }
         }
-        public static string BannerTitleKey
-        {
-            get
-            {
-                return "BannerTitle";
-            }
-        }
         public static string ResultMessageKey
         {
             get
@@ -44,38 +37,6 @@ namespace Portofolio.AppModels.Utils
             get
             {
                 return "Title";
-            }
-        }
-
-        public static string BannerNavRouteValueKey
-        {
-            get
-            {
-                return "BannerNavRouteValue";
-            }
-        }
-
-        public static string BannerNavActionKey
-        {
-            get
-            {
-                return "BannerNavAction";
-            }
-        }
-
-        public static string BannerNavControllerKey
-        {
-            get
-            {
-                return "BannerNavController";
-            }
-        }
-
-        public static string BannerNavTitleKey
-        {
-            get
-            {
-                return "BannerNavTitle";
             }
         }
 

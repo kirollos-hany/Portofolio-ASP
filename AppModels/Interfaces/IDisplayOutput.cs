@@ -3,6 +3,6 @@ namespace Portofolio.AppModels.Services
 {
     public interface IDisplayOutput
     {
-        void DisplayOutput(ViewDataDictionary viewData, bool isSuccess, string message);
+        void DisplayOutput(ITempDataDictionary tempData, bool isSuccess, string message);
     }
 }

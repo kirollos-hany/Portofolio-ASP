@@ -14,6 +14,7 @@ using Portofolio.AppModels.Models;
 using static Portofolio.AppModels.Utils.Constants;
 using static Portofolio.AppModels.Utils.KeyConstants;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 namespace Portofolio.Controllers
 {
     public class UserController : Controller
@@ -22,23 +23,33 @@ namespace Portofolio.Controllers
 
         private readonly UserManager<User> _userManager;
 
-        private readonly IRepository<UsersInProject> _uipRepository;
+        private readonly UIPRepository _uipRepository;
 
         private readonly IImageServices _imageServices;
 
-        private readonly IRepository<UserLink> _userLinksRepository;
+        private readonly UserLinksRepository _userLinksRepository;
 
-        private readonly IRepository<LinkType> _linkTypesRepository;
+        private readonly LinkTypesRepository _linkTypesRepository;
 
         private readonly IEmailParserFromModelAsync<HTMLModel> _htmlEmailParser;
 
         private readonly IMailService _mailServices;
 
-        private readonly IRepository<Contact> _contactsRepository;
+        private readonly ContactRepository _contactsRepository;
 
         private readonly IDisplayOutput _outputDisplayer;
 
-        public UserController(IDisplayOutput outputDisplayer, BaseRepository<Contact> contactsRepository, SignInManager<User> signInManager, UserManager<User> userManager, BaseRepository<UsersInProject> uipRepository, IImageServices imageServices, BaseRepository<UserLink> userLinksRepository, BaseRepository<LinkType> linkTypesRepository, IEmailParserFromModelAsync<HTMLModel> htmlEmailParser, IMailService mailServices)
+        private readonly ProjectsRepository _projectsRepository;
+
+        private readonly ProjectImagesRepository _projectImagesRepository;
+
+        private readonly ProjectLinksRepository _projectLinksRepository;
+
+        private readonly UserCertificatesRepository _certificatesRepository;
+
+        private readonly ProjectFeedbacksRepository _feedbacksRepository;
+
+        public UserController(ProjectFeedbacksRepository feedbacksRepository, UserCertificatesRepository certificatesRepository, ProjectLinksRepository projectLinksRepository, ProjectImagesRepository projectImagesRepository, ProjectsRepository projectsRepository, IDisplayOutput outputDisplayer, ContactRepository contactsRepository, SignInManager<User> signInManager, UserManager<User> userManager, UIPRepository uipRepository, IImageServices imageServices, UserLinksRepository userLinksRepository, LinkTypesRepository linkTypesRepository, IEmailParserFromModelAsync<HTMLModel> htmlEmailParser, IMailService mailServices)
         {
             _uipRepository = uipRepository;
             _signInManager = signInManager;
@@ -50,9 +61,18 @@ namespace Portofolio.Controllers
             _mailServices = mailServices;
             _contactsRepository = contactsRepository;
             _outputDisplayer = outputDisplayer;
+            _projectsRepository = projectsRepository;
+            _projectImagesRepository = projectImagesRepository;
+            _projectLinksRepository = projectLinksRepository;
+            _certificatesRepository = certificatesRepository;
+            _feedbacksRepository = feedbacksRepository;
         }
         public IActionResult Login(string returnUrl = null)
         {
+            if(_signInManager.IsSignedIn(HttpContext.User))
+            {
+                return RedirectToAction(nameof(DashboardController.Index), "Dashboard");
+            }
             ViewData[ReturnUrlKey] = returnUrl;
             return View();
         }
@@ -61,10 +81,11 @@ namespace Portofolio.Controllers
         public async Task<IActionResult> Profile()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            user.UsersInProjects = await _uipRepository.FindCollectionByCondition((uip) => uip.UserId == user.Id);
-            user.UserLinks = await _userLinksRepository.FindCollectionByCondition(ul => ul.UserId == user.Id);
+            user.UsersInProjects = await _uipRepository.GetUsersProjectsWithIncludes(user.Id);
+            user.UserLinks = await _userLinksRepository.GetUserLinks(user.Id);
+            user.Certificates = await _certificatesRepository.GetUsersCertificates(user.Id);
             var linkTypes = await _linkTypesRepository.GetAll();
-            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).Count();
+            var pendingContactsCount = await _contactsRepository.PendingContactsCount();
             return View(new UserProfileViewModel
             {
                 PendingContactsCount = pendingContactsCount,
@@ -96,7 +117,7 @@ namespace Portofolio.Controllers
                     }
                     else
                     {
-                        _outputDisplayer.DisplayOutput(ViewData, false, "Email or password is invalid");
+                        _outputDisplayer.DisplayOutput(TempData, false, "Email or password is invalid");
                     }
                 }
             }
@@ -108,6 +129,11 @@ namespace Portofolio.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProfile(UserProfileViewModel profileViewModel, IFormFile userImageFile)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (user.Id != profileViewModel.User.Id && !await _userManager.IsInRoleAsync(user, UserRoles.Admin.ToString()))
+            {
+                return Unauthorized();
+            }
             string imagePath = string.Empty;
             if (userImageFile != default(IFormFile))
             {
@@ -121,7 +147,7 @@ namespace Portofolio.Controllers
                 }
                 catch (CustomException ex)
                 {
-                    _outputDisplayer.DisplayOutput(ViewData, false, ex.Message);
+                    _outputDisplayer.DisplayOutput(TempData, false, ex.Message);
                 }
             }
             else
@@ -139,13 +165,13 @@ namespace Portofolio.Controllers
             return RedirectToAction(controllerName: "Home", actionName: nameof(HomeController.Index));
         }
 
-        [Authorize]
+        [Authorize("Admin")]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var linkTypes = await _linkTypesRepository.GetAll();
-            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).Count();
+            var pendingContactsCount = await _contactsRepository.PendingContactsCount();
             return View(new CreateProfileViewModel
             {
                 PendingContactsCount = pendingContactsCount,
@@ -154,7 +180,7 @@ namespace Portofolio.Controllers
             });
         }
 
-        [Authorize]
+        [Authorize("Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateProfileViewModel createProfileViewModel, IFormFile userImageFile)
@@ -172,15 +198,21 @@ namespace Portofolio.Controllers
                 {
                     _imageServices.ValidateImgExtension(userImageFile);
                     newUser.ImagePath = await _imageServices.UploadImgAsync(userImageFile);
-                    await _userManager.UpdateAsync(newUser);
+                    var result = await _userManager.UpdateAsync(newUser);
+                    if(!result.Succeeded)
+                    {
+                        _outputDisplayer.DisplayOutput(TempData, false, result.ToString());
+                        return RedirectToAction(nameof(Create));
+                    }
                     await _imageServices.ResizeImg(newUser.ImagePath, UserImageSize);
                 }
             }
             catch (CustomException ex)
             {
-                _outputDisplayer.DisplayOutput(ViewData, false, ex.Message);
+                _outputDisplayer.DisplayOutput(TempData, false, ex.Message);
+                return RedirectToAction(nameof(Create));
             }
-            _outputDisplayer.DisplayOutput(ViewData, true, "User created successfuly");
+            _outputDisplayer.DisplayOutput(TempData, true, "User created successfuly");
             return RedirectToAction(nameof(Create));
         }
 
@@ -189,7 +221,7 @@ namespace Portofolio.Controllers
         public async Task<IActionResult> PasswordChange()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var pendingContactsCount = (await _contactsRepository.GetAll()).Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).Count();
+            var pendingContactsCount = await _contactsRepository.PendingContactsCount();
             return View(new ChangePasswordViewModel
             {
                 PendingContactsCount = pendingContactsCount,
@@ -211,9 +243,9 @@ namespace Portofolio.Controllers
             var result = await _userManager.ChangePasswordAsync(user, changePasswordViewModel.OldPassword, changePasswordViewModel.NewPassword);
             if (!result.Succeeded)
             {
-                _outputDisplayer.DisplayOutput(ViewData, false, result.ToString());
+                _outputDisplayer.DisplayOutput(TempData, false, result.ToString());
             }
-            _outputDisplayer.DisplayOutput(ViewData, true, "Password change is successful");
+            _outputDisplayer.DisplayOutput(TempData, true, "Password change is successful");
             return RedirectToAction(nameof(PasswordChange));
         }
 
@@ -234,7 +266,7 @@ namespace Portofolio.Controllers
             }
             else if (user == default(User))
             {
-                _outputDisplayer.DisplayOutput(ViewData, false, "Email invalid");
+                _outputDisplayer.DisplayOutput(TempData, false, "Email invalid");
                 return RedirectToAction(nameof(ForgotPassword));
             }
             var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -280,14 +312,40 @@ namespace Portofolio.Controllers
                 }
                 else
                 {
-                    _outputDisplayer.DisplayOutput(ViewData, false, "Login failed, " + result.ToString());
+                    _outputDisplayer.DisplayOutput(TempData, false, "Login failed, " + result.ToString());
                     return RedirectToAction(nameof(ResetPassword), new { token = newPasswordViewModel.Token, email = newPasswordViewModel.Email });
                 }
             }
-            _outputDisplayer.DisplayOutput(ViewData, false, "Password change failed, " + result.ToString());
+            _outputDisplayer.DisplayOutput(TempData, false, "Password change failed, " + result.ToString());
             return RedirectToAction(nameof(ResetPassword), new { token = newPasswordViewModel.Token, email = newPasswordViewModel.Email });
         }
 
+        [Authorize("Admin")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var userToDelete = await _userManager.GetUserByIdWithInclude(id);
+            if(userToDelete == default(User))
+            {
+                return NotFound();
+            }
+            await _userLinksRepository.DeleteCollection(userToDelete.UserLinks);
+            var projects = userToDelete.CreatedProjects;
+            foreach(var project in projects)
+            {
+                _imageServices.DeleteImg(project.Thumbnail);
+                foreach(var image in project.ProjectImages)
+                {
+                    _imageServices.DeleteImg(image.ImagePath);
+                }
+                await _projectImagesRepository.DeleteCollection(project.ProjectImages);
+                await _projectLinksRepository.DeleteCollection(project.ProjectLinks);
+                await _feedbacksRepository.DeleteCollection(project.ProjectFeedbacks);
+            }
+            await _projectsRepository.DeleteCollection(projects);
+            await _certificatesRepository.DeleteCollection(userToDelete.Certificates);
+            await _userManager.DeleteAsync(userToDelete);
+            return RedirectToAction(nameof(DashboardController.Developers), "Dashboard");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

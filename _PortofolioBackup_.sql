@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 22, 2021 at 12:12 PM
+-- Generation Time: Sep 28, 2021 at 09:36 PM
 -- Server version: 8.0.26
 -- PHP Version: 7.4.2
 
@@ -96,6 +96,7 @@ CREATE TABLE `aspnetuserroles` (
 --
 
 INSERT INTO `aspnetuserroles` (`UserId`, `RoleId`) VALUES
+(59, 1),
 (66, 1);
 
 -- --------------------------------------------------------
@@ -135,7 +136,6 @@ INSERT INTO `aspnetusers` (`Id`, `ImagePath`, `CreatedAt`, `UpdatedAt`, `UserNam
 (2, 'Et molestiae aliquid consequatur et. Sit beatae laboriosam et dolore minus. Voluptatem corporis est harum quos ut odit minus molestiae. Autem voluptatem eius autem et accusamus.', '2021-08-23 19:15:22.000000', '2021-08-23 19:15:22.000000', 'Arch Hilpert', NULL, 'mylene.brekke@cruickshank.biz', NULL, 0, '396-74-9235', NULL, '3056e139-6ec7-4866-8f04-d2362f157035', '+201206784139', 0, 0, NULL, 0, 0, 'Backend Developer'),
 (4, 'Tempore eveniet et laborum corrupti. Qui provident distinctio maiores laborum quo.', '2021-08-23 19:15:22.000000', '2021-08-23 19:15:22.000000', 'Mabel Mills DDS', NULL, 'jeanie_schuppe@ernserpfannerstill.co.uk', NULL, 0, '603-05-4173', NULL, '36b287f9-bfd5-4b5b-8ca4-69537a5e0f94', '+201206784139', 0, 0, NULL, 0, 0, 'Backend Developer'),
 (5, 'Aliquam consequatur a aut mollitia ex alias porro. Ut qui debitis similique consequatur.', '2021-08-23 19:15:22.000000', '2021-08-23 19:15:22.000000', 'Leonie Donnelly', NULL, 'madalyn@kirlin.co.uk', NULL, 0, '069-78-4929', NULL, '6dc4d89e-2eb2-45e1-b56e-ebd66d6ed340', '+201206784139', 0, 0, NULL, 0, 0, 'Backend Developer'),
-(7, 'Laborum est assumenda vero possimus dolores aliquam et ut. Dolorem voluptas aliquid labore magni. Fuga qui aspernatur sint recusandae.', '2021-08-23 19:15:22.000000', '2021-08-23 19:15:22.000000', 'Ms. Erna Strosin PhD', NULL, 'neoma.volkman@torphygoldner.us', NULL, 0, '134-32-6803', NULL, 'b40ca34a-a18f-4f40-84a7-8724e3d0ac2d', '+201206784139', 0, 0, NULL, 0, 0, 'Backend Developer'),
 (8, 'Voluptatem et et aperiam libero ab non odio quod. Incidunt voluptatem illum incidunt rem veniam explicabo. Numquam aliquam architecto ipsam debitis distinctio quo. Exercitationem sunt corrupti molestias.', '2021-08-23 19:15:22.000000', '2021-08-23 19:15:22.000000', 'Ms. Kristofer O\'Reilly', NULL, 'jacey@krajcik.uk', NULL, 0, '029-84-5182', NULL, '912712dd-c60f-48a7-be5e-a5f449fb277d', '+201206784139', 0, 0, NULL, 0, 0, 'Backend Developer'),
 (9, 'Sit quis ab numquam ea occaecati.', '2021-08-23 19:15:22.000000', '2021-08-23 19:15:22.000000', 'Mr. Graham Malvina Stamm I', NULL, 'leo@bruen.biz', NULL, 0, '575-49-8358', NULL, '6cd426b3-d519-4ac5-b0b9-9b3469c4cdef', '+201206784139', 0, 0, NULL, 0, 0, 'Backend Developer'),
 (10, 'Molestias ut beatae pariatur consequatur esse. Eum consequatur sint eum eligendi consequatur et ea perspiciatis.', '2021-08-23 19:15:22.000000', '2021-08-23 19:15:22.000000', 'Clark Watsica', NULL, 'jessy_schaden@kochcummings.biz', NULL, 0, '108-94-6663', NULL, '572cf113-d9b0-49c9-b273-4815ee056e6f', '+201206784139', 0, 0, NULL, 0, 0, 'Backend Developer'),
@@ -180,8 +180,10 @@ INSERT INTO `aspnetusers` (`Id`, `ImagePath`, `CreatedAt`, `UpdatedAt`, `UserNam
 (49, 'Optio ut nihil ut architecto excepturi vero est necessitatibus eos.', '2021-08-23 19:15:22.000000', '2021-08-23 19:15:22.000000', 'Dr. Alexandro Nicolas', NULL, 'isai@morissettekozey.us', NULL, 0, '110-89-1601', NULL, '899abbe8-c62c-4c0c-b3f7-0f2be73cc96a', '+201206784139', 0, 0, NULL, 0, 0, 'Backend Developer'),
 (50, 'Ut reprehenderit rerum a voluptatem inventore officia. Non enim sint sit et molestiae ducimus. Perferendis molestiae expedita architecto cum qui beatae voluptas voluptas. Quam sed tenetur dolorem facere earum ab.', '2021-08-23 19:15:22.000000', '2021-08-23 19:15:22.000000', 'Ms. Lelia Vandervort Jr.', NULL, 'hollie@gleichner.uk', NULL, 0, '252-29-4601', NULL, '5f9261d8-297d-4778-a79a-b9af9065faad', '+201206784139', 0, 0, NULL, 0, 0, 'Backend Developer'),
 (59, 'images\\475c9636-1a28-49e4-b79f-62bb66b695453a698033-7fcd-4b5c-b4a4-dc8f9889ff7bbebo.jpeg', '2021-08-25 09:43:57.410932', '2021-08-25 10:06:31.125981', 'Abanoub Rafaat', 'ABANOUB RAFAAT', 'bebo@gmail.com', 'BEBO@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEI0EOfH1O2tXFqQdVcimXqERyOWQ0PfFSw40x3UQVnuA46L1TTp25z/gD6yETHWmyg==', 'XH65JIPI74YRRFLH6YQYE5KYWODWCSNK', '224c4efd-85db-4531-9d5d-2dd7efe90e90', '+201282692682', 0, 0, NULL, 1, 0, 'Front End Developer'),
-(61, '~/img/avatar.png', '2021-08-26 14:41:44.306244', '2021-08-26 14:41:44.306239', 'Gergis Hanna', 'GERGIS HANNA', 'gergishanna@gmail.com', 'GERGISHANNA@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEL97ILlfTPgqFfqfp+Wnviei7mJ7pGe8qC/ikBpFxyz/3hcvX1A4D8ACE1Q5iz+rxw==', 'Q5USBUTN5ATNJ5U2U2IZYJMV2RUAP464', '01823e59-7159-4e70-a471-4901adbb9971', NULL, 0, 0, NULL, 1, 0, 'Back End Developer'),
-(66, 'Images\\2f6a365b-fcff-4b76-a0d6-a2583e5d3d8b.jpeg', '2021-09-22 14:41:44.306244', '2021-09-22 14:41:44.306244', 'Kirollos Hany', 'KIROLLOS HANY', 'kirolloshany9999@gmail.com', 'KIROLLOSHANY9999@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEH2smken8iztt7DljRfbkKTpeJni5Ctqekt8ljs95/0zEsKA9XoF81R4g3vfcok6bQ==', 'CKRCWI7Y5IFWFCPH6XYTGXHEFD2AG72F', 'b4c996d6-f7ca-4231-8ab7-47b0c0654979', '+201206784139', 0, 0, NULL, 0, 0, 'Back End Developer');
+(61, 'img/avatar.png', '2021-08-26 14:41:44.306244', '2021-08-26 14:41:44.306239', 'Gergis Hanna', 'GERGIS HANNA', 'gergishanna@gmail.com', 'GERGISHANNA@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEL97ILlfTPgqFfqfp+Wnviei7mJ7pGe8qC/ikBpFxyz/3hcvX1A4D8ACE1Q5iz+rxw==', 'Q5USBUTN5ATNJ5U2U2IZYJMV2RUAP464', '01823e59-7159-4e70-a471-4901adbb9971', NULL, 0, 0, NULL, 1, 0, 'Back End Developer'),
+(66, 'Images\\2f6a365b-fcff-4b76-a0d6-a2583e5d3d8b.jpeg', '2021-09-22 14:41:44.306244', '2021-09-22 14:41:44.306244', 'Kirollos Hany', 'KIROLLOS HANY', 'kirolloshany9999@gmail.com', 'KIROLLOSHANY9999@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEH2smken8iztt7DljRfbkKTpeJni5Ctqekt8ljs95/0zEsKA9XoF81R4g3vfcok6bQ==', 'CKRCWI7Y5IFWFCPH6XYTGXHEFD2AG72F', 'b4c996d6-f7ca-4231-8ab7-47b0c0654979', '+201206784139', 0, 0, NULL, 0, 0, 'Back End Developer'),
+(67, 'img/avatar.png', '2021-09-28 11:09:11.310974', '2021-09-28 12:43:11.326378', 'Test', 'TEST', 'test@gmail.com', 'TEST@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAENOd2BZcCByqtQ8r+RbOB4IY/P2wrNsEJJf5tmak7xqUWENZOJzrJqapbcoHWhjHXg==', 'OJBLN4YC7Q6TE6J5HOVICRCKMK2BNJMA', 'e910e66c-4113-4035-a5ae-a066f7d93141', '+201206784139', 0, 0, NULL, 1, 0, 'Software Engineer'),
+(68, 'img/avatar.png', '2021-09-28 18:58:28.363513', '2021-09-28 18:58:28.363509', 'TestUser', 'TESTUSER', 'test2@gmail.com', 'TEST2@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEPjmTLxNoPcigt1ypuOAKmFhmc+bRslblYsCzExPvW1Yr338jLw7IXs/ED9vMPXj1w==', '34YDV64BT2LJHQJZKUUEGQX6ZDMF5WU3', '557457ff-66d4-458c-9ef2-4666bfdaaaec', NULL, 0, 0, NULL, 1, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -195,31 +197,6 @@ CREATE TABLE `aspnetusertokens` (
   `Name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `Value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `contactlogs`
---
-
-CREATE TABLE `contactlogs` (
-  `Id` int NOT NULL,
-  `ContactId` int DEFAULT NULL,
-  `UserId` int DEFAULT NULL,
-  `Action` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `ContactName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `UserName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `CreatedAt` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `contactlogs`
---
-
-INSERT INTO `contactlogs` (`Id`, `ContactId`, `UserId`, `Action`, `ContactName`, `UserName`, `CreatedAt`) VALUES
-(5, 62, 58, 'Contact status updated', 'Kirollos', 'Kirollos Hany', '2021-09-21 16:52:42'),
-(6, 1, 58, 'Contact deleted', 'Terence Jacobi', 'Kirollos Hany', '2021-09-22 09:08:00'),
-(7, 61, 58, 'Contact status updated', 'Kirollos Hany', 'Kirollos Hany', '2021-09-22 09:08:14');
 
 -- --------------------------------------------------------
 
@@ -245,8 +222,7 @@ CREATE TABLE `contacts` (
 INSERT INTO `contacts` (`Id`, `StatusId`, `ContactName`, `Phone`, `Email`, `Message`, `CreatedAt`, `UpdatedAt`) VALUES
 (2, 1, 'Miss Neha Littel', '+201206784139', 'herminio@morissette.info', 'Animi rerum saepe repellat ut sed vitae nisi. Deserunt in facere consequatur voluptate sint minus. Et est omnis est magnam dignissimos.', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
 (3, 1, 'Madalyn Labadie', '+201206784139', 'zora@labadie.ca', 'Magni laudantium modi non omnis id alias. Fugiat alias optio deleniti saepe reprehenderit. Non laborum quibusdam aut animi. Eligendi amet est doloremque assumenda minus harum. Iste aut iusto voluptatem.', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
-(4, 1, 'Zella Corkery DVM', '+201206784139', 'ottilie_harber@legrospfannerstill.com', 'Porro repudiandae voluptas recusandae reprehenderit. Occaecati necessitatibus fugit minus adipisci.', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
-(5, 1, 'Jazmyne Brakus', '+201206784139', 'millie@harber.us', 'Impedit et est laudantium eum. A fugiat sint facilis aut occaecati necessitatibus error sed. Ea ea accusantium molestiae autem non autem id aliquid. Et architecto tempore aut recusandae quia.', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
+(5, 3, 'Jazmyne Brakus', '+201206784139', 'millie@harber.us', 'Impedit et est laudantium eum. A fugiat sint facilis aut occaecati necessitatibus error sed. Ea ea accusantium molestiae autem non autem id aliquid. Et architecto tempore aut recusandae quia.', '2021-08-23 19:15:22', '2021-09-28 12:22:52'),
 (6, 1, 'Hiram Hyatt', '+201206784139', 'winifred_stroman@brekke.uk', 'Sint qui dolores eligendi voluptas debitis magnam aut. Voluptatibus tempora qui minus. Asperiores asperiores error odit sequi. Est error dolor eum quisquam ut porro eaque quidem. Adipisci id placeat cum aut vel et.', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
 (7, 1, 'Cordell Bogan', '+201206784139', 'cassie@barton.name', 'Ratione aliquid corrupti sed distinctio consequatur quo aut. Sint possimus dignissimos porro porro occaecati est quaerat. Explicabo reiciendis enim rerum praesentium totam reprehenderit ipsum aperiam. Tempora omnis officia excepturi itaque rerum sequi officia fugiat quae.', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
 (8, 1, 'Abbie Bernhard Sr.', '+201206784139', 'josiah@bruenoconner.com', 'Voluptatibus et sunt et molestias quos et sint. Tempora consequuntur quo sed nobis neque. Odit ea tempora assumenda et. Rerum totam vel dolore. Labore sit voluptatem in.', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
@@ -322,7 +298,7 @@ CREATE TABLE `contactstatuses` (
 
 INSERT INTO `contactstatuses` (`Id`, `Status`, `CreatedAt`, `UpdatedAt`) VALUES
 (1, 'Pending', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
-(2, 'In Progress', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
+(2, 'InProgress', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
 (3, 'Completed', '2021-08-23 19:15:22', '2021-08-23 19:15:22');
 
 -- --------------------------------------------------------
@@ -335,19 +311,18 @@ CREATE TABLE `linktypes` (
   `Id` int NOT NULL,
   `LinkType` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `CreatedAt` datetime NOT NULL,
-  `UpdatedAt` datetime NOT NULL,
-  `IconClass` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
+  `UpdatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `linktypes`
 --
 
-INSERT INTO `linktypes` (`Id`, `LinkType`, `CreatedAt`, `UpdatedAt`, `IconClass`) VALUES
-(1, 'Url', '2021-08-23 19:15:22', '2021-08-23 19:15:22', 'mdi mdi-link\r\n'),
-(2, 'Github', '2021-08-23 19:15:22', '2021-08-23 19:15:22', 'mdi mdi-github-box'),
-(3, 'LinkedIn', '2021-08-23 19:15:22', '2021-08-23 19:15:22', 'mdi mdi-linkedin-box'),
-(4, 'Facebook', '2021-08-23 19:15:22', '2021-08-23 19:15:22', 'mdi mdi-facebook-box');
+INSERT INTO `linktypes` (`Id`, `LinkType`, `CreatedAt`, `UpdatedAt`) VALUES
+(1, 'Url', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
+(2, 'Github', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
+(3, 'LinkedIn', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
+(4, 'Facebook', '2021-08-23 19:15:22', '2021-08-23 19:15:22');
 
 -- --------------------------------------------------------
 
@@ -410,7 +385,15 @@ INSERT INTO `projectlinks` (`Id`, `ProjectId`, `TypeId`, `Link`, `CreatedAt`, `U
 (104, 68, 1, '#', '2021-09-19 20:58:50', '2021-09-22 08:32:05'),
 (105, 68, 2, '#', '2021-09-19 20:58:50', '2021-09-22 08:32:05'),
 (106, 68, 3, '#', '2021-09-19 20:58:50', '2021-09-22 08:32:05'),
-(107, 68, 4, '#', '2021-09-19 20:58:50', '2021-09-22 08:32:05');
+(107, 68, 4, '#', '2021-09-19 20:58:50', '2021-09-22 08:32:05'),
+(180, 87, 1, '#', '2021-09-28 18:53:38', '2021-09-28 18:53:38'),
+(181, 87, 2, '#', '2021-09-28 18:53:38', '2021-09-28 18:53:38'),
+(182, 87, 3, '#', '2021-09-28 18:53:38', '2021-09-28 18:53:38'),
+(183, 87, 4, '#', '2021-09-28 18:53:38', '2021-09-28 18:53:38'),
+(184, 88, 1, '#', '2021-09-28 18:59:32', '2021-09-28 18:59:32'),
+(185, 88, 2, '#', '2021-09-28 18:59:32', '2021-09-28 18:59:32'),
+(186, 88, 3, '#', '2021-09-28 18:59:32', '2021-09-28 18:59:32'),
+(187, 88, 4, '#', '2021-09-28 18:59:32', '2021-09-28 18:59:32');
 
 -- --------------------------------------------------------
 
@@ -447,7 +430,13 @@ INSERT INTO `projectlogs` (`Id`, `ProjectId`, `UserId`, `Action`, `Title`, `User
 (21, NULL, 58, 'Project created', 'tests', 'Kirollos Hany', '2021-09-22 08:52:50'),
 (23, NULL, 58, 'Project created', 'fdsafdas', 'Kirollos Hany', '2021-09-22 08:57:30'),
 (25, 85, 58, 'Project created', 'fdafdas', 'Kirollos Hany', '2021-09-22 09:00:10'),
-(26, 85, 58, 'Project deleted', 'fdafdas', 'Kirollos Hany', '2021-09-22 09:00:20');
+(26, 85, 58, 'Project deleted', 'fdafdas', 'Kirollos Hany', '2021-09-22 09:00:20'),
+(27, 86, 67, 'Create', 'Test', 'Test', '2021-09-28 12:07:49'),
+(28, 86, 67, 'Update', 'Test', 'Test', '2021-09-28 12:19:30'),
+(29, 86, 67, 'Update', 'Test', 'Test', '2021-09-28 12:20:11'),
+(30, 86, 67, 'Delete', 'Test', 'Test', '2021-09-28 12:20:54'),
+(31, 87, 67, 'Create', 'Test', 'Test', '2021-09-28 18:53:38'),
+(32, 88, 68, 'Create', 'Testss', 'TestUser', '2021-09-28 18:59:32');
 
 -- --------------------------------------------------------
 
@@ -457,6 +446,7 @@ INSERT INTO `projectlogs` (`Id`, `ProjectId`, `UserId`, `Action`, `Title`, `User
 
 CREATE TABLE `projects` (
   `Id` int NOT NULL,
+  `CreatorId` int NOT NULL,
   `TypeId` int NOT NULL,
   `Title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `Description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
@@ -470,8 +460,10 @@ CREATE TABLE `projects` (
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` (`Id`, `TypeId`, `Title`, `Description`, `CreatedAt`, `UpdatedAt`, `ToolsUsed`, `Thumbnail`) VALUES
-(68, 3, 'Portofolio', 'Startup Portofolio Gallery', '2021-09-19 20:58:50', '2021-09-22 08:32:05', 'HTML-CSS-JAVASCRIPT-ASPNETCORE', 'images\\4c92845d-257f-4f1e-bf27-7776d42a8de521a0fafb-317d-4a4a-acb9-ebaf2a74ac3c.jpg');
+INSERT INTO `projects` (`Id`, `CreatorId`, `TypeId`, `Title`, `Description`, `CreatedAt`, `UpdatedAt`, `ToolsUsed`, `Thumbnail`) VALUES
+(68, 66, 3, 'Portofolio', 'Startup Portofolio Gallery', '2021-09-19 20:58:50', '2021-09-22 08:32:05', 'HTML-CSS-JAVASCRIPT-ASPNETCORE', 'images\\4c92845d-257f-4f1e-bf27-7776d42a8de521a0fafb-317d-4a4a-acb9-ebaf2a74ac3c.jpg'),
+(87, 67, 3, 'Test', 'test test test', '2021-09-28 18:53:37', '2021-09-28 18:53:37', 'Tool1-Tool2-Tool3', 'images\\bf45b841-0ee4-48ef-b669-f394da7d7343f0d4441d-a44b-44c6-8664-d30c981b477aimg3.jpg'),
+(88, 68, 1, 'Testss', 'Tessssss', '2021-09-28 18:59:32', '2021-09-28 18:59:32', 'Tool1-Tool2', 'images\\392f5290-0276-4836-bf96-3d92807b49a25e7ca3fc-e758-49c6-89a9-e36b22ee89898e4212e0-79de-4db5-b272-8af52f033adbaee5c8ee-36b0-4daf-a3fd-6129b9b6def1.jpg');
 
 -- --------------------------------------------------------
 
@@ -555,48 +547,22 @@ CREATE TABLE `services` (
 --
 
 INSERT INTO `services` (`Id`, `ServiceName`, `ServiceDescription`, `ServiceImage`, `CreatedAt`, `UpdatedAt`) VALUES
-(1, 'Web Application Service', 'A libero quia qui dolorum iure voluptas illo ut. Distinctio molestiae earum. Voluptatem fugiat ea quaerat qui illum voluptatibus natus. Labore consectetur sunt saepe. Ea distinctio est in dicta sit sequi molestiae non consequatur. Velit et repellendus a.', 'images\\fc64822d-64f6-4421-9799-95cd1d26a2d30e1a0472-ef73-4931-8732-742a5f3313fe4f29b64f-bcf8-4740-83b5-a705e08b02da.jpg', '0001-01-01 00:00:00.000000', '2021-09-22 08:30:33.234964'),
-(2, 'Desktop Application Service', 'A libero quia qui dolorum iure voluptas illo ut. Distinctio voluptas temporibus illum molestiae earum. Voluptatem fugiat ea quaerat qui illum voluptatibus natus. Labore consectetur sunt saepe. Ea distinctio est in dicta sit sequi molestiae non consequatur. Velit et repellendus a.', 'images\\0e1a0472-ef73-4931-8732-742a5f3313fe4f29b64f-bcf8-4740-83b5-a705e08b02da.jpg', '0001-01-01 00:00:00.000000', '2021-09-20 14:40:25.285197'),
-(3, 'Mobile Application Service', 'Illum ea eaque est commodi. Quaerat nam voluptate sit quaerat in. Vel ut ea eum deserunt possimus et aperiam necessitatibus qui. Ducimus autem est est minima quaerat dolores modi commodi et. Vitae laudantium fugiat quibusdam dolor autem eius ut iste ducimus. Et illum corrupti ipsum qui totam.', 'images\\9ba84d20-2fe5-4a39-904c-119bdf9c6dea4f29b64f-bcf8-4740-83b5-a705e08b02da.jpg', '0001-01-01 00:00:00.000000', '2021-09-20 14:40:34.403358'),
-(5, 'Other', 'Other services by demand', 'images\\43ef966d-72c1-4a86-9934-ac0e42b54ab5unnamed.jpg', '0001-01-01 00:00:00.000000', '2021-09-20 14:40:41.807704');
+(1, 'Web Application Service', 'A libero quia  iure voluptas illo ut. Distinctio molestiae earum. Voluptatem fugiat ea quaerat qui illum voluptatibus natus. Labore consectetur sunt saepe. Ea distinctio est in dicta sit sequi molestiae non consequatur. Velit et repellendus a.', 'images\\4733d171-d660-4086-b374-1cd2e146bdba0e1a0472-ef73-4931-8732-742a5f3313fe4f29b64f-bcf8-4740-83b5-a705e08b02da.jpg', '0001-01-01 00:00:00.000000', '2021-09-28 13:51:38.149554'),
+(2, 'Desktop Application Service', 'A libero quia qui dolorum iure voluptas illo ut. Distinctio voluptas temporibus illum molestiae earum. Voluptatem fugiat ea quaerat qui illum voluptatibus natus. Labore consectetur sunt saepe. Ea distinctio est in dicta sit sequi molestiae non consequatur. Velit et repellendus a.', 'images\\fc4bd72c-cb3c-4e7a-94d1-0996e9b176f09ba84d20-2fe5-4a39-904c-119bdf9c6dea4f29b64f-bcf8-4740-83b5-a705e08b02da.jpg', '0001-01-01 00:00:00.000000', '2021-09-28 13:52:01.075268'),
+(3, 'Mobile Application Service', 'Illum ea eaque est commodi. Quaerat nam voluptate sit quaerat in. Vel ut ea eum deserunt possimus et aperiam necessitatibus qui. Ducimus autem est est minima quaerat dolores modi commodi et. Vitae laudantium fugiat quibusdam dolor autem eius ut iste ducimus. Et illum corrupti ipsum qui totam.', 'images\\429998c1-aed6-4cc9-b2d2-94dbfa2466720008c62f-3802-42bb-b383-0beb094a5a650e1a0472-ef73-4931-8732-742a5f3313fe4f29b64f-bcf8-4740-83b5-a705e08b02da.jpg', '0001-01-01 00:00:00.000000', '2021-09-28 13:52:12.573333');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `serviceslogs`
+-- Table structure for table `usercertificates`
 --
 
-CREATE TABLE `serviceslogs` (
+CREATE TABLE `usercertificates` (
   `Id` int NOT NULL,
-  `ServiceId` int DEFAULT NULL,
-  `UserId` int DEFAULT NULL,
-  `Action` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `ServiceName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `UserName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `CreatedAt` datetime NOT NULL
+  `UserId` int NOT NULL,
+  `ImagePath` text NOT NULL,
+  `Description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `serviceslogs`
---
-
-INSERT INTO `serviceslogs` (`Id`, `ServiceId`, `UserId`, `Action`, `ServiceName`, `UserName`, `CreatedAt`) VALUES
-(3, 1, 58, 'Service updated', 'Web Application Service', 'Kirollos Hany', '2021-09-21 18:35:22'),
-(4, 1, 58, 'Service updated', 'Web Application Service', 'Kirollos Hany', '2021-09-21 18:36:44'),
-(5, 8, 58, 'Service created', 'TestService', 'Kirollos Hany', '2021-09-21 18:37:02'),
-(6, 8, 58, 'Service deleted', 'TestService', 'Kirollos Hany', '2021-09-21 18:37:15'),
-(7, 8, 58, 'Service deleted', 'TestService', 'Kirollos Hany', '2021-09-21 18:39:54'),
-(8, 8, 58, 'Service deleted', 'TestService', 'Kirollos Hany', '2021-09-21 18:40:23'),
-(9, 8, 58, 'Service deleted', 'TestService', 'Kirollos Hany', '2021-09-21 18:41:24'),
-(11, 9, 58, 'Service created', 'Test', 'Kirollos Hany', '2021-09-22 08:13:01'),
-(12, 9, 58, 'Service updated', 'Test', 'Kirollos Hany', '2021-09-22 08:13:37'),
-(14, 10, 58, 'Service created', 'test', 'Kirollos Hany', '2021-09-22 08:14:28'),
-(16, 11, 58, 'Service created', 'test', 'Kirollos Hany', '2021-09-22 08:16:13'),
-(17, 11, 58, 'Service updated', 'test', 'Kirollos Hany', '2021-09-22 08:16:25'),
-(18, 11, 58, 'Service deleted', 'test', 'Kirollos Hany', '2021-09-22 08:16:34'),
-(19, 1, 58, 'Service updated', 'Web Application Service', 'Kirollos Hany', '2021-09-22 08:18:19'),
-(20, 1, 58, 'Service updated', 'Web Application Service', 'Kirollos Hany', '2021-09-22 08:30:25'),
-(21, 1, 58, 'Service updated', 'Web Application Service', 'Kirollos Hany', '2021-09-22 08:30:33');
 
 -- --------------------------------------------------------
 
@@ -622,7 +588,6 @@ INSERT INTO `userlinks` (`Id`, `UserId`, `TypeId`, `Link`, `CreatedAt`, `Updated
 (2, 2, 3, 'http://www.oharahoeger.biz/shop/books/applet.aspx', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
 (4, 4, 2, 'http://www.buckridge.name/films/form.gem', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
 (5, 5, 4, 'http://www.stracke.us/reviews/form.aspx', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
-(7, 7, 1, 'http://www.flatley.info/shop/films/form.lsp', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
 (8, 8, 4, 'http://www.langosh.ca/shop/food/index.res', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
 (9, 9, 4, 'http://www.schiller.name/home/form.lsp', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
 (10, 10, 2, 'http://www.feil.ca/reviews/root.jsp', '2021-08-23 19:15:22', '2021-08-23 19:15:22'),
@@ -673,7 +638,18 @@ INSERT INTO `userlinks` (`Id`, `UserId`, `TypeId`, `Link`, `CreatedAt`, `Updated
 (73, 61, 1, ' #', '0001-01-01 00:00:00', '0001-01-01 00:00:00'),
 (74, 61, 2, ' #', '0001-01-01 00:00:00', '0001-01-01 00:00:00'),
 (75, 61, 3, ' #', '0001-01-01 00:00:00', '0001-01-01 00:00:00'),
-(76, 61, 4, ' #', '0001-01-01 00:00:00', '0001-01-01 00:00:00');
+(76, 61, 4, ' #', '0001-01-01 00:00:00', '0001-01-01 00:00:00'),
+(77, 66, 4, 'https://www.facebook.com/profile.php?id=100004658298305', '2021-09-23 15:03:09', '2021-09-23 15:03:09'),
+(78, 66, 2, 'https://github.com/kirollos-hany', '2021-09-23 15:03:09', '2021-09-23 15:03:09'),
+(79, 66, 3, 'https://www.linkedin.com/in/kirollos-hany-92149b1b2/', '2021-09-23 15:03:09', '2021-09-23 15:03:09'),
+(80, 67, 1, '#', '2021-09-28 11:09:11', '2021-09-28 12:43:12'),
+(81, 67, 2, '#', '2021-09-28 11:09:12', '2021-09-28 12:43:12'),
+(82, 67, 3, '#', '2021-09-28 11:09:12', '2021-09-28 12:43:12'),
+(83, 67, 4, '#', '2021-09-28 11:09:12', '2021-09-28 12:43:12'),
+(84, 68, 1, '#', '2021-09-28 18:58:29', '2021-09-28 18:58:29'),
+(85, 68, 2, '#', '2021-09-28 18:58:29', '2021-09-28 18:58:29'),
+(86, 68, 3, '#', '2021-09-28 18:58:29', '2021-09-28 18:58:29'),
+(87, 68, 4, '#', '2021-09-28 18:58:29', '2021-09-28 18:58:29');
 
 -- --------------------------------------------------------
 
@@ -717,7 +693,14 @@ CREATE TABLE `usersinprojects` (
 --
 
 INSERT INTO `usersinprojects` (`Id`, `UserId`, `ProjectId`, `RoleId`, `CreatedAt`, `UpdatedAt`) VALUES
-(109, 59, 68, 2, '2021-09-19 20:58:49.676420', '2021-09-22 08:32:04.896429');
+(109, 59, 68, 2, '2021-09-19 20:58:49.676420', '2021-09-22 08:32:04.896429'),
+(145, 66, 68, 3, '2001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000'),
+(149, 59, 87, 2, '2021-09-28 18:53:37.493086', '2021-09-28 18:53:37.493123'),
+(150, 66, 87, 1, '2021-09-28 18:53:37.526791', '2021-09-28 18:53:37.526794'),
+(151, 67, 87, 3, '2021-09-28 18:53:37.529822', '2021-09-28 18:53:37.529823'),
+(152, 66, 88, 2, '2021-09-28 18:59:32.251696', '2021-09-28 18:59:32.251738'),
+(153, 67, 88, 2, '2021-09-28 18:59:32.259733', '2021-09-28 18:59:32.259735'),
+(154, 68, 88, 3, '2021-09-28 18:59:32.261881', '2021-09-28 18:59:32.261882');
 
 -- --------------------------------------------------------
 
@@ -799,14 +782,6 @@ ALTER TABLE `aspnetusertokens`
   ADD PRIMARY KEY (`UserId`,`LoginProvider`,`Name`);
 
 --
--- Indexes for table `contactlogs`
---
-ALTER TABLE `contactlogs`
-  ADD PRIMARY KEY (`Id`),
-  ADD KEY `FK_ContactLogs_contacts_ContactId` (`ContactId`),
-  ADD KEY `FK_ContactLogs_AspNetUsers_ContactId` (`UserId`);
-
---
 -- Indexes for table `contacts`
 --
 ALTER TABLE `contacts`
@@ -862,7 +837,8 @@ ALTER TABLE `projectlogs`
 --
 ALTER TABLE `projects`
   ADD PRIMARY KEY (`Id`),
-  ADD KEY `TypeId` (`TypeId`);
+  ADD KEY `TypeId` (`TypeId`),
+  ADD KEY `project_creator-fk` (`CreatorId`);
 
 --
 -- Indexes for table `projecttypes`
@@ -886,12 +862,11 @@ ALTER TABLE `services`
   ADD PRIMARY KEY (`Id`);
 
 --
--- Indexes for table `serviceslogs`
+-- Indexes for table `usercertificates`
 --
-ALTER TABLE `serviceslogs`
+ALTER TABLE `usercertificates`
   ADD PRIMARY KEY (`Id`),
-  ADD KEY `IX_ServicesLogs_ServiceId` (`ServiceId`),
-  ADD KEY `IX_ServicesLogs_UserId` (`UserId`);
+  ADD KEY `certificates_user_fk` (`UserId`);
 
 --
 -- Indexes for table `userlinks`
@@ -948,13 +923,7 @@ ALTER TABLE `aspnetuserclaims`
 -- AUTO_INCREMENT for table `aspnetusers`
 --
 ALTER TABLE `aspnetusers`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
-
---
--- AUTO_INCREMENT for table `contactlogs`
---
-ALTER TABLE `contactlogs`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `contacts`
@@ -984,25 +953,25 @@ ALTER TABLE `projectfeedbacks`
 -- AUTO_INCREMENT for table `projectimages`
 --
 ALTER TABLE `projectimages`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `projectlinks`
 --
 ALTER TABLE `projectlinks`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
 
 --
 -- AUTO_INCREMENT for table `projectlogs`
 --
 ALTER TABLE `projectlogs`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT for table `projecttypes`
@@ -1023,16 +992,16 @@ ALTER TABLE `services`
   MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `serviceslogs`
+-- AUTO_INCREMENT for table `usercertificates`
 --
-ALTER TABLE `serviceslogs`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+ALTER TABLE `usercertificates`
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `userlinks`
 --
 ALTER TABLE `userlinks`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `userrolesinproject`
@@ -1044,7 +1013,7 @@ ALTER TABLE `userrolesinproject`
 -- AUTO_INCREMENT for table `usersinprojects`
 --
 ALTER TABLE `usersinprojects`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 
 --
 -- Constraints for dumped tables
@@ -1110,6 +1079,7 @@ ALTER TABLE `projectlinks`
 -- Constraints for table `projects`
 --
 ALTER TABLE `projects`
+  ADD CONSTRAINT `project_creator-fk` FOREIGN KEY (`CreatorId`) REFERENCES `aspnetusers` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`TypeId`) REFERENCES `projecttypes` (`Id`) ON DELETE RESTRICT;
 
 --
@@ -1118,6 +1088,12 @@ ALTER TABLE `projects`
 ALTER TABLE `requestedservices`
   ADD CONSTRAINT `FK_RequestedServices_contacts_ContactId` FOREIGN KEY (`ContactId`) REFERENCES `contacts` (`Id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_RequestedServices_Services_ServiceId` FOREIGN KEY (`ServiceId`) REFERENCES `services` (`Id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `usercertificates`
+--
+ALTER TABLE `usercertificates`
+  ADD CONSTRAINT `certificates_user_fk` FOREIGN KEY (`UserId`) REFERENCES `aspnetusers` (`Id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `userlinks`

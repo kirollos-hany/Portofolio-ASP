@@ -6,68 +6,75 @@ using Portofolio.Database;
 using Portofolio.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Portofolio.AppModels.Services;
 
 namespace Portofolio.AppModels.Repositories
 {
-    public class ServicesRepository : BaseRepository<Service>
+    public class ServicesRepository : BaseRepository
     {
         public ServicesRepository(PortofolioDbContext dbContext) : base(dbContext)
         {
         }
 
-        public async override Task<Service> Create(Service entity)
+        public async Task<ICollection<Service>> GetLatestServices(int numOfServices)
         {
-            entity.CreatedAt = DateTime.Now;
-            entity.UpdatedAt = DateTime.Now;
-            await _dbContext.Services.AddAsync(entity);
-            await SaveChanges();
-            return entity;
+            return await _dbContext.Services.OrderByDescending((serv)=>serv.CreatedAt).Take(numOfServices).ToListAsync();
         }
 
-        public async override Task<Service> Delete(Service entity)
+        public async Task<Service> GetById(int id)
         {
-            _dbContext.Services.Remove(entity);
-            await SaveChanges();
-            return entity;
+            return await _dbContext.Services.FindAsync(id);
         }
 
-        public async override Task<ICollection<Service>> DeleteCollection(ICollection<Service> entities)
+        public async Task<ICollection<Service>> GetAll()
         {
-            _dbContext.Services.RemoveRange(entities);
-            await SaveChanges();
-            return entities;
+            return await _dbContext.Services.ToListAsync();
         }
 
-        public async override Task<Service> Edit(Service entity)
+        public async Task<Service> Create(Service service)
         {
-            Service service = await _dbContext.Services.FirstOrDefaultAsync(service => entity.Id == service.Id);
-            service.ServiceDescription = entity.ServiceDescription;
-            service.ServiceImage = entity.ServiceImage;
-            service.ServiceName = entity.ServiceName;
+            service.CreatedAt = DateTime.Now;
             service.UpdatedAt = DateTime.Now;
-            await SaveChanges();
-            return entity;
+            await _dbContext.Services.AddAsync(service);
+            await _dbContext.SaveChangesAsync();
+            return service;
         }
 
-        public async override Task<Service> FindByCondition(Expression<Func<Service, bool>> expression)
+        public async Task<Service> Delete(int serviceId)
         {
-            return await _dbContext.Services.Include(service => service.Requests).Where(expression).FirstOrDefaultAsync();
+            var service = await _dbContext.Services.FindAsync(serviceId);
+            _dbContext.Services.Remove(service);
+            await _dbContext.SaveChangesAsync();
+            return service;
         }
 
-        public async override Task<ICollection<Service>> FindCollectionByCondition(Expression<Func<Service, bool>> expression)
+        public async Task<Service> EditWithoutImage(int serviceId, Service service)
         {
-            return await _dbContext.Services.Include(service => service.Requests).Where(expression).ToListAsync();
+            var oldService = await _dbContext.Services.FindAsync(serviceId);
+            oldService.ServiceName = service.ServiceName;
+            oldService.ServiceDescription = service.ServiceDescription;
+            oldService.UpdatedAt = DateTime.Now;
+            await _dbContext.SaveChangesAsync();
+            return oldService;
         }
 
-        public async override Task<ICollection<Service>> GetAll()
+        public async Task<Service> EditWithImage(int serviceId, Service service)
         {
-            return await _dbContext.Services.Include(service => service.Requests).ToListAsync();
+            var oldService = await _dbContext.Services.FindAsync(serviceId);
+            oldService.ServiceName = service.ServiceName;
+            oldService.ServiceDescription = service.ServiceDescription;
+            oldService.UpdatedAt = DateTime.Now;
+            oldService.ServiceImage = service.ServiceImage;
+            await _dbContext.SaveChangesAsync();
+            return oldService;
         }
 
-        public async override Task<Service> GetById(int id)
-        {
-            return await _dbContext.Services.Include(service => service.Requests).FirstOrDefaultAsync(service => service.Id == id);
-        }
+
+
+        // public async override Task<Service> GetById(int id)
+        // {
+        //     return await _dbContext.Services.Include(service => service.Requests).FirstOrDefaultAsync(service => service.Id == id);
+        // }
 
     }
 }

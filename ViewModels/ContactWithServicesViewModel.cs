@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 namespace Portofolio.ViewModels
 {
-    public class ContactWithServicesViewModel
+    public class ContactWithServicesViewModel : ParentHomeViewModel
     {
         public ICollection<Service> Services { get; set; }
 

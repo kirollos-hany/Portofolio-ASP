@@ -1,0 +1,38 @@
+@{
+    ViewData[TitleKey] = "Services";
+}
+@model ServiceDetailsViewModel
+<!--Start Profile Card-->
+<div class="page-content page-container container" id="page-content">
+  <div class="padding container">
+    <div class="row justify-content-center h-100">
+      <div class="col-xl-12 col-md-12">
+        <div class="card user-card-full">
+          <div class="row m-l-0 m-r-0">
+            <div class="col-sm-4">
+              <div class="card-block text-center text-white">
+                <div class="m-b-25">
+                  <img class="img-fluid" src="~/@Model.Service.ServiceImage" alt="Profile Img" />
+                </div>
+                <h6 class="f-w-600 light">@Model.Service.ServiceName</h6>
+              </div>
+            </div>
+            <div class="col-sm-8">
+              <div class="card-block">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <p class="m-b-10 f-w-600">Description</p>
+                    <h6 class="text-muted f-w-400">
+                      @Model.Service.ServiceDescription
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--End Profile Card-->

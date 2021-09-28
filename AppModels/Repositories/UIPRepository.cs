@@ -8,67 +8,90 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 namespace Portofolio.AppModels.Repositories
 {
-    public class UIPRepository : BaseRepository<UsersInProject>
+    public class UIPRepository : BaseRepository
     {
         public UIPRepository(PortofolioDbContext dbContext) : base(dbContext)
         {
         }
 
-        public async override Task<UsersInProject> Create(UsersInProject entity)
+        public async Task<UsersInProject> Create(UsersInProject usersInProject)
         {
-            entity.CreatedAt = DateTime.Now;
-            entity.UpdatedAt = DateTime.Now;
-            await _dbContext.UsersInProjects.AddAsync(entity);
-            await SaveChanges();
-            return entity;
+            usersInProject.CreatedAt = DateTime.Now;
+            usersInProject.UpdatedAt = DateTime.Now;
+            await _dbContext.UsersInProjects.AddAsync(usersInProject);
+            await _dbContext.SaveChangesAsync();
+            return usersInProject;
         }
 
-        public async override Task<UsersInProject> Delete(UsersInProject entity)
+        public async Task<UsersInProject> Edit(int id, UsersInProject newUsersInProject)
         {
-            _dbContext.UsersInProjects.Remove(entity);
-            await SaveChanges();
-            return entity;
-        }
-
-        public async override Task<ICollection<UsersInProject>> DeleteCollection(ICollection<UsersInProject> entities)
-        {
-            _dbContext.UsersInProjects.RemoveRange(entities);
-            await SaveChanges();
-            return entities;
-        }
-
-        public async override Task<UsersInProject> Edit(UsersInProject entity)
-        {
-            var uip = await _dbContext.UsersInProjects.FindAsync(entity.Id);
+            var uip = await _dbContext.UsersInProjects.FindAsync(id);
             uip.UpdatedAt = DateTime.Now;
-            uip.UserId = entity.UserId;
-            uip.RoleId = entity.RoleId;
-            await SaveChanges();
+            uip.UserId = newUsersInProject.UserId;
+            uip.RoleId = newUsersInProject.RoleId;
+            await _dbContext.SaveChangesAsync();
             return uip;
         }
 
-        public async override Task<UsersInProject> FindByCondition(Expression<Func<UsersInProject, bool>> expression)
+        public async Task CreateFromCollection(int projectId, ICollection<string> usersNRolesIds, char delimiter)
         {
-            return await _dbContext.UsersInProjects.Include(uip => uip.Role).Include(uip => uip.Project)
-            .Include(uip => uip.User)
-            .Where(expression).FirstOrDefaultAsync();
+            foreach (var str in usersNRolesIds)
+            {
+                string[] splitStr = str.Split(delimiter);
+                await Create(new UsersInProject
+                {
+                    ProjectId = projectId,
+                    UserId = Convert.ToInt32(splitStr[1]),
+                    RoleId = Convert.ToInt32(splitStr[0])
+                });
+            }
         }
 
-        public async override Task<ICollection<UsersInProject>> FindCollectionByCondition(Expression<Func<UsersInProject, bool>> expression)
+        public async Task EditFromCollection(ICollection<UsersInProject> usersInProjects, ICollection<string> usersNRolesIds, char delimiter)
         {
-            return await _dbContext.UsersInProjects.Include(uip => uip.Role).Include(uip => uip.Project)
-            .Include(uip => uip.User)
-            .Where(expression).ToListAsync();
+            for (int i = 0; i < usersNRolesIds.Count; i++)
+            {
+                string[] splitStr = usersNRolesIds.ElementAt(i).Split(delimiter);
+                await Edit(usersInProjects.ElementAt(i).Id, new UsersInProject
+                {
+                    UserId = Convert.ToInt32(splitStr[1]),
+                    RoleId = Convert.ToInt32(splitStr[0])
+                });
+            }
         }
 
-        public async override Task<ICollection<UsersInProject>> GetAll()
+        public async Task<ICollection<UsersInProject>> GetUsersProjects(int userId)
         {
-            return await _dbContext.UsersInProjects.Include(uip => uip.Role).Include(uip => uip.Project).Include(uip => uip.User).ToListAsync();
+            return await _dbContext.UsersInProjects.Where((uip) => uip.UserId == userId).ToListAsync();
         }
 
-        public async override Task<UsersInProject> GetById(int id)
+        public async Task<ICollection<UsersInProject>> GetUsersProjectsWithIncludes(int userId)
         {
-            return await _dbContext.UsersInProjects.Include(uip => uip.Role).Include(uip => uip.Project).Include(uip => uip.User).FirstOrDefaultAsync();
+            return await _dbContext.UsersInProjects.Include((uip) => uip.Project).Include((uip) => uip.Role)
+            .Where((uip) => uip.UserId == userId).ToListAsync();
         }
+
+        public async Task<ICollection<UsersInProject>> GetProjectUips(int projectId)
+        {
+            return await _dbContext.UsersInProjects.Include((uip) => uip.Role).Include((uip) => uip.Project).Where((uip) => uip.ProjectId == projectId).ToListAsync();
+        }
+        public async Task<ICollection<UsersInProject>> DeleteCollection(ICollection<UsersInProject> uips)
+        {
+            _dbContext.UsersInProjects.RemoveRange(uips);
+            await _dbContext.SaveChangesAsync();
+            return uips;
+        }
+
+        public async Task<UsersInProject> Delete(int id)
+        {
+            var uip = await _dbContext.UsersInProjects.FindAsync(id);
+            _dbContext.UsersInProjects.Remove(uip);
+            await _dbContext.SaveChangesAsync();
+            return uip;
+        }
+
+        
+
+
     }
 }

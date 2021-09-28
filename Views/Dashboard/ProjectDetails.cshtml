@@ -52,10 +52,10 @@
   </div>
 </div>
 <div class="row padding-sides-9">
-  <div id="descriptionContainer" class="active-container col-6 btn-inverse-info btn-lg clickable ">
+  <div id="descriptionContainer" class="active-container col-6 btn-inverse-primary btn-lg clickable ">
     <h5 id="descriptionBtn">Description</h5>
   </div>
-  <div id="feedbackContainer" class="col-6 btn-inverse-info btn-lg clickable">
+  <div id="feedbackContainer" class="col-6 btn-inverse-primary btn-lg clickable">
     <h5 id="feedbackBtn">Feedback</h5>
   </div>
   <div id="displayDescription" class="white-bg col-12 dark border-dark-2 padding-vertical-10">
@@ -67,7 +67,7 @@
       foreach(var feedback in Model.ChosenProject.ProjectFeedbacks)
       {
         <p>@feedback.Feedback</p>
-        <span>@feedback.CreatedAt</span>
+        <span>@feedback.CreatedAt.ToString(DateTimeFormat)</span>
         <hr>
       }
     }
@@ -132,6 +132,12 @@
           </div>
     </li>
     }
+    <li>
+        <a class="justify-content-between d-flex">
+            <h5 class="dark">Created</h5>
+              <span class="or">@Model.ChosenProject.CreatedAt.ToString(DateFormat)</span>
+          </a>
+      </li>
 	</ul>
    </div>
   </div>
@@ -202,13 +208,14 @@
       <div class="modal-header">
         <h4 class="modal-title text-xs-center">Edit Project</h4>
       </div>
-    @if (ViewData[ResultMessageKey] != null)
-      {
-        ResultMsgViewModel resultVM = ViewData[ResultMessageKey] as ResultMsgViewModel;
-        <div class="modal-header">
+      <div asp-validation-summary="All"></div> 
+        @if(TempData[ResultMessageKey] != null)
+        {
+          ResultMsgViewModel resultVM = TempData.GetResultMessage();
+          <div class="modal-header">
           <div class="@resultVM.CssClass">@resultVM.Message</div>
-        </div>
-      }
+          </div>
+        }
       <div class="modal-body">
         <form role="form" asp-action="Edit" asp-controller="Projects" enctype="multipart/form-data" method="post">
         <div class="form-group">

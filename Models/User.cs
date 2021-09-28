@@ -18,26 +18,26 @@ namespace Portofolio.Models
         }
 
         [Required(ErrorMessage = "Username is required")]
-        public override string UserName {get; set;}
+        public override string UserName { get; set; }
         [Required]
         [EmailAddress]
-        public override string Email {get; set;}
+        public override string Email { get; set; }
 
         [Phone(ErrorMessage = "Phone number format is invalid, correct format +xx xxxxxxxxxx")]
         [DataType(DataType.PhoneNumber, ErrorMessage = "Phone number format is invalid, correct format +xx xxxxxxxxxx")]
-        public override string PhoneNumber {get; set;}
+        public override string PhoneNumber { get; set; }
 
         [StringLength(maximumLength: 255)]
-        public string Specialization {get; set;}
+        public string Specialization { get; set; }
 
         [Required]
         public string ImagePath { get; set; }
 
         [Required]
-        public DateTime CreatedAt {get; set;}
+        public DateTime CreatedAt { get; set; }
 
         [Required]
-        public DateTime UpdatedAt {get; set;}
+        public DateTime UpdatedAt { get; set; }
 
         [InverseProperty(nameof(UserLink.User))]
         public virtual ICollection<UserLink> UserLinks { get; set; }
@@ -45,12 +45,14 @@ namespace Portofolio.Models
         public virtual ICollection<UsersInProject> UsersInProjects { get; set; }
 
         [InverseProperty(nameof(ProjectLog.User))]
-        public virtual ICollection<ProjectLog> ProjectLogs {get; set;}
+        public virtual ICollection<ProjectLog> ProjectLogs { get; set; }
 
-        [InverseProperty(nameof(ContactLog.User))]
-        public virtual ICollection<ContactLog> ContactLogs {get; set;}
+        [InverseProperty(nameof(Project.Creator))]
 
-        [InverseProperty(nameof(ServicesLog.User))]
-        public virtual ICollection<ServicesLog> ServicesLogs {get; set;}
+        public virtual ICollection<Project> CreatedProjects { get; set; }
+
+        [InverseProperty(nameof(UserCertificates.Owner))]
+        public virtual ICollection<UserCertificates> Certificates { get; set; }
+
     }
 }

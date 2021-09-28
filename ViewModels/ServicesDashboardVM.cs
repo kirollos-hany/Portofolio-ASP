@@ -8,7 +8,6 @@ namespace Portofolio.ViewModels
     {
 
         public PaginationViewModel<Service> PaginationModel { get; set; }
-        public int Id;
 
         [Required]
         public string Name { get; set; }
@@ -18,5 +17,6 @@ namespace Portofolio.ViewModels
         [Required]
 
         public string Description { get; set; }
+
     }
 }

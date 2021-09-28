@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Personal\\Portofolio\\Portofolio.csproj": {}
+    "e:\\Personal\\Portofolio\\Portofolio.csproj": {}
   },
   "projects": {
-    "E:\\Personal\\Portofolio\\Portofolio.csproj": {
+    "e:\\Personal\\Portofolio\\Portofolio.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Personal\\Portofolio\\Portofolio.csproj",
+        "projectUniqueName": "e:\\Personal\\Portofolio\\Portofolio.csproj",
         "projectName": "Portofolio",
-        "projectPath": "E:\\Personal\\Portofolio\\Portofolio.csproj",
+        "projectPath": "e:\\Personal\\Portofolio\\Portofolio.csproj",
         "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "E:\\Personal\\Portofolio\\obj\\",
+        "outputPath": "e:\\Personal\\Portofolio\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -41,6 +41,10 @@
             "Faker.Net": {
               "target": "Package",
               "version": "[1.5.138, )"
+            },
+            "Json.Net": {
+              "target": "Package",
+              "version": "[1.0.33, )"
             },
             "MailKit": {
               "target": "Package",

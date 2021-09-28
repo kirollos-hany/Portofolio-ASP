@@ -1,14 +1,10 @@
 @{
     ViewData[TitleKey] = "Projects";
-    ViewData[BannerNavActionKey] = "index";
-    ViewData[BannerNavControllerKey] = "projects";
-    ViewData[BannerNavTitleKey] = ViewData[TitleKey];
-    ViewData[BannerTitleKey] = ViewData[TitleKey];
-    ViewData[PaginationCurrentPage] = Model.CurrentPage;
-    ViewData[PaginationMaxPageCount] = Model.MaxPageCount;
-    ViewData[PaginationDisplayCount] = Model.DisplayCount;
+    ViewData[PaginationCurrentPage] = Model.PaginationModel.CurrentPage;
+    ViewData[PaginationMaxPageCount] = Model.PaginationModel.MaxPageCount;
+    ViewData[PaginationDisplayCount] = Model.PaginationModel.DisplayCount;
 }
-@model PaginationViewModel<Project>
+@model ProjectsViewModel
 <!-- Start popular-courses Area -->
 <section class="popular-courses-area section-gap courses-page">
     <div class="container">
@@ -19,10 +15,47 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            @if (Model.Collection != default(ICollection<Project>))
+        <div class="row m-2">
+          @if(Model.PaginationModel.Collection != default(ICollection<Project>))
             {
-                @foreach(Project project in Model.Collection)
+              foreach(var project in Model.PaginationModel.Collection)
+              {
+                      <div class="col-lg-3 col-md-6 single-blog">
+                              <div class="thumb">
+                                <img class="img-fluid" src="~/@project.Thumbnail" alt="Project Thumbnail" />
+                              </div>
+                              @{
+                                var teamLeader = project.UsersInProjects.Where((uip) => uip.Role.Role == TeamLeaderRole).Select((uip) => uip.User).FirstOrDefault();
+                              }
+                              @if(teamLeader != default(User))
+                              {
+                                <p class="meta">@project.CreatedAt.ToString(DateFormat) | Lead By <a target="_blank" asp-action="profile" asp-controller="home" asp-route-id="@teamLeader.Id">@teamLeader.UserName</a></p>
+                              }else{
+                                <p class="meta">@project.CreatedAt.ToString(DateFormat)</p>
+                              }
+                                <h5>@project.Title</h5>
+                              <a
+                                asp-action="details"
+                                asp-controller="projects"
+                                asp-route-id="@project.Id"
+                                target="_blank"
+                                class="
+                                  details-btn
+                                  d-flex
+                                  justify-content-center
+                                  align-items-center
+                                "
+                                ><span class="details">Details</span
+                                ><span class="lnr lnr-arrow-right"></span
+                              ></a>
+                    </div>
+              }
+            }
+        </div>
+        @* <div class="row">
+            @if (Model.PaginationModel.Collection != default(ICollection<Project>))
+            {
+                @foreach(Project project in Model.PaginationModel.Collection)
                 {
                     <div class="single-popular-carusel col-lg-3 col-md-6">
                         <div class="thumb-wrap relative">
@@ -42,7 +75,7 @@
                     </div>
                 }
             }
-        </div>
+        </div> *@
     @{
         await Html.RenderPartialAsync("_PaginationPartial");
     }

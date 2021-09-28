@@ -43,7 +43,5 @@ namespace Portofolio.Models
         [InverseProperty(nameof(RequestedService.AssociatedContact))]
         public virtual ICollection<RequestedService> RequestedServices { get; set; }
 
-        [InverseProperty(nameof(ContactLog.Contact))]
-        public virtual ICollection<ContactLog> Logs {get; set;}
     }
 }

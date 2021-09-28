@@ -25,6 +25,8 @@ namespace Portofolio.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [Required(ErrorMessage = "Creator is required")]
+        public int CreatorId { get; set; }
         [Required]
         public int TypeId { get; set; }
         [Required]
@@ -58,6 +60,11 @@ namespace Portofolio.Models
         public virtual ICollection<UsersInProject> UsersInProjects { get; set; }
 
         [InverseProperty(nameof(ProjectLog.Project))]
-        public virtual ICollection<ProjectLog> Logs {get; set;}
+        public virtual ICollection<ProjectLog> Logs { get; set; }
+
+        [ForeignKey(nameof(CreatorId))]
+        [InverseProperty(nameof(User.CreatedProjects))]
+        public virtual User Creator { get; set; }
+
     }
 }

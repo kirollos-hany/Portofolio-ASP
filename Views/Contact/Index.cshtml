@@ -1,9 +1,5 @@
 @{
     ViewData[TitleKey] = "Contact";
-    ViewData[BannerTitleKey] = "Contact Us";
-    ViewData[BannerNavTitleKey] = ViewData[BannerTitleKey];
-    ViewData[BannerNavActionKey] = "index";
-    ViewData[BannerNavControllerKey] = "contact";
 }
 @model ContactWithServicesViewModel
 <!-- Start contact-page Area -->
@@ -44,13 +40,13 @@
             <div class="col-lg-8">
             <form class="form-area contact-form text-right" id="myForm" asp-controller="contact"
                     asp-action="create" enctype="multipart/form-data" method="post">
-                @if(ViewData[ResultMessageKey] != default(ViewDataDictionary))
-                {
-                ResultMsgViewModel resultVM = ViewData[ResultMessageKey] as ResultMsgViewModel;
-                <div class="modal-header">
-                <div class="@resultVM.CssClass">@resultVM.Message</div>
-                </div>
-                }
+        @if(TempData[ResultMessageKey] != null)
+        {
+          ResultMsgViewModel resultVM = TempData.GetResultMessage();
+          <div class="modal-header">
+          <div class="@resultVM.CssClass">@resultVM.Message</div>
+          </div>
+        }
                     <div class="row">
                         <div class="col-lg-6 form-group">
                             <input placeholder="Enter your name" onfocus="this.placeholder = ''"

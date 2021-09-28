@@ -9,57 +9,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Portofolio.AppModels.Repositories
 {
-    public class ProjectFeedbacksRepository : BaseRepository<ProjectFeedback>
+    public class ProjectFeedbacksRepository : BaseRepository
     {
         public ProjectFeedbacksRepository(PortofolioDbContext dbContext) : base(dbContext)
         {
         }
 
-        public async override Task<ProjectFeedback> Create(ProjectFeedback entity)
+        public async Task<ProjectFeedback> Create(ProjectFeedback feedback)
         {
-            entity.CreatedAt = DateTime.Now;
-            await _dbContext.ProjectFeedbacks.AddAsync(entity);
-            await SaveChanges();
-            return entity;
+            feedback.CreatedAt = DateTime.Now;
+            await _dbContext.ProjectFeedbacks.AddAsync(feedback);
+            await _dbContext.SaveChangesAsync();
+            return feedback;
         }
 
-        public async override Task<ProjectFeedback> Delete(ProjectFeedback entity)
+        public async Task<ICollection<ProjectFeedback>> DeleteCollection(ICollection<ProjectFeedback> feedbacks)
         {
-            _dbContext.ProjectFeedbacks.Remove(entity);
-            await SaveChanges();
-            return entity;
+            _dbContext.ProjectFeedbacks.RemoveRange(feedbacks);
+            await _dbContext.SaveChangesAsync();
+            return feedbacks;
         }
 
-        public async override Task<ICollection<ProjectFeedback>> DeleteCollection(ICollection<ProjectFeedback> entities)
-        {
-            _dbContext.ProjectFeedbacks.RemoveRange(entities);
-            await SaveChanges();
-            return entities;
-        }
-
-        public override Task<ProjectFeedback> Edit(ProjectFeedback entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async override Task<ProjectFeedback> FindByCondition(Expression<Func<ProjectFeedback, bool>> expression)
-        {
-            return await _dbContext.ProjectFeedbacks.Where(expression).FirstOrDefaultAsync();
-        }
-
-        public async override Task<ICollection<ProjectFeedback>> FindCollectionByCondition(Expression<Func<ProjectFeedback, bool>> expression)
-        {
-            return await _dbContext.ProjectFeedbacks.Where(expression).ToListAsync();
-        }
-
-        public async override Task<ICollection<ProjectFeedback>> GetAll()
-        {
-            return await _dbContext.ProjectFeedbacks.ToListAsync();
-        }
-
-        public async override Task<ProjectFeedback> GetById(int id)
-        {
-            return await _dbContext.ProjectFeedbacks.FindAsync(id);
-        }
     }
 }

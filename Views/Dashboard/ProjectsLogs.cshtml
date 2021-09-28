@@ -13,7 +13,7 @@
                             <th>Title</th>
                             <th>Username</th>
                             <th>Action</th>
-                            <th>Created At</th>
+                            <th>Created</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -26,7 +26,7 @@
                                             <td>@log.Title</td>
                                             <td>@log.UserName</td>
                                             <td>@log.Action</td>
-                                            <td>@log.CreatedAt</td>
+                                            <td>@log.CreatedAt.ToString(DateTimeFormat)</td>
                                       </tr>
                                     }
                             }

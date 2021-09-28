@@ -16,6 +16,8 @@
                 </div>
                 <h6 class="f-w-600">@Model.User.UserName</h6>
                 <p>@Model.User.Specialization</p>
+                <p>Joined : @Model.User.CreatedAt.ToString(DateTimeFormat)</p>
+                <p>Updated : @Model.User.UpdatedAt.ToString(DateTimeFormat)</p>
                 <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16 clickable" data-toggle="modal"
                   data-target="#editProfileModal"></i>
               </div>
@@ -62,9 +64,7 @@
                 {
                 <ul class="social-link list-unstyled m-t-40 m-b-10">
                   <li>
-                    @if (Model.User.UserLinks.Count != 0)
-                    {
-                      @foreach (var ul in Model.User.UserLinks)
+                      @foreach (var ul in userLinks)
                       {
                         if(ul.Link != default(string))
                         {
@@ -73,7 +73,6 @@
                           class="@LinkIconsDictionary[ul.Type.Type]" aria-hidden="true"></i></a>
                         }
                       }
-                    }
                   </li>
                 </ul>
                 }
@@ -96,9 +95,10 @@
       </div>
       <div class="modal-body">
         <form role="form" asp-action="editprofile" asp-controller="user" enctype="multipart/form-data" method="post">
-        @if(ViewData[ResultMessageKey] != default(ViewDataDictionary))
+        <div asp-validation-summary="All"></div> 
+        @if(TempData[ResultMessageKey] != null)
         {
-          ResultMsgViewModel resultVM = ViewData[ResultMessageKey] as ResultMsgViewModel;
+          ResultMsgViewModel resultVM = TempData.GetResultMessage();
           <div class="modal-header">
           <div class="@resultVM.CssClass">@resultVM.Message</div>
           </div>
@@ -152,7 +152,8 @@
                     <label class="control-label">@lt.Type</label>
                   <div>
                   <input type="hidden" value="@link.Id" asp-for="LinksIds"/>
-                  <input type="url" class="form-control input-lg" value="@link.Link" asp-for="Links"/>
+                  <input type="text" class="form-control input-lg" value="@link.Link" asp-for="Links"/>
+                  <span class="text-danger" asp-validation-for="Links"></span>
                   </div>
                 </div>
                 }

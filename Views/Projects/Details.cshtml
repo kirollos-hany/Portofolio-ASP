@@ -1,11 +1,6 @@
 @{
 
     ViewData[TitleKey] = "Details"; 
-    ViewData[BannerTitleKey] = "Project Details";
-    ViewData[BannerNavTitleKey] ="Projects";
-    ViewData[BannerNavRouteValueKey] = Model.Project.Id;
-    ViewData[BannerNavActionKey] = "index";
-    ViewData[BannerNavControllerKey] = "projects";
 }
 @model ProjectDetailsViewModel
 
@@ -62,14 +57,13 @@
                         <div class="jq-tab-content active" data-tab="1">@Model.Project.Description</div>
                         <div class="jq-tab-content" data-tab="5">
                             <div class="feedeback">
-                                @if (ViewData[ResultMessageKey] != default(ViewDataDictionary))
-
-                                {
-                                    ResultMsgViewModel resultVM = ViewData[ResultMessageKey] as ResultMsgViewModel;
+                                    @if(TempData[ResultMessageKey] != null)
+                                    {
+                                    ResultMsgViewModel resultVM = TempData.GetResultMessage();
                                     <div class="modal-header">
-                                        <div class="@resultVM.CssClass">@resultVM.Message</div>
+                                    <div class="@resultVM.CssClass">@resultVM.Message</div>
                                     </div>
-                                }
+                                    }
                                 <form asp-action="feedback" asp-controller="projects" method="post"
                                     enctype="multipart/form-data">
                                     <h4 class="pb-20">We'd love to know your feedback!</h4>
@@ -85,7 +79,7 @@
                 </div>
             </div>
             <div class="col-lg-4 right-contents">
-                <a class="primary-btn text-uppercase light-important">@Model.Project.Title</a>
+                <a class="primary-btn text-uppercase" style="color:white !important;">@Model.Project.Title</a>
                 <ul>
                     @if (@Model.Project.UsersInProjects != default(ICollection<UsersInProject>))
                     {
@@ -145,6 +139,12 @@
                         </div>
                     </li>
                     }
+                    <li>
+                        <a class="justify-content-between d-flex">
+                            <h5 class="dark">Created</h5>
+                            <span class="or">@Model.Project.CreatedAt.ToString(DateFormat)</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -181,7 +181,7 @@
                         <div class="card col-sm-2 m-1 p-0" shuffle-tag="@role">
                             <div class="card-body">
                                 <a target="_blank" asp-action="profile" asp-controller="home" asp-route-id="@uip.User.Id">
-                                    <p class="card-text">@uip.User.UserName</p>
+                                    <p class="card-text dark">@uip.User.UserName</p>
                                 </a>
                                 </div>
                                 <a target="_blank" asp-action="profile" asp-controller="home" asp-route-id="@uip.User.Id">

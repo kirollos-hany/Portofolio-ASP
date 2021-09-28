@@ -1,11 +1,7 @@
 @{
     ViewData[TitleKey] = "Profile";
-    ViewData[BannerTitleKey] = "Profile";
-    ViewData[BannerNavTitleKey] = "Members";
-    ViewData[BannerNavActionKey] = "members";
-    ViewData[BannerNavControllerKey] = "home";
 }
-@model User
+@model ProfileViewModel
 <!--Start Profile Card-->
 <div class="page-content page-container container" id="page-content">
   <div class="padding container">
@@ -16,10 +12,11 @@
             <div class="col-sm-4 bg-c-lite-green user-profile">
               <div class="card-block text-center text-white">
                 <div class="m-b-25">
-                  <img class="img-fluid rounded-circle" src="~/@Model.ImagePath" alt="Profile Img" />
+                  <img class="img-fluid rounded-circle" src="~/@Model.User.ImagePath" alt="Profile Img" />
                 </div>
-                <h6 class="f-w-600">@Model.UserName</h6>
-                <p>@Model.Specialization</p>
+                <h6 class="f-w-600 light">@Model.User.UserName</h6>
+                <p>@Model.User.Specialization</p>
+                <p>Joined : @Model.User.CreatedAt.ToString(DateFormat)</p>
               </div>
             </div>
             <div class="col-sm-8">
@@ -29,12 +26,12 @@
                   <div class="col-sm-6">
                     <p class="m-b-10 f-w-600">Email</p>
                     <h6 class="text-muted f-w-400">
-                      @Model.Email
+                      @Model.User.Email
                     </h6>
                   </div>
                   <div class="col-sm-6">
                     <p class="m-b-10 f-w-600">Phone</p>
-                    <h6 class="text-muted f-w-400">@Model.PhoneNumber</h6>
+                    <h6 class="text-muted f-w-400">@Model.User.PhoneNumber</h6>
                   </div>
                 </div>
                 <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">
@@ -42,9 +39,9 @@
                 </h6>
                 <div class="row">
                   <div class="col-sm-6">
-                    @if (Model.UsersInProjects != default(ICollection<UsersInProject>))
+                    @if (Model.User.UsersInProjects != default(ICollection<UsersInProject>))
                     {
-                      foreach (var userInProject in Model.UsersInProjects)
+                      foreach (var userInProject in Model.User.UsersInProjects)
                       {
                         <a asp-action="details" asp-controller="projects" asp-route-id="@userInProject.ProjectId">
                           <h6 class="text-muted f-w-400">@userInProject.Project.Title - @userInProject.Role.Role</h6>
@@ -55,9 +52,9 @@
                 </div>
                 @{
                   ICollection<UserLink> userLinks = default(ICollection<UserLink>);
-                  if(Model.UserLinks != default(ICollection<UserLink>))
+                  if(Model.User.UserLinks != default(ICollection<UserLink>))
                   {
-                    userLinks = Model.UserLinks.Where((ul) => ul.Link != LinksDefault).ToList();
+                    userLinks = Model.User.UserLinks.Where((ul) => ul.Link != LinksDefault).ToList();
                   }
                 }
                 @if(userLinks != default(ICollection<UserLink>))

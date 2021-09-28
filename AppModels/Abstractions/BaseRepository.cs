@@ -1,37 +1,14 @@
 using Portofolio.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Portofolio.AppModels.Repositories
 {
-    public abstract class BaseRepository<T> : IRepository<T> where T : class
+    public abstract class BaseRepository
     {
         protected readonly PortofolioDbContext _dbContext;
+
         public BaseRepository(PortofolioDbContext dbContext)
         {
             _dbContext = dbContext;
-        }
-        public abstract Task<T> Create(T entity);
-
-        public abstract Task<T> Delete(T entity);
-
-        public abstract Task<ICollection<T>> DeleteCollection(ICollection<T> entities);
-
-        public abstract Task<T> Edit(T entity);
-
-        public abstract Task<T> FindByCondition(Expression<Func<T, bool>> expression);
-
-        public abstract Task<ICollection<T>> FindCollectionByCondition(Expression<Func<T, bool>> expression);
-
-        public abstract Task<ICollection<T>> GetAll();
-
-        public abstract Task<T> GetById(int id);
-
-        protected async Task<int> SaveChanges()
-        {
-            return await Task.Run(() => _dbContext.SaveChanges());
         }
     }
 }

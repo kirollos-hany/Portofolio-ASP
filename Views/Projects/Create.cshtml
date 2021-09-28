@@ -1,19 +1,19 @@
 @{
   Layout = "_DashboardLayout";
-  Model.Users = Model.Users.OrderByDescending((user) => { return user.CreatedAt; }).ToList();
 }
 @model CreateProjectViewModel
 <div class="col-12 grid-margin stretch-card">
   <div class="card">
     <div class="card-body" style="background-color:black;">
       <h4 class="card-title">Create Project</h4>
-      @if (ViewData[ResultMessageKey] != default(ViewDataDictionary))
-      {
-        ResultMsgViewModel resultVM = ViewData[ResultMessageKey] as ResultMsgViewModel;
-        <div class="modal-header">
+      <div asp-validation-summary="All"></div> 
+        @if(TempData[ResultMessageKey] != null)
+        {
+          ResultMsgViewModel resultVM = TempData.GetResultMessage();
+          <div class="modal-header">
           <div class="@resultVM.CssClass">@resultVM.Message</div>
-        </div>
-      }
+          </div>
+        }
       <form class="forms-sample" method="POST" asp-action="create" asp-controller="projects" enctype="multipart/form-data">
         <div class="form-group">
           <label>Title</label>

@@ -1,71 +1,72 @@
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using Portofolio.Models;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using Portofolio.Database;
-using System.Linq.Expressions;
 using System.Linq;
 using System;
-using Microsoft.EntityFrameworkCore;
-
+using static Portofolio.AppModels.Utils.Constants;
 namespace Portofolio.AppModels.Repositories
 {
-    class ContactRepository : BaseRepository<Contact>
+    public class ContactRepository : BaseRepository
     {
         public ContactRepository(PortofolioDbContext dbContext) : base(dbContext)
         {
         }
 
-        public async override Task<Contact> Create(Contact entity)
+        public async Task<Contact> Create(Contact contact)
         {
-            entity.CreatedAt = DateTime.Now;
-            entity.UpdatedAt = DateTime.Now;
-            await _dbContext.Contacts.AddAsync(entity);
-            await SaveChanges();
-            return entity;
-        }
-
-        public async override Task<Contact> Delete(Contact entity)
-        {
-            _dbContext.Contacts.Remove(entity);
-            await SaveChanges();
-            return entity;
-        }
-
-        public async override Task<ICollection<Contact>> DeleteCollection(ICollection<Contact> entities)
-        {
-            _dbContext.Contacts.RemoveRange(entities);
-            await SaveChanges();
-            return entities;
-        }
-
-        public async override Task<Contact> Edit(Contact entity)
-        {
-            Contact contact = await _dbContext.Contacts.Include(contact => contact.Status).FirstOrDefaultAsync(contact => contact.Id == entity.Id);
-            contact.StatusId = entity.StatusId;
+            var pendingId = await _dbContext.ContactStatuses.Where((cs) => cs.Status == ContactStatuses.Pending.ToString()).Select((cs) => cs.Id).FirstOrDefaultAsync();
+            if(pendingId != default(int))
+            {
+                contact.StatusId = pendingId;
+            }
+            contact.CreatedAt = DateTime.Now;
             contact.UpdatedAt = DateTime.Now;
-            await SaveChanges();
-            return entity;
+            await _dbContext.Contacts.AddAsync(contact);
+            await _dbContext.SaveChangesAsync();
+            return contact;
         }
 
-        public async override Task<Contact> FindByCondition(Expression<Func<Contact, bool>> expression)
+        public async Task<Contact> GetById(int id)
         {
-            return await _dbContext.Contacts.Include(Contact => Contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).FirstOrDefaultAsync(expression);
+            return await _dbContext.Contacts.FindAsync(id);
         }
 
-        public async override Task<ICollection<Contact>> FindCollectionByCondition(Expression<Func<Contact, bool>> expression)
+        public async Task<int> PendingContactsCount()
         {
-            return await _dbContext.Contacts.Include(contact => contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).Where(expression).ToListAsync();
+            var pendingContacts = await _dbContext.Contacts.Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).ToListAsync();
+            return pendingContacts.Count;
         }
 
-        public async override Task<ICollection<Contact>> GetAll()
+        public async Task<Contact> Edit(int id, int statusId)
         {
-            return await _dbContext.Contacts.Include(contact => contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).ToListAsync();
+            var oldContact = await _dbContext.Contacts.FindAsync(id);
+            oldContact.StatusId = statusId;
+            oldContact.UpdatedAt = DateTime.Now;
+            await _dbContext.SaveChangesAsync();
+            return oldContact;
         }
 
-        public async override Task<Contact> GetById(int id)
+        public async Task<Contact> Delete(Contact contact)
         {
-            return await _dbContext.Contacts.Include(contact => contact.Status).Include(contact => contact.RequestedServices).ThenInclude(requestedService => requestedService.AssociatedService).FirstOrDefaultAsync(contact => contact.Id == id);
+            _dbContext.Contacts.Remove(contact);
+            await _dbContext.SaveChangesAsync();
+            return contact;
         }
+
+        public async Task<ICollection<Contact>> GetAll()
+        {
+            return await _dbContext.Contacts.ToListAsync();
+        }
+
+        public async Task<ICollection<Contact>> GetAllOrderedByUpdateTime()
+        {
+            return await _dbContext.Contacts.Include((con) => con.Status).OrderByDescending((con)=>con.UpdatedAt).ToListAsync();
+        }
+
+        
+
 
     }
 }

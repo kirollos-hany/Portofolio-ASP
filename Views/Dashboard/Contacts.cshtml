@@ -13,7 +13,6 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>PhoneNumber</th>
-                            <th>Requested Services</th>
                             <th>Status</th>
                           </tr>
                         </thead>
@@ -27,15 +26,6 @@
                                     <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light">@contact.ContactName</a></td>
                                     <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light">@contact.Email</a></td>
                                     <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light">@contact.Phone</a></td>
-                                    <td><ul>
-                                      @if(contact.RequestedServices != default(ICollection<RequestedService>))
-                                        {
-                                          @foreach(var service in contact.RequestedServices)
-                                          {
-                                              <li><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light">@service.AssociatedService.ServiceName</a></li>
-                                          }
-                                        }
-                                    </ul></td>
                                     @{
                                         var status = contact.Status.Status;
                                     }
@@ -49,6 +39,7 @@
                                     {
                                         <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light"><label class="badge badge-success">@contact.Status.Status</label></a></td>
                                     }
+                                    
                               </tr>
                               }
                             }

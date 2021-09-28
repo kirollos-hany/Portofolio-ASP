@@ -9,62 +9,71 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Portofolio.AppModels.Repositories
 {
-    public class UserLinksRepository : BaseRepository<UserLink>
+    public class UserLinksRepository : BaseRepository
     {
         public UserLinksRepository(PortofolioDbContext dbContext) : base(dbContext)
         {
         }
 
-        public async override Task<UserLink> Create(UserLink entity)
+        public async Task<UserLink> Edit(int id, UserLink newLink)
         {
-            entity.CreatedAt = DateTime.Now;
-            entity.UpdatedAt = DateTime.Now;
-            await _dbContext.UserLinks.AddAsync(entity);
-            await SaveChanges();
-            return entity;
+            var link = await _dbContext.UserLinks.FindAsync(id);
+            link.UpdatedAt = DateTime.Now;
+            link.Link = newLink.Link;
+            await _dbContext.SaveChangesAsync();
+            return link;
         }
 
-        public async override Task<UserLink> Delete(UserLink entity)
+        public async Task<UserLink> Create(UserLink newLink)
         {
-            _dbContext.UserLinks.Remove(entity);
-            await SaveChanges();
-            return entity;
+            newLink.CreatedAt = DateTime.Now;
+            newLink.UpdatedAt = DateTime.Now;
+            await _dbContext.UserLinks.AddAsync(newLink);
+            await _dbContext.SaveChangesAsync();
+            return newLink;
         }
 
-        public async override Task<ICollection<UserLink>> DeleteCollection(ICollection<UserLink> entities)
+        public async Task CreateUserLinks(ICollection<string> links, ICollection<int> linkTypeIds, int userId)
         {
-            _dbContext.UserLinks.RemoveRange(entities);
-            await SaveChanges();
-            return entities;
+            for (int i = 0; i < links.Count; i++)
+            {
+                var newUserLink = new UserLink
+                {
+                    UserId = userId,
+                    TypeId = linkTypeIds.ElementAt(i),
+                };
+                if(links.ElementAt(i) != default(string))
+                {
+                    newUserLink.Link = links.ElementAt(i);
+                }
+                await Create(newUserLink);
+            }
         }
 
-        public async override Task<UserLink> Edit(UserLink entity)
+        public async Task EditUserLinks(ICollection<string> links, ICollection<int> ids)
         {
-            var ul = await _dbContext.UserLinks.FindAsync(entity.Id);
-            ul.Link = entity.Link;
-            ul.UpdatedAt = DateTime.Now;
-            await SaveChanges();
-            return entity;
+            for (int i = 0; i < links.Count; i++)
+            {
+                var newUserLink = new UserLink
+                {
+                    Link = links.ElementAt(i),
+                    Id = ids.ElementAt(i)
+                };
+                await Edit(ids.ElementAt(i), newUserLink);
+            }
         }
 
-        public async override Task<UserLink> FindByCondition(Expression<Func<UserLink, bool>> expression)
+        public async Task<ICollection<UserLink>> GetUserLinks(int userId)
         {
-            return await _dbContext.UserLinks.Include(ul => ul.Type).Include(ul => ul.User).Where(expression).FirstOrDefaultAsync();
+            return await _dbContext.UserLinks.Include((link) => link.Type).Where((link) => link.UserId == userId).ToListAsync();
         }
 
-        public async override Task<ICollection<UserLink>> FindCollectionByCondition(Expression<Func<UserLink, bool>> expression)
+        public async Task<ICollection<UserLink>> DeleteCollection(ICollection<UserLink> userLinks)
         {
-            return await _dbContext.UserLinks.Include(ul => ul.Type).Include(ul => ul.User).Where(expression).ToListAsync();
+            _dbContext.UserLinks.RemoveRange(userLinks);
+            await _dbContext.SaveChangesAsync();
+            return userLinks;
         }
 
-        public async override Task<ICollection<UserLink>> GetAll()
-        {
-            return await _dbContext.UserLinks.Include(ul => ul.Type).Include(ul => ul.User).ToListAsync();
-        }
-
-        public async override Task<UserLink> GetById(int id)
-        {
-            return await _dbContext.UserLinks.Include(ul => ul.Type).Include(ul => ul.User).FirstOrDefaultAsync(ul => ul.Id == id);
-        }
     }
 }

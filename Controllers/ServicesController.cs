@@ -7,44 +7,65 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Portofolio.ViewModels;
 using Portofolio.AppModels.Extensions;
-using static Portofolio.AppModels.Utils.Constants;
 using Portofolio.AppModels.Services;
 using Portofolio.AppModels.Exceptions;
-using Microsoft.AspNetCore.Identity;
+using static Portofolio.AppModels.Utils.Constants;
+using Microsoft.AspNetCore.Http;
 namespace Portofolio.Controllers
 {
     public class ServicesController : Controller
     {
-        private readonly IRepository<Service> _repository;
+        private readonly ServicesRepository _repository;
 
         private readonly IImageServices _imageServices;
 
         private readonly IPaginator<Service> _paginator;
 
-        private readonly UserManager<User> _userManager;
-
-        private readonly IRepository<ServicesLog> _servicesLogRepository;
-
         private readonly IDisplayOutput _outputDisplayer;
 
-        public ServicesController(IDisplayOutput outputDisplayer, UserManager<User> userManager, BaseRepository<ServicesLog> servicesLogRepository, BasePaginator<Service> paginator, BaseRepository<Service> repository, IImageServices imageServices)
+        private readonly ProjectsRepository _projectsRepository;
+
+        public ServicesController(ProjectsRepository projectsRepository, IDisplayOutput outputDisplayer, BasePaginator<Service> paginator, ServicesRepository repository, IImageServices imageServices)
         {
             _repository = repository;
             _imageServices = imageServices;
             _paginator = paginator;
-            _userManager = userManager;
-            _servicesLogRepository = servicesLogRepository;
             _outputDisplayer = outputDisplayer;
+            _projectsRepository = projectsRepository;
         }
         public async Task<IActionResult> Index(int page = 1)
         {
+            var latestProjects = await _projectsRepository.GetLatestProjects(4);
+            var latestServices = await _repository.GetLatestServices(4);
             ICollection<Service> services = await _repository.GetAll();
             var paginatedModel = _paginator.Paginate(services, page);
-            return View(paginatedModel);
+            return View(new ServicesViewModel
+            {
+                LatestProjects = latestProjects,
+                LatestServices = latestServices,
+                PaginationModel = paginatedModel
+            });
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var latestServices = await _repository.GetLatestServices(4);
+            var latestProjects = await _projectsRepository.GetLatestProjects(4);
+            var service = await _repository.GetById(id);
+            if (service == default(Service))
+            {
+                return NotFound();
+            }
+            return View(new ServiceDetailsViewModel
+            {
+                LatestProjects = latestProjects,
+                LatestServices = latestServices,
+                Service = service
+            });
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize("Admin")]
         public async Task<IActionResult> Create(ServicesDashboardVM serviceVM)
         {
             if (!ModelState.IsValid)
@@ -59,39 +80,21 @@ namespace Portofolio.Controllers
             if (serviceVM.ServiceImage != null)
             {
                 service.ServiceImage = await _imageServices.UploadImgAsync(serviceVM.ServiceImage);
+                await _imageServices.ResizeImg(service.ServiceImage, ServiceImageSize);
             }
             await _repository.Create(service);
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            await _servicesLogRepository.Create(new ServicesLog
-            {
-                ServiceId = service.Id,
-                UserId = user.Id,
-                ServiceName = service.ServiceName,
-                Action = LogActions.Create.ToString(),
-                UserName = user.UserName
-            });
             return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
         }
 
-        [Authorize]
+        [Authorize("Admin")]
         public async Task<IActionResult> Delete(int id)
         {
-            var service = await _repository.GetById(id);
+            var service = await _repository.Delete(id);
             _imageServices.DeleteImg(service.ServiceImage);
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            await _servicesLogRepository.Create(new ServicesLog
-            {
-                ServiceId = service.Id,
-                UserId = user.Id,
-                ServiceName = service.ServiceName,
-                Action = LogActions.Delete.ToString(),
-                UserName = user.UserName
-            });
-            await _repository.Delete(service);
             return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
         }
 
-        [Authorize]
+        [Authorize("Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, ServicesDashboardVM model)
@@ -99,51 +102,43 @@ namespace Portofolio.Controllers
             if (!ModelState.IsValid)
             {
                 ModelState.AssignViewDataWithErrors(ViewData);
-                return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
+                return RedirectToAction(nameof(DashboardController.ServiceDetails), "Dashboard", new {id = id});
             }
-            if (model.ServiceImage != null)
+            if (model.ServiceImage != default(IFormFile))
             {
                 try
                 {
                     var service = new Service
                     {
-                        Id = id,
                         ServiceName = model.Name,
                         ServiceDescription = model.Description
                     };
                     _imageServices.ValidateImgExtension(model.ServiceImage);
                     _imageServices.DeleteImg(service.ServiceImage);
                     service.ServiceImage = await _imageServices.UploadImgAsync(model.ServiceImage);
-                    await _repository.Edit(service);
+                    await _imageServices.ResizeImg(service.ServiceImage, ServiceImageSize);
+                    await _repository.EditWithImage(id, service);
                 }
                 catch (CustomException ex)
                 {
-                    _outputDisplayer.DisplayOutput(ViewData, false, ex.Message);
-                    return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
+                    _outputDisplayer.DisplayOutput(TempData, false, ex.Message);
+                    return RedirectToAction(nameof(DashboardController.ServiceDetails), "Dashboard", new {id = id});
                 }
-            }else
+            }
+            else
             {
-                var service = await _repository.GetById(id);
-                var newService = new Service{
-                    Id = id,
+                var newService = new Service
+                {
                     ServiceName = model.Name,
                     ServiceDescription = model.Description,
-                    ServiceImage = service.ServiceImage
                 };
-                await _repository.Edit(newService);
+                await _repository.EditWithoutImage(id, newService);
             }
-            _outputDisplayer.DisplayOutput(ViewData, true, "Service edit successful");
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            await _servicesLogRepository.Create(new ServicesLog
-            {
-                ServiceId = id,
-                UserId = user.Id,
-                ServiceName = model.Name,
-                Action = LogActions.Update.ToString(),
-                UserName = user.UserName
-            });
-            return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
+            _outputDisplayer.DisplayOutput(TempData, true, "Service edit successful");
+            return RedirectToAction(nameof(DashboardController.ServiceDetails), "Dashboard", new {id = id});
         }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

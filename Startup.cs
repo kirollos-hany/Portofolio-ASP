@@ -49,17 +49,17 @@ namespace Portofolio
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.Use(async (cxt, next) =>
             {
                 await next();
                 if (cxt.Response.StatusCode == 404)
                 {
-                    cxt.Request.Path = "/errors/error404";
-                    await next();
-                }else if(cxt.Response.StatusCode == 401)
+                    cxt.Response.Redirect("/Errors/Error404");
+                }
+                else if (cxt.Response.StatusCode == 401)
                 {
-                    cxt.Request.Path = "errors/error401";
-                    await next();
+                    cxt.Response.Redirect("/Errors/Error401");
                 }
             });
 

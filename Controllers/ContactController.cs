@@ -10,17 +10,16 @@ using Portofolio.AppModels.Extensions;
 using Portofolio.AppModels.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using System.Linq;
 namespace Portofolio.Controllers
 {
     public class ContactController : Controller
     {
-        private readonly IRepository<Contact> _contactRepository;
-        private readonly IRepository<Service> _serviceRepository;
+        private readonly ContactRepository _contactRepository;
+        private readonly ServicesRepository _servicesRepository;
 
         private readonly IMailService _mailService;
 
-        private readonly IRepository<RequestedService> _requestedServicesRepository;
+        private readonly RequestedServicesRepository _requestedServicesRepository;
 
         private readonly IEmailParserFromModelAsync<HTMLWithModel<Contact>> _contactEmailParser;
 
@@ -28,30 +27,34 @@ namespace Portofolio.Controllers
 
         private readonly SignInManager<User> _signInManager;
 
-        private readonly IRepository<ContactStatus> _contactStatusRepository;
-
-        private readonly IRepository<ContactLog> _contactLogsRepository;
+        private readonly ContactStatusRepository _contactStatusRepository;
 
         private readonly IDisplayOutput _outputDisplayer;
 
-        public ContactController(IDisplayOutput outputDisplayer, SignInManager<User> signInManager, BaseRepository<ContactLog> contactLogsRepository, BaseRepository<ContactStatus> contactStatusRepository, UserManager<User> userManager, BaseRepository<Contact> contactRepository, IEmailParserFromModelAsync<HTMLWithModel<Contact>> contactEmailParser, BaseRepository<Service> serviceRepository, BaseRepository<RequestedService> requestedServicesRepository, IMailService mailService)
+        private readonly ProjectsRepository _projectsRepository;
+
+        public ContactController(ProjectsRepository projectsRepository, ServicesRepository servicesRepository, IDisplayOutput outputDisplayer, SignInManager<User> signInManager, ContactStatusRepository contactStatusRepository, UserManager<User> userManager, ContactRepository contactRepository, IEmailParserFromModelAsync<HTMLWithModel<Contact>> contactEmailParser, RequestedServicesRepository requestedServicesRepository, IMailService mailService)
         {
             _mailService = mailService;
             _contactRepository = contactRepository;
-            _serviceRepository = serviceRepository;
             _requestedServicesRepository = requestedServicesRepository;
             _contactEmailParser = contactEmailParser;
             _userManager = userManager;
             _contactStatusRepository = contactStatusRepository;
-            _contactLogsRepository = contactLogsRepository;
             _signInManager = signInManager;
             _outputDisplayer = outputDisplayer;
+            _projectsRepository = projectsRepository;
+            _servicesRepository = servicesRepository;
         }
         public async Task<IActionResult> Index()
         {
+            var latestProjects = await _projectsRepository.GetLatestProjects(4);
+            var latestServices = await _servicesRepository.GetLatestServices(4);
             var viewModel = new ContactWithServicesViewModel
             {
-                Services = await _serviceRepository.GetAll(),
+                Services = await _servicesRepository.GetAll(),
+                LatestProjects = latestProjects,
+                LatestServices = latestServices
             };
             return View(viewModel);
         }
@@ -65,8 +68,6 @@ namespace Portofolio.Controllers
                 ModelState.AssignViewDataWithErrors(ViewData);
                 return RedirectToAction(controllerName: "Contact", actionName: "Index");
             }
-            ContactStatus cs = await _contactStatusRepository.FindByCondition(cs => cs.Status == ContactStatuses.Pending.ToString());
-            contactData.Contact.StatusId = cs.Id;
             Contact savedContact = await _contactRepository.Create(contactData.Contact);
             await _requestedServicesRepository.CreateFromIds(contactData.RequestedServicesIds, savedContact.Id);
             var contact = await _contactRepository.GetById(savedContact.Id);
@@ -77,68 +78,52 @@ namespace Portofolio.Controllers
                 HrefValue = $"href={Url.ActionLink(nameof(ContactController.ContactDetails), "Contact", new { id = contactData.Contact.Id }, Request.Scheme)}"
             });
             await _mailService.SendEmailAsync(mailRequest);
-            _outputDisplayer.DisplayOutput(ViewData, true, "Contact received successfuly, we will contact you asap!");
+            _outputDisplayer.DisplayOutput(TempData, true, "Contact received successfuly, we will contact you asap!");
             return RedirectToAction(controllerName: "Contact", actionName: "Index");
         }
-        [Authorize]
+        [Authorize("Admin")]
         public async Task<IActionResult> ContactDetails(int id)
         {
             var contact = await _contactRepository.GetById(id);
+            if(contact == default(Contact))
+            {
+                return NotFound();
+            }
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var statuses = await _contactStatusRepository.GetAll();
-            var pendingContactsCount = (await _contactRepository.GetAll()).Where((contact) => contact.Status.Status == ContactStatuses.Pending.ToString()).Count();
             return View(new ContactDetailsViewModel
             {
-                PendingContactsCount = pendingContactsCount,
+                PendingContactsCount = await _contactRepository.PendingContactsCount(),
                 Contact = contact,
                 User = user,
                 ContactStatuses = statuses
             });
         }
 
-        [Authorize]
+        [Authorize("Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditContactStatus(ContactDetailsViewModel editViewModel)
         {
-            
             if (editViewModel.StatusId == default(int))
             {
-                _outputDisplayer.DisplayOutput(ViewData, false, "Please select a new status for the contact");
+                _outputDisplayer.DisplayOutput(TempData, false, "Please select a new status for the contact");
             }
             else
             {
-                var contact = await _contactRepository.GetById(editViewModel.Contact.Id);
-                contact.StatusId = editViewModel.StatusId;
-                await _contactRepository.Edit(contact);
-                _outputDisplayer.DisplayOutput(ViewData, true, "Contact editted successfuly");
+                var contact = await _contactRepository.Edit(editViewModel.Contact.Id, editViewModel.StatusId);
+                _outputDisplayer.DisplayOutput(TempData, true, "Contact editted successfuly");
                 var user = await _userManager.GetUserAsync(HttpContext.User);
-                await _contactLogsRepository.Create(new ContactLog
-                {
-                    ContactName = contact.ContactName,
-                    Action = LogActions.Update.ToString(),
-                    UserId = user.Id,
-                    ContactId = contact.Id,
-                    UserName = user.UserName
-                });
             }
             return RedirectToAction(nameof(ContactDetails), new { id = editViewModel.Contact.Id });
         }
 
-        [Authorize]
+        [Authorize("Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var contact = await _contactRepository.GetById(id);
             await _contactRepository.Delete(contact);
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            await _contactLogsRepository.Create(new ContactLog
-            {
-                ContactName = contact.ContactName,
-                Action = LogActions.Delete.ToString(),
-                UserId = user.Id,
-                ContactId = contact.Id,
-                UserName = user.UserName
-            });
             return RedirectToAction(nameof(DashboardController.Contacts), "Dashboard");
         }
 

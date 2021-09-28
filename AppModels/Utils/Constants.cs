@@ -4,9 +4,12 @@ namespace Portofolio.AppModels.Utils
 {
     public class Constants
     {
+        public enum UserRoles { Admin }
         public static Size ProjectImageSize { get => new Size(1024, 1024); }
 
         public static Size UserImageSize { get => new Size(475, 475); }
+
+        public static Size ServiceImageSize { get => new Size(475, 475); }
 
         public static string ProjectImageDeleteAction { get => "Project image deleted"; }
 
@@ -22,7 +25,7 @@ namespace Portofolio.AppModels.Utils
 
         public static string TeamLeaderRole { get => "Team Leader"; }
 
-        public static string AdminRole { get => "Admin"; }
+        public enum Roles { Admin };
 
         public static string LinksDefault { get => "#"; }
 
@@ -40,6 +43,12 @@ namespace Portofolio.AppModels.Utils
                 return dict;
             }
         }
+
+        public static string NotAssigned { get => "N/A"; }
+
+        public static string DateFormat { get => "ddd, dd MMM yyyy"; }
+
+        public static string DateTimeFormat { get => "ddd, dd MMM yyyy hh:mm tt"; }
 
     }
 

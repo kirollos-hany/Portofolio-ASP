@@ -1,7 +1,10 @@
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<User> _userManager
+@model DashboardViewModel
 @{
   ViewData[TitleKey] = "Dashboard";
+  bool isAdmin = await _userManager.IsInRoleAsync(Model.User, UserRoles.Admin.ToString());
 }
-@model DashboardViewModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,13 +29,14 @@
   <!-- endinject -->
   <!-- Layout styles -->
   <link rel="stylesheet" href="~/assets/css/style.css" />
-  <link rel="stylesheet" href="~/css/main.css" />
+  <link rel="stylesheet" href="~/css/main-dash.css" />
   <link rel="stylesheet" href="~/css/profile.css" />
   <link rel="stylesheet" href="~/css/project-details.css"/>
   <!-- End layout styles -->
-  <link rel="shortcut icon" href="~/assets/images/favicon.png" />
+  <link rel="shortcut icon" href="~/img/iconCross.png" />
   <link rel="stylesheet" href="~/css/dashboard-custom.css"/>
   <link rel="stylesheet" href="~/css/shuffler.css"/>
+  <link rel="stylesheet" href="~/css/linearicons.css" />
 </head>
 
 <body>
@@ -40,8 +44,8 @@
     <!-- partial:partials/_sidebar.html -->
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
       <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top bg-transparent">
-        <a class="sidebar-brand brand-logo" href="index.html"><img src="~/assets/images/logo.svg" alt="logo" /></a>
-        <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="~/assets/images/logo-mini.svg"
+        <a class="sidebar-brand brand-logo" asp-action="index" asp-controller="dashboard"><img src="~/img/logoCross.png" alt="logo" /></a>
+        <a class="sidebar-brand brand-logo-mini" asp-action="index" asp-controller="dashboard"><img src="~/img/iconCross.png"
             alt="logo" /></a>
       </div>
       <ul class="nav">
@@ -97,47 +101,61 @@
             <span class="menu-title">Projects</span>
           </a>
         </li>
-        <li class="nav-item menu-items" id="projectsNavItem">
-          <a class="nav-link" asp-action="members" asp-controller="dashboard">
-            <span class="menu-icon">
-              <i class="mdi mdi-speedometer"></i>
-            </span>
-            <span class="menu-title">Members</span>
-          </a>
-        </li>
+        @if(isAdmin)
+        {
+                  <li class="nav-item menu-items" id="projectsNavItem">
+                    <a class="nav-link" asp-action="developers" asp-controller="dashboard">
+                      <span class="menu-icon">
+                        <i class="mdi mdi-speedometer"></i>
+                      </span>
+                      <span class="menu-title">Developers</span>
+                    </a>
+                  </li>
+
+                  <li class="nav-item menu-items">
+                        <a class="nav-link" asp-action="Create" asp-controller="User">
+                          <span class="menu-icon">
+                              <i class="mdi mdi-account-plus"></i>
+                            </span>
+                            <span class="menu-title">Create User</span>
+                        </a>
+                  </li>
+
+              <li class="nav-item menu-items">
+                <a class="nav-link d-flex justify-content-between" asp-action="contacts" asp-controller="dashboard">
+                  <div class="d-inline-flex">
+                        <span class="menu-icon">
+                          <i class="mdi mdi-contact-mail"></i>
+                        </span>
+                        <span class="menu-title align-self-center">Contacts</span>
+                  </div>
+                  @if(Model.PendingContactsCount != 0)
+                  {
+                      <span id="pendingContactCount">
+                          <i class="notification-circle bg-notification">@Model.PendingContactsCount</i>
+                      </span>
+                  }
+                </a>
+              </li>
+
+              <li class="nav-item menu-items">
+                    <a class="nav-link" asp-action="services" asp-controller="dashboard">
+                          <span class="menu-icon">
+                            <i class="mdi mdi-layers"></i>
+                          </span>
+                          <span class="menu-title">Services</span>
+                    </a>
+              </li>
         <li class="nav-item menu-items">
-          <a class="nav-link" asp-action="Create" asp-controller="User">
-            <span class="menu-icon">
-              <i class="mdi mdi-account-plus"></i>
-            </span>
-            <span class="menu-title">Create User</span>
-          </a>
-        </li>
-        <li class="nav-item menu-items">
-          <a class="nav-link d-flex justify-content-between" asp-action="contacts" asp-controller="dashboard">
-            <div class="d-inline-flex">
+              <a class="nav-link" asp-action="projectslogs" asp-controller="dashboard">
                   <span class="menu-icon">
-                    <i class="mdi mdi-contact-mail"></i>
-                  </span>
-                  <span class="menu-title align-self-center">Contacts</span>
-            </div>
-            @if(Model.PendingContactsCount != 0)
-            {
-                <span>
-                    <i class="notification-circle bg-notification">@Model.PendingContactsCount</i>
-                </span>
-            }
-          </a>
+                      <i class="mdi mdi-clipboard"></i>
+                    </span>
+                    <span class="menu-title">Project Logs</span>
+              </a>
         </li>
-        <li class="nav-item menu-items">
-          <a class="nav-link" asp-action="services" asp-controller="dashboard">
-            <span class="menu-icon">
-              <i class="mdi mdi-layers"></i>
-            </span>
-            <span class="menu-title">Services</span>
-          </a>
-        </li>
-        <li class="nav-item menu-items">
+        }
+        <!-- <li class="nav-item menu-items">
           <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
             <span class="menu-icon">
               <i class="mdi mdi-security"></i>
@@ -164,9 +182,17 @@
               </li>
             </ul>
           </div>
+        </li> -->
+        <li class="nav-item menu-items" id="projectsNavItem">
+          <a class="nav-link" asp-action="index" asp-controller="home" target="_blank">
+            <span class="menu-icon">
+              <i class="mdi mdi-home"></i>
+            </span>
+            <span class="menu-title">Home</span>
+          </a>
         </li>
         <li class="nav-item menu-items">
-          <a class="nav-link" href="pages/charts/chartjs.html">
+          <a class="nav-link" asp-action="logout" asp-controller="user">
             <span class="menu-icon">
               <i class="mdi mdi-logout"></i>
             </span>
@@ -184,12 +210,12 @@
               alt="logo" /></a>
         </div>
         <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize" id="navToggle">
             <span class="mdi mdi-menu"></span>
           </button>
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item dropdown d-none d-lg-block">
-              <a class="nav-link btn btn-success create-new-button" asp-action="create" asp-controller="projects">+ Create New Project</a>
+              <a class="nav-link btn btn-primary create-new-button" asp-action="create" asp-controller="projects">+ Create New Project</a>
             </li>
             <li class="nav-item dropdown">
               <div class="nav-link clickable" id="profileDropdown" href="#" data-toggle="dropdown">
@@ -271,6 +297,7 @@
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
   }
+
     <script src="~/js/easing.min.js"></script>
     <script src="~/js/hoverIntent.js"></script>
     <script src="~/js/superfish.min.js"></script>
@@ -281,6 +308,7 @@
     <script src="~/js/owl.carousel.min.js"></script>
     <script src="~/js/main.js"></script>
     <script src="~/js/shuffler.js"></script> 
+    <script src="~/js/pending-contact-count.js"></script>
 
   <!-- End custom js for this page -->
 </body>

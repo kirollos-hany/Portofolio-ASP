@@ -14412,6 +14412,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Shared\\_ScrollToTopBtn.cshtml",
+      "TargetPath": "Views\\Shared\\_ScrollToTopBtn.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Contact\\ContactDetails.cshtml",
       "TargetPath": "Views\\Contact\\ContactDetails.cshtml",
       "FileKind": "mvc"
@@ -14432,16 +14437,6 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "e:\\Personal\\Portofolio\\Views\\Home\\Members.cshtml",
-      "TargetPath": "Views\\Home\\Members.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\Members.cshtml",
-      "TargetPath": "Views\\Dashboard\\Members.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Projects\\Details.cshtml",
       "TargetPath": "Views\\Projects\\Details.cshtml",
       "FileKind": "mvc"
@@ -14452,8 +14447,8 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\ServicesLogs.cshtml",
-      "TargetPath": "Views\\Dashboard\\ServicesLogs.cshtml",
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\Developers.cshtml",
+      "TargetPath": "Views\\Dashboard\\Developers.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -14507,6 +14502,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Home\\Developers.cshtml",
+      "TargetPath": "Views\\Home\\Developers.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\ProjectsLogs.cshtml",
       "TargetPath": "Views\\Dashboard\\ProjectsLogs.cshtml",
       "FileKind": "mvc"
@@ -14519,11 +14519,6 @@
     {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\Contacts.cshtml",
       "TargetPath": "Views\\Dashboard\\Contacts.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\ContactsLogs.cshtml",
-      "TargetPath": "Views\\Dashboard\\ContactsLogs.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -14552,6 +14547,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Shared\\_ServiceCrudPartial.cshtml",
+      "TargetPath": "Views\\Shared\\_ServiceCrudPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Shared\\_DashboardLayout.cshtml",
       "TargetPath": "Views\\Shared\\_DashboardLayout.cshtml",
       "FileKind": "mvc"
@@ -14572,8 +14572,18 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Dashboard\\ServiceDetails.cshtml",
+      "TargetPath": "Views\\Dashboard\\ServiceDetails.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Shared\\_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Services\\Details.cshtml",
+      "TargetPath": "Views\\Services\\Details.cshtml",
       "FileKind": "mvc"
     },
     {

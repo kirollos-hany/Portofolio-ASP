@@ -8,62 +8,21 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 namespace Portofolio.AppModels.Repositories
 {
-    public class ProjectTypeRepository : BaseRepository<ProjectType>
+    public class ProjectTypeRepository : BaseRepository
     {
         public ProjectTypeRepository(PortofolioDbContext dbContext) : base(dbContext)
         {
         }
 
-        public async override Task<ProjectType> Create(ProjectType entity)
-        {
-            entity.CreatedAt = DateTime.Now;
-            entity.UpdatedAt = DateTime.Now;
-            await _dbContext.ProjectTypes.AddAsync(entity);
-            await SaveChanges();
-            return entity;
-        }
-
-        public async override Task<ProjectType> Delete(ProjectType entity)
-        {
-            _dbContext.ProjectTypes.Remove(entity);
-            await SaveChanges();
-            return entity;
-        }
-
-        public async override Task<ICollection<ProjectType>> DeleteCollection(ICollection<ProjectType> entities)
-        {
-            _dbContext.ProjectTypes.RemoveRange(entities);
-            await SaveChanges();
-            return entities;
-        }
-
-        public async override Task<ProjectType> Edit(ProjectType entity)
-        {
-            var projectType = await _dbContext.ProjectTypes.FindAsync(entity.Id);
-            projectType.Type = entity.Type;
-            projectType.UpdatedAt = DateTime.Now;
-            await SaveChanges();
-            return entity;
-        }
-
-        public async override Task<ProjectType> FindByCondition(Expression<Func<ProjectType, bool>> expression)
-        {
-            return await _dbContext.ProjectTypes.Include(pt => pt.Projects).Where(expression).FirstOrDefaultAsync();
-        }
-
-        public async override Task<ICollection<ProjectType>> FindCollectionByCondition(Expression<Func<ProjectType, bool>> expression)
-        {
-            return await _dbContext.ProjectTypes.Include(pt => pt.Projects).Where(expression).ToListAsync();
-        }
-
-        public async override Task<ICollection<ProjectType>> GetAll()
+        public async Task<ICollection<ProjectType>> GetAll()
         {
             return await _dbContext.ProjectTypes.ToListAsync();
         }
 
-        public async override Task<ProjectType> GetById(int id)
-        {
-            return await _dbContext.ProjectTypes.Include(pt => pt.Projects).FirstOrDefaultAsync(pt => pt.Id == id);
-        }
+
+        // public async override Task<ProjectType> GetById(int id)
+        // {
+        //     return await _dbContext.ProjectTypes.Include(pt => pt.Projects).FirstOrDefaultAsync(pt => pt.Id == id);
+        // }
     }
 }

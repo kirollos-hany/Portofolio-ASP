@@ -7,11 +7,12 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title text-xs-center">Edit Profile</h4>
+        <h4 class="modal-title text-xs-center">Create user</h4> 
       </div>
-        @if(ViewData[ResultMessageKey] != default(ViewDataDictionary))
+      <div asp-validation-summary="All"></div> 
+        @if(TempData[ResultMessageKey] != null)
         {
-          ResultMsgViewModel resultVM = ViewData[ResultMessageKey] as ResultMsgViewModel;
+          ResultMsgViewModel resultVM = TempData.GetResultMessage();
           <div class="modal-header">
           <div class="@resultVM.CssClass">@resultVM.Message</div>
           </div>

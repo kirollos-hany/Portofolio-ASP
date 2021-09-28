@@ -9,62 +9,63 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Portofolio.AppModels.Repositories
 {
-    public class ProjectLinksRepository : BaseRepository<ProjectLink>
+    public class ProjectLinksRepository : BaseRepository
     {
         public ProjectLinksRepository(PortofolioDbContext dbContext) : base(dbContext)
         {
         }
 
-        public async override Task<ProjectLink> Create(ProjectLink entity)
+        public async Task<ProjectLink> Create(ProjectLink link)
         {
-            entity.CreatedAt = DateTime.Now;
-            entity.UpdatedAt = DateTime.Now;
-            await _dbContext.ProjectLinks.AddAsync(entity);
-            await SaveChanges();
-            return entity;
+            link.CreatedAt = DateTime.Now;
+            link.UpdatedAt = DateTime.Now;
+            await _dbContext.ProjectLinks.AddAsync(link);
+            await _dbContext.SaveChangesAsync();
+            return link;
         }
 
-        public async override Task<ProjectLink> Delete(ProjectLink entity)
+        public async Task<ProjectLink> Edit(int id, ProjectLink newLink)
         {
-            _dbContext.ProjectLinks.Remove(entity);
-            await SaveChanges();
-            return entity;
+            var link = await _dbContext.ProjectLinks.FindAsync(id);
+            link.Link = newLink.Link;
+            link.UpdatedAt = DateTime.Now;
+            await _dbContext.SaveChangesAsync();
+            return link;
         }
 
-        public async override Task<ICollection<ProjectLink>> DeleteCollection(ICollection<ProjectLink> entities)
+        public async Task CreateFromCollection(int projectId, ICollection<int> linkTypesIds, ICollection<string> links)
         {
-            _dbContext.ProjectLinks.RemoveRange(entities);
-            await SaveChanges();
-            return entities;
+            for(int i = 0; i < links.Count; i++)
+            {
+                var link = new ProjectLink{
+                    ProjectId = projectId,
+                    TypeId = linkTypesIds.ElementAt(i)
+                };
+                if(links.ElementAt(i) != default(string))
+                {
+                    link.Link = links.ElementAt(i);
+                }
+                await Create(link);
+            }
         }
 
-        public async override Task<ProjectLink> Edit(ProjectLink entity)
+        public async Task EditFromCollection(ICollection<int> linksIds, ICollection<string> links)
         {
-            var pl = await _dbContext.ProjectLinks.FindAsync(entity.Id);
-            pl.Link = entity.Link;
-            pl.UpdatedAt = DateTime.Now;
-            await SaveChanges();
-            return pl;
+            for(int i = 0; i < linksIds.Count; i++)
+            {
+                await Edit(linksIds.ElementAt(i), new ProjectLink
+                {
+                    Link = links.ElementAt(i)
+                });
+            }
         }
 
-        public async override Task<ProjectLink> FindByCondition(Expression<Func<ProjectLink, bool>> expression)
+        public async Task<ICollection<ProjectLink>> DeleteCollection(ICollection<ProjectLink> links)
         {
-            return await _dbContext.ProjectLinks.Include(pl => pl.Type).FirstOrDefaultAsync(expression);
+            _dbContext.ProjectLinks.RemoveRange(links);
+            await _dbContext.SaveChangesAsync();
+            return links;
         }
 
-        public async override Task<ICollection<ProjectLink>> FindCollectionByCondition(Expression<Func<ProjectLink, bool>> expression)
-        {
-            return await _dbContext.ProjectLinks.Include(pl => pl.Type).Where(expression).ToListAsync();
-        }
-
-        public async override Task<ICollection<ProjectLink>> GetAll()
-        {
-            return await _dbContext.ProjectLinks.Include(pl => pl.Type).ToListAsync();
-        }
-
-        public async override Task<ProjectLink> GetById(int id)
-        {
-            return await _dbContext.ProjectLinks.Include(pl => pl.Type).FirstOrDefaultAsync(pl => pl.Id == id);
-        }
     }
 }
