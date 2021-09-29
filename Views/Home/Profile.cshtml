@@ -2,6 +2,9 @@
     ViewData[TitleKey] = "Profile";
 }
 @model ProfileViewModel
+    @{
+      await Html.RenderPartialAsync("_ShortBanner");
+    }
 <!--Start Profile Card-->
 <div class="page-content page-container container" id="page-content">
   <div class="padding container">

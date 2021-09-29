@@ -3,7 +3,9 @@
     ViewData[TitleKey] = "Details"; 
 }
 @model ProjectDetailsViewModel
-
+    @{
+      await Html.RenderPartialAsync("_ShortBanner");
+    }
 <!-- Start course-details Area -->
 <section class="course-details-area pt-120">
     <div class="container">

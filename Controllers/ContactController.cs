@@ -48,8 +48,8 @@ namespace Portofolio.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var latestProjects = await _projectsRepository.GetLatestProjects(4);
-            var latestServices = await _servicesRepository.GetLatestServices(4);
+            var latestProjects = await _projectsRepository.GetLatestProjects(NumOfLatestItems);
+            var latestServices = await _servicesRepository.GetLatestServices(NumOfLatestItems);
             var viewModel = new ContactWithServicesViewModel
             {
                 Services = await _servicesRepository.GetAll(),

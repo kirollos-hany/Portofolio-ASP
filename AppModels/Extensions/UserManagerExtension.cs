@@ -75,6 +75,11 @@ namespace Portofolio.AppModels.Extensions
             .Where((user) => user.Id == userId).FirstOrDefaultAsync();
         }
 
+        public static async Task<User> GetUserById(this UserManager<User> userManager, int userId)
+        {
+            return await userManager.Users.Where(user => user.Id == userId).FirstOrDefaultAsync();
+        }
+
         public static async Task<ICollection<User>> GetFounders(this UserManager<User> userManager)
         {
             return await userManager.GetUsersInRoleAsync(UserRoles.Admin.ToString());

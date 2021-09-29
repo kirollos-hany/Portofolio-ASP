@@ -9,7 +9,7 @@ namespace Portofolio.AppModels.Services
 
         public ProjectsPaginator()
         {
-            NumItemsInPage = 8;
+            NumItemsInPage = 4;
             NumPageLinksDisplay = 4;
         }
     }

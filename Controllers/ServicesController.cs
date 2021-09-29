@@ -35,8 +35,8 @@ namespace Portofolio.Controllers
         }
         public async Task<IActionResult> Index(int page = 1)
         {
-            var latestProjects = await _projectsRepository.GetLatestProjects(4);
-            var latestServices = await _repository.GetLatestServices(4);
+            var latestProjects = await _projectsRepository.GetLatestProjects(NumOfLatestItems);
+            var latestServices = await _repository.GetLatestServices(NumOfLatestItems);
             ICollection<Service> services = await _repository.GetAll();
             var paginatedModel = _paginator.Paginate(services, page);
             return View(new ServicesViewModel
@@ -49,8 +49,8 @@ namespace Portofolio.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var latestServices = await _repository.GetLatestServices(4);
-            var latestProjects = await _projectsRepository.GetLatestProjects(4);
+            var latestServices = await _repository.GetLatestServices(NumOfLatestItems);
+            var latestProjects = await _projectsRepository.GetLatestProjects(NumOfLatestItems);
             var service = await _repository.GetById(id);
             if (service == default(Service))
             {

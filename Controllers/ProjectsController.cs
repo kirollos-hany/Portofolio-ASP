@@ -68,8 +68,8 @@ namespace Portofolio.Controllers
 
         public async Task<IActionResult> Index(int page = 1)
         {
-            var latestProjects = await _projectsRepository.GetLatestProjects(4);
-            var latestServices = await _servicesRepository.GetLatestServices(4);
+            var latestProjects = await _projectsRepository.GetLatestProjects(NumOfLatestItems);
+            var latestServices = await _servicesRepository.GetLatestServices(NumOfLatestItems);
             var projects = await _projectsRepository.GetAll();
             var paginationVM = _projectPaginator.Paginate(projects, page);
             return View(new ProjectsViewModel
@@ -82,8 +82,8 @@ namespace Portofolio.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var latestProjects = await _projectsRepository.GetLatestProjects(4);
-            var latestServices = await _servicesRepository.GetLatestServices(4);
+            var latestProjects = await _projectsRepository.GetLatestProjects(NumOfLatestItems);
+            var latestServices = await _servicesRepository.GetLatestServices(NumOfLatestItems);
             var project = await _projectsRepository.GetByIdWithInclude(id);
             if (project == default(Project))
             {
@@ -188,6 +188,8 @@ namespace Portofolio.Controllers
             _outputDisplayer.DisplayOutput(TempData, true, "Project created successfully");
             await _projectLogRepository.Create(new ProjectLog
             {
+                CreatorId = user.Id,
+                CreatorName = user.UserName,
                 ProjectId = project.Id,
                 UserId = user.Id,
                 Title = project.Title,
@@ -256,8 +258,11 @@ namespace Portofolio.Controllers
                 }
             }
             _outputDisplayer.DisplayOutput(TempData, true, "Project edit is successful");
+            var creator = await _userManager.GetUserById(edittedProject.CreatorId);
             await _projectLogRepository.Create(new ProjectLog
             {
+                CreatorId = creator.Id,
+                CreatorName = creator.UserName,
                 ProjectId = edittedProject.Id,
                 UserId = user.Id,
                 Title = edittedProject.Title,
@@ -288,8 +293,11 @@ namespace Portofolio.Controllers
             await _projectLinksRepository.DeleteCollection(project.ProjectLinks);
             await _uipRepository.DeleteCollection(project.UsersInProjects);
             await _projectsRepository.Delete(project.Id);
+            var creator = await _userManager.GetUserById(project.CreatorId);
             await _projectLogRepository.Create(new ProjectLog
             {
+                CreatorId = creator.Id,
+                CreatorName = creator.UserName,
                 ProjectId = id,
                 UserId = user.Id,
                 Title = project.Title,
@@ -311,8 +319,11 @@ namespace Portofolio.Controllers
             }
             _imageServices.DeleteImg(image.ImagePath);
             await _projectImagesRepository.Delete(image.Id);
+            var creator = await _userManager.GetUserById(project.CreatorId);
             await _projectLogRepository.Create(new ProjectLog
             {
+                CreatorName = creator.UserName,
+                CreatorId = creator.Id,
                 ProjectId = project.Id,
                 UserId = user.Id,
                 Title = project.Title,
@@ -332,8 +343,11 @@ namespace Portofolio.Controllers
             {
                 return Unauthorized();
             }
+            var creator = await _userManager.GetUserById(project.CreatorId);
             await _projectLogRepository.Create(new ProjectLog
             {
+                CreatorId = creator.Id,
+                CreatorName = creator.UserName,
                 ProjectId = uip.ProjectId,
                 UserId = user.Id,
                 Title = project.Title,

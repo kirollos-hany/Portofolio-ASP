@@ -17,15 +17,7 @@
                               <div class="thumb">
                                 <img class="img-fluid" src="~/@project.Thumbnail" alt="Project Thumbnail" />
                               </div>
-                              @{
-                                var teamLeader = project.UsersInProjects.Where((uip) => uip.Role.Role == TeamLeaderRole).Select((uip) => uip.User).FirstOrDefault();
-                              }
-                              @if(teamLeader != default(User))
-                              {
-                                <p class="meta light">@project.CreatedAt.ToString(DateFormat) | Lead By <a target="_blank" asp-action="profile" asp-controller="home" asp-route-id="@teamLeader.Id">@teamLeader.UserName</a></p>
-                              }else{
-                                <p class="meta light">@project.CreatedAt.ToString(DateFormat)</p>
-                              }
+                                <p class="meta light">@project.CreatedAt.ToString(DateFormat) | By <a target="_blank" asp-action="profile" asp-controller="home" asp-route-id="@project.CreatorId">@project.Creator.UserName</a></p>
                                 <h5 class="light">@project.Title</h5>
                               <a
                                 asp-action="projectdetails"

@@ -13,11 +13,16 @@ namespace Portofolio.Models
         public Nullable<int> ProjectId { get; set; }
         public Nullable<int> UserId { get; set; }
 
+        public Nullable<int> CreatorId { get; set; }
+
         [Required(ErrorMessage = "Action made is required")]
         public string Action { get; set; }
 
         [Required(ErrorMessage = "Project title is required")]
         public string Title { get; set; }
+
+        [Required(ErrorMessage = "Creator name is required")]
+        public string CreatorName { get; set; }
 
         [Required(ErrorMessage = "Username is required")]
         public string UserName { get; set; }

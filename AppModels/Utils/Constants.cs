@@ -50,6 +50,8 @@ namespace Portofolio.AppModels.Utils
 
         public static string DateTimeFormat { get => "ddd, dd MMM yyyy hh:mm tt"; }
 
+        public static int NumOfLatestItems { get => 4; }
+
     }
 
 }

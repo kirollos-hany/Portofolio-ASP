@@ -5,6 +5,9 @@
     ViewData[PaginationDisplayCount] = Model.PaginationModel.DisplayCount;
 }
 @model ServicesViewModel
+    @{
+      await Html.RenderPartialAsync("_ShortBanner");
+    }
 <!-- Start events-list Area -->
 <section class="events-list-area section-gap event-page-lists" style="padding: 60px 0;">
     <div class="container">

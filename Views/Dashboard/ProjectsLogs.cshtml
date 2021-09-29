@@ -11,8 +11,9 @@
                         <thead>
                           <tr>
                             <th>Title</th>
-                            <th>Username</th>
+                            <th>Creator</th>
                             <th>Action</th>
+                            <th>Action By</th>
                             <th>Created</th>
                           </tr>
                         </thead>
@@ -21,11 +22,11 @@
                             {
                                     @foreach(var log in Model.Logs)
                                     {
-                                      
                                       <tr class="clickable-bg">
                                             <td>@log.Title</td>
-                                            <td>@log.UserName</td>
+                                            <td>@log.CreatorName</td>
                                             <td>@log.Action</td>
+                                            <td>@log.UserName</td>
                                             <td>@log.CreatedAt.ToString(DateTimeFormat)</td>
                                       </tr>
                                     }

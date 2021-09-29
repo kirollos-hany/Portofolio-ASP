@@ -9,6 +9,7 @@ using Portofolio.AppModels.Repositories;
 using Portofolio.AppModels.Services;
 using Portofolio.ViewModels;
 using Portofolio.AppModels.Extensions;
+using static Portofolio.AppModels.Utils.Constants;
 namespace Portofolio.Controllers
 {
     public class HomeController : Controller
@@ -39,8 +40,8 @@ namespace Portofolio.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var latestProjects = await _projectsRepository.GetLatestProjects(4);
-            var latestServices = await _servicesRepository.GetLatestServices(4);
+            var latestProjects = await _projectsRepository.GetLatestProjects(NumOfLatestItems);
+            var latestServices = await _servicesRepository.GetLatestServices(NumOfLatestItems);
             var founders = await _userManager.GetFounders();
             return View(new HomeViewModel{
                 LatestProjects = latestProjects,
@@ -51,8 +52,8 @@ namespace Portofolio.Controllers
 
         public async Task<IActionResult> Developers(int page = 1)
         {
-            var latestProjects = await _projectsRepository.GetLatestProjects(4);
-            var latestServices = await _servicesRepository.GetLatestServices(4);
+            var latestProjects = await _projectsRepository.GetLatestProjects(NumOfLatestItems);
+            var latestServices = await _servicesRepository.GetLatestServices(NumOfLatestItems);
             var users = await _userManager.Users.ToListAsync();
             users = users.OrderByDescending((user) => user.CreatedAt).ToList();
             var paginationVM = _usersPaginator.Paginate(users, page);
@@ -70,8 +71,8 @@ namespace Portofolio.Controllers
             {
                 return NotFound();
             }
-            var latestProjects = await _projectsRepository.GetLatestProjects(4);
-            var latestServices = await _servicesRepository.GetLatestServices(4);
+            var latestProjects = await _projectsRepository.GetLatestProjects(NumOfLatestItems);
+            var latestServices = await _servicesRepository.GetLatestServices(NumOfLatestItems);
             return View(new ProfileViewModel{
                 User = user,
                 LatestProjects = latestProjects,

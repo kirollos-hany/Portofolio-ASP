@@ -14437,6 +14437,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Shared\\_LongBanner.cshtml",
+      "TargetPath": "Views\\Shared\\_LongBanner.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Projects\\Details.cshtml",
       "TargetPath": "Views\\Projects\\Details.cshtml",
       "FileKind": "mvc"
@@ -14469,11 +14474,6 @@
     {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Shared\\_Footer.cshtml",
       "TargetPath": "Views\\Shared\\_Footer.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "e:\\Personal\\Portofolio\\Views\\Shared\\_Banner.cshtml",
-      "TargetPath": "Views\\Shared\\_Banner.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -14579,6 +14579,11 @@
     {
       "FilePath": "e:\\Personal\\Portofolio\\Views\\Shared\\_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "e:\\Personal\\Portofolio\\Views\\Shared\\_ShortBanner.cshtml",
+      "TargetPath": "Views\\Shared\\_ShortBanner.cshtml",
       "FileKind": "mvc"
     },
     {

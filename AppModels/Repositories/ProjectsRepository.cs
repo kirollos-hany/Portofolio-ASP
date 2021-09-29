@@ -17,12 +17,12 @@ namespace Portofolio.AppModels.Repositories
 
         public async Task<ICollection<Project>> GetLatestProjects(int numOfProjects)
         {
-            return await _dbContext.Projects.OrderByDescending((proj) => proj.CreatedAt).Take(numOfProjects).ToListAsync();
+            return await _dbContext.Projects.Include(project => project.Creator).OrderByDescending((proj) => proj.CreatedAt).Take(numOfProjects).ToListAsync();
         }
 
         public async Task<ICollection<Project>> GetAll()
         {
-            return await _dbContext.Projects.OrderByDescending((proj) => proj.CreatedAt).ToListAsync();
+            return await _dbContext.Projects.Include(project => project.Creator).OrderByDescending((proj) => proj.CreatedAt).ToListAsync();
         }
 
         public async Task<Project> GetByIdWithInclude(int id)
@@ -33,7 +33,7 @@ namespace Portofolio.AppModels.Repositories
             .Include(project => project.ProjectImages)
             .Include(Project => Project.UsersInProjects).ThenInclude(usersInProject => usersInProject.User)
             .Include(project => project.UsersInProjects).ThenInclude(usersInProject => usersInProject.Role)
-            .FirstOrDefaultAsync(project => project.Id == id);
+            .OrderByDescending(project => project.CreatedAt).FirstOrDefaultAsync(project => project.Id == id);
         }
 
         public async Task<Project> GetByIdNoInclude(int id)
@@ -87,7 +87,7 @@ namespace Portofolio.AppModels.Repositories
 
         public async Task<ICollection<Project>> GetUserCreatedProjects(int userId)
         {
-            return await _dbContext.Projects.Where((project) => project.CreatorId == userId).ToListAsync();
+            return await _dbContext.Projects.Include(project => project.Creator).Where((project) => project.CreatorId == userId).ToListAsync();
         }
 
     }
