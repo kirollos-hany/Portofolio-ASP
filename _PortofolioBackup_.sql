@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 28, 2021 at 09:36 PM
+-- Generation Time: Sep 30, 2021 at 10:20 AM
 -- Server version: 8.0.26
 -- PHP Version: 7.4.2
 
@@ -26,6 +26,10 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `aspnetroleclaims`
 --
+
+CREATE DATABASE portofoliodb;
+
+USE portofoliodb;
 
 CREATE TABLE `aspnetroleclaims` (
   `Id` int NOT NULL,
@@ -181,7 +185,7 @@ INSERT INTO `aspnetusers` (`Id`, `ImagePath`, `CreatedAt`, `UpdatedAt`, `UserNam
 (50, 'Ut reprehenderit rerum a voluptatem inventore officia. Non enim sint sit et molestiae ducimus. Perferendis molestiae expedita architecto cum qui beatae voluptas voluptas. Quam sed tenetur dolorem facere earum ab.', '2021-08-23 19:15:22.000000', '2021-08-23 19:15:22.000000', 'Ms. Lelia Vandervort Jr.', NULL, 'hollie@gleichner.uk', NULL, 0, '252-29-4601', NULL, '5f9261d8-297d-4778-a79a-b9af9065faad', '+201206784139', 0, 0, NULL, 0, 0, 'Backend Developer'),
 (59, 'images\\475c9636-1a28-49e4-b79f-62bb66b695453a698033-7fcd-4b5c-b4a4-dc8f9889ff7bbebo.jpeg', '2021-08-25 09:43:57.410932', '2021-08-25 10:06:31.125981', 'Abanoub Rafaat', 'ABANOUB RAFAAT', 'bebo@gmail.com', 'BEBO@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEI0EOfH1O2tXFqQdVcimXqERyOWQ0PfFSw40x3UQVnuA46L1TTp25z/gD6yETHWmyg==', 'XH65JIPI74YRRFLH6YQYE5KYWODWCSNK', '224c4efd-85db-4531-9d5d-2dd7efe90e90', '+201282692682', 0, 0, NULL, 1, 0, 'Front End Developer'),
 (61, 'img/avatar.png', '2021-08-26 14:41:44.306244', '2021-08-26 14:41:44.306239', 'Gergis Hanna', 'GERGIS HANNA', 'gergishanna@gmail.com', 'GERGISHANNA@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEL97ILlfTPgqFfqfp+Wnviei7mJ7pGe8qC/ikBpFxyz/3hcvX1A4D8ACE1Q5iz+rxw==', 'Q5USBUTN5ATNJ5U2U2IZYJMV2RUAP464', '01823e59-7159-4e70-a471-4901adbb9971', NULL, 0, 0, NULL, 1, 0, 'Back End Developer'),
-(66, 'Images\\2f6a365b-fcff-4b76-a0d6-a2583e5d3d8b.jpeg', '2021-09-22 14:41:44.306244', '2021-09-22 14:41:44.306244', 'Kirollos Hany', 'KIROLLOS HANY', 'kirolloshany9999@gmail.com', 'KIROLLOSHANY9999@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEH2smken8iztt7DljRfbkKTpeJni5Ctqekt8ljs95/0zEsKA9XoF81R4g3vfcok6bQ==', 'CKRCWI7Y5IFWFCPH6XYTGXHEFD2AG72F', 'b4c996d6-f7ca-4231-8ab7-47b0c0654979', '+201206784139', 0, 0, NULL, 0, 0, 'Back End Developer'),
+(66, 'images\\5bceb4a8-8a66-42c4-b922-bdb0aa8b7268kiro.jpeg', '2021-09-22 14:41:44.306244', '2021-09-29 15:13:10.610578', 'Kirollos Hany', 'KIROLLOS HANY', 'kirolloshany9999@gmail.com', 'KIROLLOSHANY9999@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEH2smken8iztt7DljRfbkKTpeJni5Ctqekt8ljs95/0zEsKA9XoF81R4g3vfcok6bQ==', 'CKRCWI7Y5IFWFCPH6XYTGXHEFD2AG72F', 'f9b84fff-89a7-4c39-94d8-18c5f7f539ba', '+201206784139', 0, 0, NULL, 0, 0, 'Back End Developer'),
 (67, 'img/avatar.png', '2021-09-28 11:09:11.310974', '2021-09-28 12:43:11.326378', 'Test', 'TEST', 'test@gmail.com', 'TEST@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAENOd2BZcCByqtQ8r+RbOB4IY/P2wrNsEJJf5tmak7xqUWENZOJzrJqapbcoHWhjHXg==', 'OJBLN4YC7Q6TE6J5HOVICRCKMK2BNJMA', 'e910e66c-4113-4035-a5ae-a066f7d93141', '+201206784139', 0, 0, NULL, 1, 0, 'Software Engineer'),
 (68, 'img/avatar.png', '2021-09-28 18:58:28.363513', '2021-09-28 18:58:28.363509', 'TestUser', 'TESTUSER', 'test2@gmail.com', 'TEST2@GMAIL.COM', 0, 'AQAAAAEAACcQAAAAEPjmTLxNoPcigt1ypuOAKmFhmc+bRslblYsCzExPvW1Yr338jLw7IXs/ED9vMPXj1w==', '34YDV64BT2LJHQJZKUUEGQX6ZDMF5WU3', '557457ff-66d4-458c-9ef2-4666bfdaaaec', NULL, 0, 0, NULL, 1, 0, NULL);
 
@@ -386,14 +390,14 @@ INSERT INTO `projectlinks` (`Id`, `ProjectId`, `TypeId`, `Link`, `CreatedAt`, `U
 (105, 68, 2, '#', '2021-09-19 20:58:50', '2021-09-22 08:32:05'),
 (106, 68, 3, '#', '2021-09-19 20:58:50', '2021-09-22 08:32:05'),
 (107, 68, 4, '#', '2021-09-19 20:58:50', '2021-09-22 08:32:05'),
-(180, 87, 1, '#', '2021-09-28 18:53:38', '2021-09-28 18:53:38'),
-(181, 87, 2, '#', '2021-09-28 18:53:38', '2021-09-28 18:53:38'),
-(182, 87, 3, '#', '2021-09-28 18:53:38', '2021-09-28 18:53:38'),
-(183, 87, 4, '#', '2021-09-28 18:53:38', '2021-09-28 18:53:38'),
-(184, 88, 1, '#', '2021-09-28 18:59:32', '2021-09-28 18:59:32'),
-(185, 88, 2, '#', '2021-09-28 18:59:32', '2021-09-28 18:59:32'),
-(186, 88, 3, '#', '2021-09-28 18:59:32', '2021-09-28 18:59:32'),
-(187, 88, 4, '#', '2021-09-28 18:59:32', '2021-09-28 18:59:32');
+(180, 87, 1, '#', '2021-09-28 18:53:38', '2021-09-29 11:29:36'),
+(181, 87, 2, '#', '2021-09-28 18:53:38', '2021-09-29 11:29:36'),
+(182, 87, 3, '#', '2021-09-28 18:53:38', '2021-09-29 11:29:36'),
+(183, 87, 4, '#', '2021-09-28 18:53:38', '2021-09-29 11:29:36'),
+(184, 88, 1, '#', '2021-09-28 18:59:32', '2021-09-29 13:18:26'),
+(185, 88, 2, '#', '2021-09-28 18:59:32', '2021-09-29 13:18:26'),
+(186, 88, 3, '#', '2021-09-28 18:59:32', '2021-09-29 13:18:26'),
+(187, 88, 4, '#', '2021-09-28 18:59:32', '2021-09-29 13:18:26');
 
 -- --------------------------------------------------------
 
@@ -405,6 +409,8 @@ CREATE TABLE `projectlogs` (
   `Id` int NOT NULL,
   `ProjectId` int DEFAULT NULL,
   `UserId` int DEFAULT NULL,
+  `CreatorId` int DEFAULT NULL,
+  `CreatorName` text,
   `Action` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `Title` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `UserName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
@@ -415,28 +421,8 @@ CREATE TABLE `projectlogs` (
 -- Dumping data for table `projectlogs`
 --
 
-INSERT INTO `projectlogs` (`Id`, `ProjectId`, `UserId`, `Action`, `Title`, `UserName`, `CreatedAt`) VALUES
-(1, 68, 58, 'Project updated', 'Portofolio', 'Kirollos Hany', '2021-09-21 16:53:53'),
-(2, 68, 58, 'Project updated', 'Portofolio', 'Kirollos Hany', '2021-09-22 08:32:05'),
-(3, NULL, 58, 'Project created', 'teste', 'Kirollos Hany', '2021-09-22 08:32:47'),
-(5, NULL, 58, 'Project created', 'tests', 'Kirollos Hany', '2021-09-22 08:36:09'),
-(7, NULL, 58, 'Project created', 'tests', 'Kirollos Hany', '2021-09-22 08:39:11'),
-(9, NULL, 58, 'Project created', 'tests', 'Kirollos Hany', '2021-09-22 08:40:44'),
-(11, NULL, 58, 'Project created', 'tests', 'Kirollos Hany', '2021-09-22 08:41:55'),
-(13, NULL, 58, 'Project created', 'tests', 'Kirollos Hany', '2021-09-22 08:44:42'),
-(15, NULL, 58, 'Project created', 'test', 'Kirollos Hany', '2021-09-22 08:48:03'),
-(17, NULL, 58, 'Project created', 'fdasfdas', 'Kirollos Hany', '2021-09-22 08:49:07'),
-(19, NULL, 58, 'Project created', 'tests', 'Kirollos Hany', '2021-09-22 08:51:02'),
-(21, NULL, 58, 'Project created', 'tests', 'Kirollos Hany', '2021-09-22 08:52:50'),
-(23, NULL, 58, 'Project created', 'fdsafdas', 'Kirollos Hany', '2021-09-22 08:57:30'),
-(25, 85, 58, 'Project created', 'fdafdas', 'Kirollos Hany', '2021-09-22 09:00:10'),
-(26, 85, 58, 'Project deleted', 'fdafdas', 'Kirollos Hany', '2021-09-22 09:00:20'),
-(27, 86, 67, 'Create', 'Test', 'Test', '2021-09-28 12:07:49'),
-(28, 86, 67, 'Update', 'Test', 'Test', '2021-09-28 12:19:30'),
-(29, 86, 67, 'Update', 'Test', 'Test', '2021-09-28 12:20:11'),
-(30, 86, 67, 'Delete', 'Test', 'Test', '2021-09-28 12:20:54'),
-(31, 87, 67, 'Create', 'Test', 'Test', '2021-09-28 18:53:38'),
-(32, 88, 68, 'Create', 'Testss', 'TestUser', '2021-09-28 18:59:32');
+INSERT INTO `projectlogs` (`Id`, `ProjectId`, `UserId`, `CreatorId`, `CreatorName`, `Action`, `Title`, `UserName`, `CreatedAt`) VALUES
+(1, 88, 66, 68, 'TestUser', 'Update', 'Testss', 'Kirollos Hany', '2021-09-29 13:18:26');
 
 -- --------------------------------------------------------
 
@@ -462,8 +448,8 @@ CREATE TABLE `projects` (
 
 INSERT INTO `projects` (`Id`, `CreatorId`, `TypeId`, `Title`, `Description`, `CreatedAt`, `UpdatedAt`, `ToolsUsed`, `Thumbnail`) VALUES
 (68, 66, 3, 'Portofolio', 'Startup Portofolio Gallery', '2021-09-19 20:58:50', '2021-09-22 08:32:05', 'HTML-CSS-JAVASCRIPT-ASPNETCORE', 'images\\4c92845d-257f-4f1e-bf27-7776d42a8de521a0fafb-317d-4a4a-acb9-ebaf2a74ac3c.jpg'),
-(87, 67, 3, 'Test', 'test test test', '2021-09-28 18:53:37', '2021-09-28 18:53:37', 'Tool1-Tool2-Tool3', 'images\\bf45b841-0ee4-48ef-b669-f394da7d7343f0d4441d-a44b-44c6-8664-d30c981b477aimg3.jpg'),
-(88, 68, 1, 'Testss', 'Tessssss', '2021-09-28 18:59:32', '2021-09-28 18:59:32', 'Tool1-Tool2', 'images\\392f5290-0276-4836-bf96-3d92807b49a25e7ca3fc-e758-49c6-89a9-e36b22ee89898e4212e0-79de-4db5-b272-8af52f033adbaee5c8ee-36b0-4daf-a3fd-6129b9b6def1.jpg');
+(87, 67, 3, 'Test', 'test test tests', '2021-09-28 18:53:37', '2021-09-29 11:29:36', 'Tool1-Tool2-Tool3', 'images\\bf45b841-0ee4-48ef-b669-f394da7d7343f0d4441d-a44b-44c6-8664-d30c981b477aimg3.jpg'),
+(88, 68, 2, 'Testss', 'Tessssss', '2021-09-28 18:59:32', '2021-09-29 13:18:26', 'Tool1-Tool2', 'images\\392f5290-0276-4836-bf96-3d92807b49a25e7ca3fc-e758-49c6-89a9-e36b22ee89898e4212e0-79de-4db5-b272-8af52f033adbaee5c8ee-36b0-4daf-a3fd-6129b9b6def1.jpg');
 
 -- --------------------------------------------------------
 
@@ -639,9 +625,9 @@ INSERT INTO `userlinks` (`Id`, `UserId`, `TypeId`, `Link`, `CreatedAt`, `Updated
 (74, 61, 2, ' #', '0001-01-01 00:00:00', '0001-01-01 00:00:00'),
 (75, 61, 3, ' #', '0001-01-01 00:00:00', '0001-01-01 00:00:00'),
 (76, 61, 4, ' #', '0001-01-01 00:00:00', '0001-01-01 00:00:00'),
-(77, 66, 4, 'https://www.facebook.com/profile.php?id=100004658298305', '2021-09-23 15:03:09', '2021-09-23 15:03:09'),
-(78, 66, 2, 'https://github.com/kirollos-hany', '2021-09-23 15:03:09', '2021-09-23 15:03:09'),
-(79, 66, 3, 'https://www.linkedin.com/in/kirollos-hany-92149b1b2/', '2021-09-23 15:03:09', '2021-09-23 15:03:09'),
+(77, 66, 4, 'https://www.facebook.com/profile.php?id=100004658298305', '2021-09-23 15:03:09', '2021-09-29 15:13:11'),
+(78, 66, 2, 'https://github.com/kirollos-hany', '2021-09-23 15:03:09', '2021-09-29 15:13:11'),
+(79, 66, 3, 'https://www.linkedin.com/in/kirollos-hany-92149b1b2/', '2021-09-23 15:03:09', '2021-09-29 15:13:11'),
 (80, 67, 1, '#', '2021-09-28 11:09:11', '2021-09-28 12:43:12'),
 (81, 67, 2, '#', '2021-09-28 11:09:12', '2021-09-28 12:43:12'),
 (82, 67, 3, '#', '2021-09-28 11:09:12', '2021-09-28 12:43:12'),
@@ -695,12 +681,11 @@ CREATE TABLE `usersinprojects` (
 INSERT INTO `usersinprojects` (`Id`, `UserId`, `ProjectId`, `RoleId`, `CreatedAt`, `UpdatedAt`) VALUES
 (109, 59, 68, 2, '2021-09-19 20:58:49.676420', '2021-09-22 08:32:04.896429'),
 (145, 66, 68, 3, '2001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000'),
-(149, 59, 87, 2, '2021-09-28 18:53:37.493086', '2021-09-28 18:53:37.493123'),
-(150, 66, 87, 1, '2021-09-28 18:53:37.526791', '2021-09-28 18:53:37.526794'),
-(151, 67, 87, 3, '2021-09-28 18:53:37.529822', '2021-09-28 18:53:37.529823'),
-(152, 66, 88, 2, '2021-09-28 18:59:32.251696', '2021-09-28 18:59:32.251738'),
-(153, 67, 88, 2, '2021-09-28 18:59:32.259733', '2021-09-28 18:59:32.259735'),
-(154, 68, 88, 3, '2021-09-28 18:59:32.261881', '2021-09-28 18:59:32.261882');
+(149, 59, 87, 2, '2021-09-28 18:53:37.493086', '2021-09-29 11:29:36.350214'),
+(150, 66, 87, 1, '2021-09-28 18:53:37.526791', '2021-09-29 11:29:36.362043'),
+(152, 66, 88, 2, '2021-09-28 18:59:32.251696', '2021-09-29 13:18:25.869378'),
+(153, 67, 88, 2, '2021-09-28 18:59:32.259733', '2021-09-29 13:18:25.883308'),
+(154, 68, 88, 3, '2021-09-28 18:59:32.261881', '2021-09-29 13:18:25.890052');
 
 -- --------------------------------------------------------
 
@@ -965,7 +950,7 @@ ALTER TABLE `projectlinks`
 -- AUTO_INCREMENT for table `projectlogs`
 --
 ALTER TABLE `projectlogs`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `projects`
@@ -1114,3 +1099,27 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+ALTER TABLE aspnetusers
+  RENAME TO AspNetUsers;
+  
+ALTER TABLE services
+  RENAME TO Services;
+  
+ALTER TABLE aspnetroles
+  RENAME TO AspNetRoles;
+  
+ALTER TABLE aspnetuserroles
+  RENAME TO AspNetUserRoles;
+  
+  ALTER TABLE usercertificates
+  RENAME TO UserCertificates;
+  
+ALTER TABLE aspnetuserclaims
+  RENAME TO AspNetUserClaims;
+  
+  ALTER TABLE aspnetroleclaims
+  RENAME TO AspNetRoleClaims;
+  
+  ALTER TABLE projectlogs
+  RENAME TO ProjectLogs;

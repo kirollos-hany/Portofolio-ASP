@@ -9,15 +9,13 @@ using Portofolio.Database;
 namespace Portofolio.Migrations
 {
     [DbContext(typeof(PortofolioDbContext))]
-    [Migration("20210831102314_EditedRelationProjectTools")]
-    partial class EditedRelationProjectTools
+    [Migration("20210930060057_LatestMigration")]
+    partial class LatestMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasCharSet("utf8mb4")
-                .UseCollation("utf8mb4_0900_ai_ci")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.9");
 
@@ -186,31 +184,6 @@ namespace Portofolio.Migrations
                     b.ToTable("contactstatuses");
                 });
 
-            modelBuilder.Entity("Portofolio.Models.ImageType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("ImgType")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex(new[] { "ImgType" }, "ImgType")
-                        .IsUnique();
-
-                    b.ToTable("imagetypes");
-                });
-
             modelBuilder.Entity("Portofolio.Models.LinkType", b =>
                 {
                     b.Property<int>("Id")
@@ -246,9 +219,16 @@ namespace Portofolio.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime");
 
+                    b.Property<int>("CreatorId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<string>("Thumbnail")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -266,6 +246,8 @@ namespace Portofolio.Migrations
                         .HasColumnType("datetime");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
 
                     b.HasIndex(new[] { "TypeId" }, "TypeId");
 
@@ -311,9 +293,6 @@ namespace Portofolio.Migrations
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TypeId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime");
 
@@ -321,9 +300,6 @@ namespace Portofolio.Migrations
 
                     b.HasIndex(new[] { "ProjectId" }, "ProjectId")
                         .HasDatabaseName("ProjectId1");
-
-                    b.HasIndex(new[] { "TypeId" }, "TypeId")
-                        .HasDatabaseName("TypeId1");
 
                     b.ToTable("projectimages");
                 });
@@ -356,9 +332,52 @@ namespace Portofolio.Migrations
                         .HasDatabaseName("ProjectId2");
 
                     b.HasIndex(new[] { "TypeId" }, "TypeId")
-                        .HasDatabaseName("TypeId2");
+                        .HasDatabaseName("TypeId1");
 
                     b.ToTable("projectlinks");
+                });
+
+            modelBuilder.Entity("Portofolio.Models.ProjectLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("CreatorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatorName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ProjectLogs");
                 });
 
             modelBuilder.Entity("Portofolio.Models.ProjectType", b =>
@@ -525,6 +544,28 @@ namespace Portofolio.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Portofolio.Models.UserCertificates", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserCertificates");
+                });
+
             modelBuilder.Entity("Portofolio.Models.UserLink", b =>
                 {
                     b.Property<int>("Id")
@@ -549,7 +590,7 @@ namespace Portofolio.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex(new[] { "TypeId" }, "TypeId")
-                        .HasDatabaseName("TypeId3");
+                        .HasDatabaseName("TypeId2");
 
                     b.HasIndex(new[] { "UserId" }, "UserId");
 
@@ -695,7 +736,7 @@ namespace Portofolio.Migrations
                     b.HasOne("Portofolio.Models.ContactStatus", "Status")
                         .WithMany("Contacts")
                         .HasForeignKey("StatusId")
-                        .HasConstraintName("contacts_ibfk_1")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Status");
@@ -703,11 +744,19 @@ namespace Portofolio.Migrations
 
             modelBuilder.Entity("Portofolio.Models.Project", b =>
                 {
+                    b.HasOne("Portofolio.Models.User", "Creator")
+                        .WithMany("CreatedProjects")
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Portofolio.Models.ProjectType", "Type")
                         .WithMany("Projects")
                         .HasForeignKey("TypeId")
-                        .HasConstraintName("projects_ibfk_1")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Creator");
 
                     b.Navigation("Type");
                 });
@@ -717,7 +766,6 @@ namespace Portofolio.Migrations
                     b.HasOne("Portofolio.Models.Project", "Project")
                         .WithMany("ProjectFeedbacks")
                         .HasForeignKey("ProjectId")
-                        .HasConstraintName("projectfeedbacks_ibfk_1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -729,18 +777,10 @@ namespace Portofolio.Migrations
                     b.HasOne("Portofolio.Models.Project", "Project")
                         .WithMany("ProjectImages")
                         .HasForeignKey("ProjectId")
-                        .HasConstraintName("projectimages_ibfk_1")
-                        .IsRequired();
-
-                    b.HasOne("Portofolio.Models.ImageType", "Type")
-                        .WithMany("ProjectImages")
-                        .HasForeignKey("TypeId")
-                        .HasConstraintName("projectimages_ibfk_2")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Project");
-
-                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("Portofolio.Models.ProjectLink", b =>
@@ -748,19 +788,33 @@ namespace Portofolio.Migrations
                     b.HasOne("Portofolio.Models.Project", "Project")
                         .WithMany("ProjectLinks")
                         .HasForeignKey("ProjectId")
-                        .HasConstraintName("projectlinks_ibfk_1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Portofolio.Models.LinkType", "Type")
                         .WithMany("ProjectLinks")
                         .HasForeignKey("TypeId")
-                        .HasConstraintName("projectlinks_ibfk_2")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Project");
 
                     b.Navigation("Type");
+                });
+
+            modelBuilder.Entity("Portofolio.Models.ProjectLog", b =>
+                {
+                    b.HasOne("Portofolio.Models.Project", "Project")
+                        .WithMany("Logs")
+                        .HasForeignKey("ProjectId");
+
+                    b.HasOne("Portofolio.Models.User", "User")
+                        .WithMany("ProjectLogs")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Project");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Portofolio.Models.RequestedService", b =>
@@ -782,18 +836,28 @@ namespace Portofolio.Migrations
                     b.Navigation("AssociatedService");
                 });
 
+            modelBuilder.Entity("Portofolio.Models.UserCertificates", b =>
+                {
+                    b.HasOne("Portofolio.Models.User", "Owner")
+                        .WithMany("Certificates")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("Portofolio.Models.UserLink", b =>
                 {
                     b.HasOne("Portofolio.Models.LinkType", "Type")
                         .WithMany("UserLinks")
                         .HasForeignKey("TypeId")
-                        .HasConstraintName("userlinks_ibfk_2")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Portofolio.Models.User", "User")
                         .WithMany("UserLinks")
                         .HasForeignKey("UserId")
-                        .HasConstraintName("userlinks_ibfk_1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -807,20 +871,18 @@ namespace Portofolio.Migrations
                     b.HasOne("Portofolio.Models.Project", "Project")
                         .WithMany("UsersInProjects")
                         .HasForeignKey("ProjectId")
-                        .HasConstraintName("usersinprojects_ibfk_2")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Portofolio.Models.UserRoleInProject", "Role")
                         .WithMany("UsersInProjects")
                         .HasForeignKey("RoleId")
-                        .HasConstraintName("usersinprojects_ibfk_3")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Portofolio.Models.User", "User")
                         .WithMany("UsersInProjects")
                         .HasForeignKey("UserId")
-                        .HasConstraintName("usersinprojects_ibfk_1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -841,11 +903,6 @@ namespace Portofolio.Migrations
                     b.Navigation("Contacts");
                 });
 
-            modelBuilder.Entity("Portofolio.Models.ImageType", b =>
-                {
-                    b.Navigation("ProjectImages");
-                });
-
             modelBuilder.Entity("Portofolio.Models.LinkType", b =>
                 {
                     b.Navigation("ProjectLinks");
@@ -855,6 +912,8 @@ namespace Portofolio.Migrations
 
             modelBuilder.Entity("Portofolio.Models.Project", b =>
                 {
+                    b.Navigation("Logs");
+
                     b.Navigation("ProjectFeedbacks");
 
                     b.Navigation("ProjectImages");
@@ -876,6 +935,12 @@ namespace Portofolio.Migrations
 
             modelBuilder.Entity("Portofolio.Models.User", b =>
                 {
+                    b.Navigation("Certificates");
+
+                    b.Navigation("CreatedProjects");
+
+                    b.Navigation("ProjectLogs");
+
                     b.Navigation("UserLinks");
 
                     b.Navigation("UsersInProjects");
