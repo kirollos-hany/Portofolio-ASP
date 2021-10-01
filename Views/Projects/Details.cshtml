@@ -1,6 +1,10 @@
 @{
 
     ViewData[TitleKey] = "Details"; 
+    ViewData[BannerTitleKey] = Model.Project.Title + "Details";
+    ViewData[BannerReturnActionKey] = "index";
+    ViewData[BannerReturnControllerKey] = "projects";
+    ViewData[BannerReturnTitleKey] = "Projects";
 }
 @model ProjectDetailsViewModel
     @{
@@ -103,11 +107,19 @@
                         </a>
                     </li>
                     <li>
-                        <a class="justify-content-between d-flex">
-                            <h5 class="dark">Technologies & Tools</h5>
-                            <span style="margin-left: 20px" class="or">@Model.Project.ToolsUsed</span>
-                        </a>
-                    </li>
+									<a class="justify-content-between d-flex">
+										<h5>Tools</h5>
+										<div class="row" style="margin-left: 20px;">
+                                            @{
+                                                var toolsArr = Model.Project.ToolsUsed.Split('-').OrderByDescending(tool => tool.Length);
+                                            }
+                                            @foreach(var tool in toolsArr)
+                                            {
+                                                <span class="ork">@tool</span>
+                                            }
+									</div>
+									</a>
+					</li>
                     <li>
                         <a class="justify-content-between d-flex">
                             <h5 class="dark">Project Type</h5>

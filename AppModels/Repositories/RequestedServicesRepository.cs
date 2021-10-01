@@ -21,6 +21,7 @@ namespace Portofolio.AppModels.Repositories
             rs.CreatedAt = DateTime.Now;
             rs.UpdatedAt = DateTime.Now;
             await _dbContext.RequestedServices.AddAsync(rs);
+            await _dbContext.SaveChangesAsync();
             return rs;
         }
 
@@ -35,10 +36,5 @@ namespace Portofolio.AppModels.Repositories
                 await Create(request);
             }
         }
-
-        // public async override Task<RequestedService> GetById(int id)
-        // {
-        //     return await _dbContext.RequestedServices.Include(rs => rs.AssociatedContact).Include(rs => rs.AssociatedService).FirstOrDefaultAsync(rs => rs.Id == id);
-        // }
     }
 }

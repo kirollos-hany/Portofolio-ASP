@@ -73,7 +73,7 @@ namespace Portofolio.Controllers
             var contact = await _contactRepository.GetById(savedContact.Id);
             var mailRequest = await _contactEmailParser.ParseAsync(new HTMLWithModel<Contact>
             {
-                Model = contactData.Contact,
+                Model = contact,
                 Path = ContactHtmlTemplatePath,
                 HrefValue = $"href={Url.ActionLink(nameof(ContactController.ContactDetails), "Contact", new { id = contactData.Contact.Id }, Request.Scheme)}"
             });

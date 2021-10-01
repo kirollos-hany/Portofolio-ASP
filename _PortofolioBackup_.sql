@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 30, 2021 at 10:20 AM
+-- Generation Time: Oct 01, 2021 at 05:07 PM
 -- Server version: 8.0.26
 -- PHP Version: 7.4.2
 
@@ -26,10 +26,6 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `aspnetroleclaims`
 --
-
-CREATE DATABASE portofoliodb;
-
-USE portofoliodb;
 
 CREATE TABLE `aspnetroleclaims` (
   `Id` int NOT NULL,
@@ -281,7 +277,10 @@ INSERT INTO `contacts` (`Id`, `StatusId`, `ContactName`, `Phone`, `Email`, `Mess
 (58, 1, 'Kirollos Hany', '+201206784139', 'kirolloshany9999@gmail.com', 'I want a web and desktop application..please get back to me on the price', '2021-08-27 11:29:48', '0001-01-01 00:00:00'),
 (59, 1, 'Kirollos Hany', '+201206784139', 'kirolloshany9999@gmail.com', 'I want a web and desktop application..please get back to me on the price', '2021-08-27 11:31:23', '0001-01-01 00:00:00'),
 (60, 1, 'Kirollos Hany', '+201206784139', 'kirolloshany9999@gmail.com', 'I want a web and desktop application..please get back to me on the price', '2021-08-27 11:33:30', '0001-01-01 00:00:00'),
-(61, 2, 'Kirollos Hany', '+201206784139', 'kirolloshany9999@gmail.com', 'I want a web and desktop application..please get back to me on the price', '2021-08-27 11:37:35', '2021-09-22 09:08:14');
+(61, 2, 'Kirollos Hany', '+201206784139', 'kirolloshany9999@gmail.com', 'I want a web and desktop application..please get back to me on the price', '2021-08-27 11:37:35', '2021-09-22 09:08:14'),
+(63, 1, 'kiro', '+201206784139', 'kiro@gmail.com', 'message', '2021-10-01 10:02:38', '2021-10-01 10:02:38'),
+(64, 1, 'kiro', '+201206784139', 'kiro@gmail.com', 'msg', '2021-10-01 10:06:40', '2021-10-01 10:06:40'),
+(65, 1, 'kiro', '+201206784139', 'kiro@gmail.com', 'msg', '2021-10-01 10:08:49', '2021-10-01 10:08:49');
 
 -- --------------------------------------------------------
 
@@ -511,7 +510,8 @@ INSERT INTO `requestedservices` (`Id`, `ServiceId`, `ContactId`, `CreatedAt`, `U
 (17, 1, 60, '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000'),
 (18, 2, 60, '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000'),
 (19, 1, 61, '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000'),
-(20, 2, 61, '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000');
+(20, 2, 61, '0001-01-01 00:00:00.000000', '0001-01-01 00:00:00.000000'),
+(23, 1, 65, '2021-10-01 10:08:49.440209', '2021-10-01 10:08:49.440309');
 
 -- --------------------------------------------------------
 
@@ -533,9 +533,10 @@ CREATE TABLE `services` (
 --
 
 INSERT INTO `services` (`Id`, `ServiceName`, `ServiceDescription`, `ServiceImage`, `CreatedAt`, `UpdatedAt`) VALUES
-(1, 'Web Application Service', 'A libero quia  iure voluptas illo ut. Distinctio molestiae earum. Voluptatem fugiat ea quaerat qui illum voluptatibus natus. Labore consectetur sunt saepe. Ea distinctio est in dicta sit sequi molestiae non consequatur. Velit et repellendus a.', 'images\\4733d171-d660-4086-b374-1cd2e146bdba0e1a0472-ef73-4931-8732-742a5f3313fe4f29b64f-bcf8-4740-83b5-a705e08b02da.jpg', '0001-01-01 00:00:00.000000', '2021-09-28 13:51:38.149554'),
-(2, 'Desktop Application Service', 'A libero quia qui dolorum iure voluptas illo ut. Distinctio voluptas temporibus illum molestiae earum. Voluptatem fugiat ea quaerat qui illum voluptatibus natus. Labore consectetur sunt saepe. Ea distinctio est in dicta sit sequi molestiae non consequatur. Velit et repellendus a.', 'images\\fc4bd72c-cb3c-4e7a-94d1-0996e9b176f09ba84d20-2fe5-4a39-904c-119bdf9c6dea4f29b64f-bcf8-4740-83b5-a705e08b02da.jpg', '0001-01-01 00:00:00.000000', '2021-09-28 13:52:01.075268'),
-(3, 'Mobile Application Service', 'Illum ea eaque est commodi. Quaerat nam voluptate sit quaerat in. Vel ut ea eum deserunt possimus et aperiam necessitatibus qui. Ducimus autem est est minima quaerat dolores modi commodi et. Vitae laudantium fugiat quibusdam dolor autem eius ut iste ducimus. Et illum corrupti ipsum qui totam.', 'images\\429998c1-aed6-4cc9-b2d2-94dbfa2466720008c62f-3802-42bb-b383-0beb094a5a650e1a0472-ef73-4931-8732-742a5f3313fe4f29b64f-bcf8-4740-83b5-a705e08b02da.jpg', '0001-01-01 00:00:00.000000', '2021-09-28 13:52:12.573333');
+(1, 'Web Application Service', 'A libero quia  iure voluptas illo ut. Distinctio molestiae earum. Voluptatem fugiat ea quaerat qui illum voluptatibus natus. Labore consectetur sunt saepe. Ea distinctio est in dicta sit sequi molestiae non consequatur. Velit et repellendus a.', 'images\\7eafd4be-c144-4dce-8828-d43c3076d5d5ue1.jpg', '0001-01-01 00:00:00.000000', '2021-10-01 17:03:29.314654'),
+(2, 'Desktop Application Service', 'A libero quia qui dolorum iure voluptas illo ut. Distinctio voluptas temporibus illum molestiae earum. Voluptatem fugiat ea quaerat qui illum voluptatibus natus. Labore consectetur sunt saepe. Ea distinctio est in dicta sit sequi molestiae non consequatur. Velit et repellendus a.', 'images\\8de23339-5998-4309-9ef5-ce416a6f01c3tt.jpg', '0001-01-01 00:00:00.000000', '2021-10-01 17:03:37.345186'),
+(3, 'Mobile Application Service', 'Illum ea eaque est commodi. Quaerat nam voluptate sit quaerat in. Vel ut ea eum deserunt possimus et aperiam necessitatibus qui. Ducimus autem est est minima quaerat dolores modi commodi et. Vitae laudantium fugiat quibusdam dolor autem eius ut iste ducimus. Et illum corrupti ipsum qui totam.', 'images\\554bea38-7992-4947-bc36-1fcfbd30bacaue1.jpg', '0001-01-01 00:00:00.000000', '2021-10-01 17:03:21.903636'),
+(12, 'Other', 'Request another service', 'images\\158509f0-f6c0-403c-888a-424c764c4a74ue1.jpg', '2021-10-01 17:03:09.326382', '2021-10-01 17:03:09.326423');
 
 -- --------------------------------------------------------
 
@@ -914,7 +915,7 @@ ALTER TABLE `aspnetusers`
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `contactstatuses`
@@ -968,13 +969,13 @@ ALTER TABLE `projecttypes`
 -- AUTO_INCREMENT for table `requestedservices`
 --
 ALTER TABLE `requestedservices`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `Id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `usercertificates`
@@ -1099,27 +1100,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-ALTER TABLE aspnetusers
-  RENAME TO AspNetUsers;
-  
-ALTER TABLE services
-  RENAME TO Services;
-  
-ALTER TABLE aspnetroles
-  RENAME TO AspNetRoles;
-  
-ALTER TABLE aspnetuserroles
-  RENAME TO AspNetUserRoles;
-  
-  ALTER TABLE usercertificates
-  RENAME TO UserCertificates;
-  
-ALTER TABLE aspnetuserclaims
-  RENAME TO AspNetUserClaims;
-  
-  ALTER TABLE aspnetroleclaims
-  RENAME TO AspNetRoleClaims;
-  
-  ALTER TABLE projectlogs
-  RENAME TO ProjectLogs;

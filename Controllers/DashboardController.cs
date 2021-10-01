@@ -118,24 +118,6 @@ namespace Portofolio.Controllers
         }
 
         [Authorize("Admin")]
-        public async Task<IActionResult> ServiceDetails(int id)
-        {
-            var service = await _servicesRepository.GetById(id);
-            if (service == default(Service))
-            {
-                return NotFound();
-            }
-            var pendingContactsCount = await _contactsRepository.PendingContactsCount();
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            return View(new ServiceDetailsDashboardVM
-            {
-                User = user,
-                PendingContactsCount = pendingContactsCount,
-                Service = service
-            });
-        }
-
-        [Authorize("Admin")]
         public async Task<IActionResult> Contacts()
         {
             var contacts = await _contactsRepository.GetAllOrderedByUpdateTime();

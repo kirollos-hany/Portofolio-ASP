@@ -4295,3 +4295,15 @@ a p{
 .content-wrapper{
   background-color: #253368 !important;
 }
+
+
+.right-contents ul li .ork {
+  color:#e9ecef !important;
+  background-color:#6c757d;
+ border-radius: 50%;
+ padding: 8px 10px;
+ margin-left: 10px;
+ font-weight: 500;
+ font-size:12px;
+ margin-bottom: 10px;
+}

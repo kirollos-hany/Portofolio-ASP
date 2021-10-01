@@ -47,23 +47,6 @@ namespace Portofolio.Controllers
             });
         }
 
-        public async Task<IActionResult> Details(int id)
-        {
-            var latestServices = await _repository.GetLatestServices(NumOfLatestItems);
-            var latestProjects = await _projectsRepository.GetLatestProjects(NumOfLatestItems);
-            var service = await _repository.GetById(id);
-            if (service == default(Service))
-            {
-                return NotFound();
-            }
-            return View(new ServiceDetailsViewModel
-            {
-                LatestProjects = latestProjects,
-                LatestServices = latestServices,
-                Service = service
-            });
-        }
-
         [HttpPost]
         [Authorize("Admin")]
         public async Task<IActionResult> Create(ServicesDashboardVM serviceVM)
@@ -102,7 +85,7 @@ namespace Portofolio.Controllers
             if (!ModelState.IsValid)
             {
                 ModelState.AssignViewDataWithErrors(ViewData);
-                return RedirectToAction(nameof(DashboardController.ServiceDetails), "Dashboard", new {id = id});
+                return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
             }
             if (model.ServiceImage != default(IFormFile))
             {
@@ -122,7 +105,7 @@ namespace Portofolio.Controllers
                 catch (CustomException ex)
                 {
                     _outputDisplayer.DisplayOutput(TempData, false, ex.Message);
-                    return RedirectToAction(nameof(DashboardController.ServiceDetails), "Dashboard", new {id = id});
+                    return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
                 }
             }
             else
@@ -135,7 +118,7 @@ namespace Portofolio.Controllers
                 await _repository.EditWithoutImage(id, newService);
             }
             _outputDisplayer.DisplayOutput(TempData, true, "Service edit successful");
-            return RedirectToAction(nameof(DashboardController.ServiceDetails), "Dashboard", new {id = id});
+            return RedirectToAction(nameof(DashboardController.Services), "Dashboard");
         }
 
 

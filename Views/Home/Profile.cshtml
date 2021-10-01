@@ -1,5 +1,9 @@
 @{
     ViewData[TitleKey] = "Profile";
+    ViewData[BannerTitleKey] = Model.User.UserName + " Profile";
+    ViewData[BannerReturnActionKey] = "developers";
+    ViewData[BannerReturnControllerKey] = "home";
+    ViewData[BannerReturnTitleKey] = "Developers";
 }
 @model ProfileViewModel
     @{
@@ -69,7 +73,7 @@
                         if(ul.Link != default(string))
                         {
                         <a href="@ul.Link" target="_blank" data-toggle="tooltip" data-placement="bottom" title=""
-                        data-original-title="facebook" data-abc="true"><i
+                        data-original-title="facebook" data-abc="true" class="dark"><i
                           class="@LinkIconsDictionary[ul.Type.Type]" aria-hidden="true"></i></a>
                         }
                       }

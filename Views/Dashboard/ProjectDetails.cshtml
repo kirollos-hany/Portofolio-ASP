@@ -96,12 +96,20 @@
 	   <span class="or">@Model.ChosenProject.UsersInProjects.Count</span>
 	  </a>
 	 </li>
-	 <li>
-	  <a class="justify-content-between d-flex">
-	   <h5 class="dark">Technologies & Tools</h5>
-	   <span style="margin-left: 20px;" class="or">@Model.ChosenProject.ToolsUsed</span>
-	  </a>
-	 </li>
+  <li>
+									<a class="justify-content-between d-flex">
+										<h5 class="dark">Tools</h5>
+										<div class="row" style="margin-left: 20px;">
+                                @{
+                                    var toolsArr = Model.ChosenProject.ToolsUsed.Split('-').OrderByDescending(tool => tool.Length);
+                                }
+                                @foreach(var tool in toolsArr)
+                                {
+                                    <span class="ork">@tool</span>
+                                }
+									</div>
+									</a>
+	  </li>
     <li>
         <a class="justify-content-between d-flex">
             <h5 class="dark">Project Type</h5>

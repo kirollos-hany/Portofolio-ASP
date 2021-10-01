@@ -9,6 +9,9 @@ namespace Portofolio.ViewModels
 
         public PaginationViewModel<Service> PaginationModel { get; set; }
 
+        [Required(ErrorMessage = "Service is reqiured")]
+        public int Id {get; set;}
+
         [Required]
         public string Name { get; set; }
 

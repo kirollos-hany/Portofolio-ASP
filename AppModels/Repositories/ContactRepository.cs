@@ -30,7 +30,7 @@ namespace Portofolio.AppModels.Repositories
 
         public async Task<Contact> GetById(int id)
         {
-            return await _dbContext.Contacts.FindAsync(id);
+            return await _dbContext.Contacts.Include(con => con.RequestedServices).ThenInclude(reqService => reqService.AssociatedService).Where(con => con.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<int> PendingContactsCount()

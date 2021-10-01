@@ -47,5 +47,37 @@ namespace Portofolio.AppModels.Utils
                 return "ReturnUrl";
             }
         }
+
+        public static string BannerTitleKey
+        {
+            get
+            {
+                return "BannerTitle";
+            }
+        }
+
+        public static string BannerReturnActionKey
+        {
+            get
+            {
+                return "BannerReturnAction";
+            }
+        }
+
+        public static string BannerReturnControllerKey
+        {
+            get
+            {
+                return "BannerReturnController";
+            }
+        }
+
+        public static string BannerReturnTitleKey
+        {
+            get
+            {
+                return "BannerReturnTitle";
+            }
+        }
     }
 }
