@@ -13,8 +13,6 @@ using Portofolio.AppModels.Exceptions;
 using Portofolio.AppModels.Models;
 using static Portofolio.AppModels.Utils.Constants;
 using static Portofolio.AppModels.Utils.KeyConstants;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 namespace Portofolio.Controllers
 {
     public class UserController : Controller
@@ -69,7 +67,7 @@ namespace Portofolio.Controllers
         }
         public IActionResult Login(string returnUrl = null)
         {
-            if(_signInManager.IsSignedIn(HttpContext.User))
+            if (_signInManager.IsSignedIn(HttpContext.User))
             {
                 return RedirectToAction(nameof(DashboardController.Index), "Dashboard");
             }
@@ -180,7 +178,15 @@ namespace Portofolio.Controllers
             });
         }
 
-        [Authorize("Admin")]
+        public async Task<IActionResult> Register()
+        {
+            var linkTypes = await _linkTypesRepository.GetAll();
+            return View(new CreateProfileViewModel
+            {
+                LinkTypes = linkTypes
+            });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateProfileViewModel createProfileViewModel, IFormFile userImageFile)
@@ -188,7 +194,7 @@ namespace Portofolio.Controllers
             if (!ModelState.IsValid)
             {
                 ModelState.AssignViewDataWithErrors(ViewData);
-                return RedirectToAction(nameof(Create));
+                return RedirectToAction(createProfileViewModel.ReturnAction, createProfileViewModel.ReturnController);
             }
             try
             {
@@ -199,10 +205,10 @@ namespace Portofolio.Controllers
                     _imageServices.ValidateImgExtension(userImageFile);
                     newUser.ImagePath = await _imageServices.UploadImgAsync(userImageFile);
                     var result = await _userManager.UpdateAsync(newUser);
-                    if(!result.Succeeded)
+                    if (!result.Succeeded)
                     {
                         _outputDisplayer.DisplayOutput(TempData, false, result.ToString());
-                        return RedirectToAction(nameof(Create));
+                        return RedirectToAction(createProfileViewModel.ReturnAction, createProfileViewModel.ReturnController);
                     }
                     await _imageServices.ResizeImg(newUser.ImagePath, UserImageSize);
                 }
@@ -210,10 +216,17 @@ namespace Portofolio.Controllers
             catch (CustomException ex)
             {
                 _outputDisplayer.DisplayOutput(TempData, false, ex.Message);
-                return RedirectToAction(nameof(Create));
+                return RedirectToAction(createProfileViewModel.ReturnAction, createProfileViewModel.ReturnController);
             }
             _outputDisplayer.DisplayOutput(TempData, true, "User created successfuly");
-            return RedirectToAction(nameof(Create));
+            if (createProfileViewModel.ReturnAction.ToLower() == "register")
+            {
+                return RedirectToAction(nameof(DashboardController.Index), "Dashboard");
+            }
+            else
+            {
+                return RedirectToAction(nameof(Create));
+            }
         }
 
         [Authorize]
@@ -324,16 +337,16 @@ namespace Portofolio.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var userToDelete = await _userManager.GetUserByIdWithInclude(id);
-            if(userToDelete == default(User))
+            if (userToDelete == default(User))
             {
                 return NotFound();
             }
             await _userLinksRepository.DeleteCollection(userToDelete.UserLinks);
             var projects = userToDelete.CreatedProjects;
-            foreach(var project in projects)
+            foreach (var project in projects)
             {
                 _imageServices.DeleteImg(project.Thumbnail);
-                foreach(var image in project.ProjectImages)
+                foreach (var image in project.ProjectImages)
                 {
                     _imageServices.DeleteImg(image.ImagePath);
                 }

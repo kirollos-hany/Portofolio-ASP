@@ -56,7 +56,7 @@ namespace Portofolio.AppModels.Extensions
             services.Configure<MailSettings>(configuration.GetSection("MailSettings"));
             services.Configure<IdentityOptions>(options =>
             {
-                options.User.RequireUniqueEmail = false;
+                options.User.RequireUniqueEmail = true;
                 options.Password.RequireUppercase = false;
                 options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
             });

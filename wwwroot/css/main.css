@@ -4259,9 +4259,10 @@ dl.toggle.time-line:before {
   margin-bottom: 40px;
 }
 /* End Features*/
-@media (min-width: 200px) {
+@media screen and (min-width: 320px) and (max-width:480px){
   #info-video {
     width: 350px;
+    margin-top:0px;
   }
 }
 
@@ -4288,4 +4289,14 @@ dl.toggle.time-line:before {
  margin-left: 20px;
  font-weight: 500;
  margin-bottom: 10px;
+}
+
+@media screen and (min-width:320px) and (max-width:480px){
+  .zero-margin-mobile{
+    margin:0px;
+  }
+}
+
+#info-video{
+  margin-top:-16px;
 }

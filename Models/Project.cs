@@ -19,7 +19,7 @@ namespace Portofolio.Models
             ProjectLinks = new HashSet<ProjectLink>();
             UsersInProjects = new HashSet<UsersInProject>();
             ToolsUsed = "N/A";
-            Thumbnail = "img/committee/mm.jpg";
+            Thumbnail = "img/mm.jpg";
         }
 
         [Key]

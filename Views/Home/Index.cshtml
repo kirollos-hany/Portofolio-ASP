@@ -66,20 +66,18 @@
         <div id="content" font-family: Georgia, Times New Roman, Times,serif;>
           <strong id="o2"><dd>OUR STORY</dd></strong>
           <dd id="o3">
-            IEEE FCIH was founded on November 2006.Under the supervision of Dr.
-            Aliaa Youssif Vice Dean for Graduate Studies at the faculty of
-            Computers and Information - Helwan University and Esraa Ali who was
-            one of the SB founders and its current mentor, Introduced to the
-            rest of founders to what IEEE.
+            Cross developers was founded on 2021.Under the supervision of Eng.Abanoub Rafaat
+            and Eng.Kirollos Hany and they are the current administrators.
           </dd>
           <br />
           <dd id="o3">
-            IEEE FCIH SB is One of Region 8 branches among hundreds of IEEE
-            student branches around the world that was created to help students
-            and develop their skills in college, and make students up to date
-            with new technologies and labor market, It’s such a real example
-            that represents the efforts of IEEE helping to spread the
-            technological innovation.
+            Cross developers is our Portfolio website which is created to publish our experiences 
+            and projects in addition to offering portfolio hosting service where everyone can 
+            find a totally free of cost way to host their portfolio and publish their knowledge and experience
+            we take care of all the technical issues so that you can simply create
+            responsive portfolio with minimum effort with full control.
+            It’s such a real example
+            that represents the efforts of Cross developers helping to spread people's knowledge and experience.
           </dd>
           <br />
         </div>
@@ -105,33 +103,18 @@
                 <a href="">Our Mission</a>
               </dt>
               <dd id="m">
-                Developing students technical and non-technical skills filling
-                the gap between the educational and practical lives through
-                events, workshops and conferences to guide the students in the
-                name of Volunteerism which is the main motivation.
+              Grouping your whole career in one site and link to your own resume and show the 
+              world your knowledge and experiences
               </dd>
               <dt>
                 <a href="">Why choose us</a>
               </dt>
               <dd>
-                We are The Only Branch in Faculty of Computer and Information in
-                Egypt, Help Student to Improve Their Skills To Enter The Job
-                Market
+                We are offering a totally free of cost way to host your portfolio 
+                taking full control on it you can manage your profile provide your projects, 
+                knowledge, certificates and social links . we don't ask for any personal information
+                , visa or credits simply create an account and start using the website
               </dd>
-              <dt>
-                <a href="">Links</a>
-              </dt>
-              <dd>
-                Website : http://ieee-fcihsb.org/ <br />
-                Facebook : https://www.facebook.com/IEEE.FCIH <br />
-                Twitter : https://twitter.com/IEEE_FCIHSB<br />
-                YouTube : https://www.youtube.com/user/IEEEFCIHSB <br />
-                Instagram : http://instagram.com/ieeefcihsb
-              </dd>
-              <dt>
-                <a href="">Sponsors</a>
-              </dt>
-              <dd>--------------------------</dd>
             </dl>
             <!-- accordion 2 end-->
           </div>
@@ -170,9 +153,11 @@
           But whatever how hard it is, we're all here to support and help you.
         </p>
         <div class="row">
-          @foreach(var founder in Model.Founders)
-          {
-                <div class="col-md-6 col-lg-4">
+          @if(Model.Founders != default(ICollection<User>))
+            {
+              foreach(var founder in Model.Founders)
+              {
+                <div class="col-md-6 col-lg-4 mx-auto zero-margin-mobile">
                   <div class="card">
                     <img src="~/@founder.ImagePath" class="card-img-top" alt="Founder image" />
                     <div class="card-body">
@@ -187,59 +172,14 @@
                         </h5></a>
                     </div>
                   </div>
-                </div>
-          }
+              </div>
+              }
+            }
+        </div>
         </div>
       </div>
     </div>
     <!-- End Latest Post -->
-
-    <!--Start Features-->
-    <div class="features text-center">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-6 col-lg-3">
-            <i class="fas fa-users fa-2x rounded-circle"></i>
-            <h2>SHINING</h2>
-            <h3>COMMITTEES</h3>
-            <p>
-              We have 8 disparate Committes each one include a well educated
-              team to perform a specific task in the activity.
-            </p>
-          </div>
-          <div class="col-sm-6 col-lg-3">
-            <i class="fas fa-calendar-alt fa-2x rounded-circle"></i>
-            <h2>PLANNED</h2>
-            <h3>EVENTS</h3>
-            <p>
-              We create and oragnize Events&Workshops to developing students
-              technical and non-technical skills beside spending a happy time
-              with the family !
-            </p>
-          </div>
-          <div class="col-sm-6 col-lg-3">
-            <i class="fas fa-graduation-cap fa-2x rounded-circle"></i>
-            <h2>EXPERT</h2>
-            <h3>INSTRUCTORS</h3>
-            <p>
-              We rigorously screen and train our instructors to ensure that they
-              meet our high standards for academic knowledge, teaching
-              experience, and interpersonal skill.
-            </p>
-          </div>
-          <div class="col-sm-6 col-lg-3">
-            <i class="fas fa-trophy fa-2x rounded-circle"></i>
-            <h2>IEEE</h2>
-            <h3>AWARDS</h3>
-            <p>
-              - The Most Creative Photo - IEEE Day 2013 <br />
-              - IEEE Regional Exemplary Student Branch award 2013/2014
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Features -->
     <!-- Start upcoming-event Area -->
     <section class="upcoming-event-area section-gap">
       <div class="container">
@@ -274,47 +214,6 @@
         </div>
       </div>
     </section>
-    @* <!-- Start upcoming-event Area -->
-    <section class="upcoming-event-area section-gap">
-      <div class="container">
-        <div class="row d-flex justify-content-center">
-          <div class="menu-content pb-70 col-lg-8">
-            <div class="title text-center">
-              <h1 class="mb-10">Our Latest Services</h1>
-              <p>Take a look at our latest services</p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-            @if(Model.LatestServices != default(ICollection<Service>))
-              {
-                foreach(var service in Model.LatestServices)
-                {
-                          <div class="col-lg-3 col-md-6 single-blog">
-                              <div class="thumb">
-                                <img class="img-fluid" src="~/@service.ServiceImage" alt="service image" />
-                              </div>
-                              <h5 style="margin-top:8px;">@service.ServiceName</h5>
-                              <a
-                                asp-action="details"
-                                asp-controller="services"
-                                asp-route-id="@service.Id"
-                                target="_blank"
-                                class="
-                                  details-btn
-                                  d-flex
-                                  justify-content-center
-                                  align-items-center
-                                "
-                                ><span class="details">Details</span
-                                ><span class="lnr lnr-arrow-right"></span
-                              ></a>
-                    </div>
-                }
-              }
-        </div>
-      </div>
-    </section> *@
     <!-- End upcoming-event Area -->>
     <!-- Start cta-one Area -->
     <section class="cta-one-area relative section-gap">
@@ -322,11 +221,11 @@
         <div class="overlay overlay-bg"></div>
         <div class="row justify-content-center">
           <div class="wrap">
-            <h1 class="text-white">Become a part of IEEE</h1>
+            <h1 class="text-white">Join Cross Developers</h1>
             <p>
-              The Registration Form of patch 20 will be open soon stay tuned !
+              Become a part of our community and show the world your work!
             </p>
-            <a class="primary-btn wh" href="committees.html">VIEW COMMITTEES</a>
+            <a class="primary-btn wh" asp-action="register" asp-controller="user">REGISTER</a>
           </div>
         </div>
       </div>

@@ -9,8 +9,11 @@ namespace Portofolio.ViewModels
 
         public ICollection<string> Links { get; set; }
 
-        [Required(ErrorMessage = "Links are required")]
         public ICollection<int> LinkTypeIds { get; set; }
+
+        public string ReturnAction { get; set; }
+
+        public string ReturnController { get; set; }
 
         [Required]
         public string Password { get; set; }

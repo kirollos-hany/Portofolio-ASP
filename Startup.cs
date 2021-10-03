@@ -28,7 +28,6 @@ namespace Portofolio
                 {
                     dbOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
                 });
-                options.EnableSensitiveDataLogging();
             });
             services.AddRepositories();
             services.AddServices();
