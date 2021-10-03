@@ -25,7 +25,7 @@ Can view and send feedback on projects
 
 
 ## Usage
-C# ASP.NET CORE MVC Razor Pages EF CORE MYSQL
+C# ASP.NET CORE MVC Razor Pages EF CORE LINQ MYSQL
 HTML5 CSS3 JQuery Bootstrap 
 
 ## Notes
