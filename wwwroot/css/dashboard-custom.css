@@ -26,3 +26,7 @@ a:hover{
 .single-blog .details-btn{
     background-color: white ;
 }
+
+.hover-blue:hover{
+    color: #154864 !important;
+}
