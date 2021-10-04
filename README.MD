@@ -11,21 +11,21 @@ knowledge, certificates and social links
 2-Registered Users
 3-Unregistered Users
 
-*Administrators:
+-Administrators:
 Have full control over the website, can view, add, delete users, view, add, update, delete projects.
 Respond to contacts and change their status PENDING, InProgress, COMPELTED.. also delete contacts.
 Add, Update, and Delete services they offer
 
-*Registered Users:
+-Registered Users:
 Can add, update, and delete their created projects 
 Can Edit their profile
 
-*Unregistered Users
+-Unregistered Users:
 Can view and send feedback on projects 
 
 
 ## Usage
-C# ASP.NET CORE MVC Razor Pages EF CORE MYSQL
+C# ASP.NET CORE MVC Razor Pages EF CORE LINQ MYSQL
 HTML5 CSS3 JQuery Bootstrap 
 
 ## Notes
